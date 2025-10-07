@@ -1,87 +1,91 @@
- <nav class="main-nav--bg">
-     <div class="container main-nav p-2">
-         <div class="main-nav-start">
-             {{--  <img src="{{ asset('assets/img/logo.png') }}" class="navbar-brand-img" alt="main_logo" style="width: 15%">  --}}
-             <div class="logo-text">
-                 <span class="logo-title">Exam Center Management System</span>
-             </div>
-         </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid px-3 px-md-4">
+        {{-- Logo / Title --}}
+        <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
+            <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="me-2" style="width: 30px;">
+            <span class="fw-semibold text-white">Exam Center Management System</span>
+        </a>
 
-         <div class="main-nav-end navbar">
-             <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
-                 <span class="sr-only">Toggle menu</span>
-                 <span class="icon menu-toggle--gray" aria-hidden="true"></span>
-             </button>
-             <div class="lang-switcher-wrapper">
-                 <button class="lang-switcher1 transparent-btn" type="button">
-                     <a href="{{ route('home') }}">Home</a>
-                 </button>
-             </div>
-             <div class="lang-switcher-wrapper">
-                 <button class="lang-switcher transparent-btn" type="button">
-                     Absents Entry
-                 </button>
-                 <ul class="lang-menu dropdown">
-                     <li><a href="{{ route('absentees.all') }}">Absentees</a></li>
-                 </ul>
-             </div>
-             <div class="lang-switcher-wrapper">
-                 <button class="lang-switcher transparent-btn" type="button">
-                     Center Change
-                 </button>
-             </div>
-             <div class="lang-switcher-wrapper">
-                 <button class="lang-switcher transparent-btn" type="button">
-                     Medium Change
-                 </button>
-             </div>
+        {{-- Toggler (hamburger icon) --}}
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-             {{--  <h6 class="font-weight-bolder mb-0">Hi!, {{ Auth::user()->name }}</h6>  --}}
-             <div class="nav-user-wrapper">
+        {{-- Navbar content --}}
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                {{-- Home --}}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('home') }}">
+                        <i class="fa-solid fa-house me-1"></i> Home
+                    </a>
+                </li>
 
-                 <button href="##" class="nav-user-btn dropdown-btn" title="My profile" type="button">
-                     <span class="sr-only">My profile</span>
-                     <span class="nav-user-img">
-                         <picture>
-                             <i class="fa-solid fa-user-tie"></i>
-                         </picture>
-                     </span>
-                 </button>
-                 <ul class="users-item-dropdown nav-user-dropdown dropdown">
-                     <li><a href="{{ route('profile.show') }}">
-                             <i data-feather="user" aria-hidden="true"></i>
-                             <span>Profile</span>
-                         </a></li>
-                     <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                             <i data-feather="log-out" aria-hidden="true"></i>
-                             <span>Log out</span>
-                         </a></li>
-                 </ul>
-             </div>
-         </div>
-     </div>
- </nav>
+                {{-- Absentees --}}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('absentees.all') }}">
+                        <i class="fa-solid fa-building-columns me-1"></i> Absentees
+                    </a>
+                </li>
 
+               {{-- Center Change --}}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">
+                        <i class="fa-solid fa-building-columns me-1"></i> Center Change
+                    </a>
+                </li>
 
+                {{-- Medium Change --}}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">
+                        <i class="fa-solid fa-language me-1"></i> Medium Change
+                    </a>
+                </li>
 
- <!-- Modal -->
- <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered modal-sm"> <!-- modal-sm = reduced width -->
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title">Ready To Leave</h5>
-                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-             </div>
-             <div class="modal-body">
-                 <p>Select "Logout" below if you are ready to end your current session.</p>
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                 <form action="{{ route('logout') }}" method="POST">
-                     @csrf
-                     <button type="submit" class="btn btn-primary">Logout</button>
-                 </form>
-             </div>
-         </div>
-     </div>
- </div>
+                {{-- Profile / User Dropdown --}}
+                <li class="nav-item dropdown ms-lg-3">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center text-white" href="#"
+                        id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user-tie me-1"></i>
+                        {{-- <span class="d-none d-md-inline">{{ Auth::user()->name ?? 'User' }}</span> --}}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile.show') }}">
+                                <i class="fa-solid fa-user me-2"></i> Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Logout Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ready To Leave</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Select "Logout" below if you are ready to end your current session.</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
