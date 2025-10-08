@@ -22,6 +22,25 @@
 
     }
 
+    .card {
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-header i {
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover .card-header i {
+    transform: scale(1.15);
+  }
+
     .page-center {
         background-image: url(../assets/img/ex.jpg);
         background-size: cover;

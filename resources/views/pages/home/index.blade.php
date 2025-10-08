@@ -1,79 +1,140 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
-    <h2 class="main-title">Dashboard</h2>
-    <div class="row stat-cards">
-        <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
-                <div class="stat-cards-icon primary">
-                    <i data-feather="bar-chart-2" aria-hidden="true"></i>
+    <div class="container my-4">
+        <h2 class="main-title text-center mb-4">Main Menus</h2>
+
+        <div class="row justify-content-center g-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="{{ route('absentees.all') }}">
+                    <div class="card text-white bg-primary h-100 text-center">
+                        <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
+                            style="height: 100px;">
+                            <i class="fa-solid fa-user-minus fa-3x text-light"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Mark Absentees</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="{{ route('absentees.all') }}">
+                    <div class="card text-white bg-success h-100 text-center">
+                        <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
+                            style="height: 100px;">
+                            <i class="fa-solid fa-language fa-3x text-light"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Change Medium</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="{{ route('absentees.all') }}">
+                    <div class="card text-dark bg-warning h-100 text-center">
+                        <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
+                            style="height: 100px;">
+                            <i class="fa-solid fa-building-user fa-3x text-light"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Change Center</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="{{ route('absentees.all') }}">
+                    <div class="card text-white bg-danger h-100 text-center">
+                    <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
+                        style="height: 100px;">
+                        <i class="fa-solid fa-comment fa-3x text-light"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Special Notes</h5>
+                    </div>
                 </div>
-                <div class="stat-cards-info">
-                    <p class="stat-cards-info__num">{{ $exam_data }}</p>
-                    <p class="stat-cards-info__title">Re-correction Applied</p>
-                    <p class="stat-cards-info__progress">
-                        {{--  <span class="stat-cards-info__profit success">
+                </a>
+            </div>
+        </div>
+
+        <br>
+        <h2 class="main-title">Dashboard</h2>
+        <div class="row stat-cards">
+            <div class="col-md-6 col-xl-3">
+                <article class="stat-cards-item">
+                    <div class="stat-cards-icon primary">
+                        <i data-feather="bar-chart-2" aria-hidden="true"></i>
+                    </div>
+                    <div class="stat-cards-info">
+                        <p class="stat-cards-info__num">{{ $exam_data }}</p>
+                        <p class="stat-cards-info__title">Today Absentees</p>
+                        <p class="stat-cards-info__progress">
+                            {{--  <span class="stat-cards-info__profit success">
                             <i data-feather="trending-up" aria-hidden="true"></i>4.07%
                         </span>
                         Last month  --}}
-                    </p>
-                </div>
-            </article>
-        </div>
-        <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
-                <div class="stat-cards-icon warning">
-                    <i data-feather="file" aria-hidden="true"></i>
-                </div>
-                <div class="stat-cards-info">
-                    <p class="stat-cards-info__num">{{ $exam }}</p>
-                    <p class="stat-cards-info__title">Total Entered</p>
-                    <p class="stat-cards-info__progress">
-                        {{--  <span class="stat-cards-info__profit success">
+                        </p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <article class="stat-cards-item">
+                    <div class="stat-cards-icon warning">
+                        <i data-feather="file" aria-hidden="true"></i>
+                    </div>
+                    <div class="stat-cards-info">
+                        <p class="stat-cards-info__num">{{ $exam }}</p>
+                        <p class="stat-cards-info__title">Today Center Changes</p>
+                        <p class="stat-cards-info__progress">
+                            {{--  <span class="stat-cards-info__profit success">
                             <i data-feather="trending-up" aria-hidden="true"></i>0.24%
                         </span>
                         Last month  --}}
-                    </p>
-                </div>
-            </article>
-        </div>
-        <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
-                <div class="stat-cards-icon purple">
-                    <i data-feather="file" aria-hidden="true"></i>
-                </div>
-                <div class="stat-cards-info">
-                    <p class="stat-cards-info__num">{{ $today }}</p>
-                    <p class="stat-cards-info__title">Today</p>
-                    <p class="stat-cards-info__progress">
-                        {{--  <span class="stat-cards-info__profit danger">
+                        </p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <article class="stat-cards-item">
+                    <div class="stat-cards-icon purple">
+                        <i data-feather="file" aria-hidden="true"></i>
+                    </div>
+                    <div class="stat-cards-info">
+                        <p class="stat-cards-info__num">{{ $today }}</p>
+                        <p class="stat-cards-info__title">Today Medium Changes</p>
+                        <p class="stat-cards-info__progress">
+                            {{--  <span class="stat-cards-info__profit danger">
                             <i data-feather="trending-down" aria-hidden="true"></i>1.64%
                         </span>
                         Last month  --}}
-                    </p>
-                </div>
-            </article>
-        </div>
-        <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
-                <div class="stat-cards-icon success">
-                    <i data-feather="feather" aria-hidden="true"></i>
-                </div>
-                <div class="stat-cards-info">
-                    <p class="stat-cards-info__num">{{ $users }}</p>
-                    <p class="stat-cards-info__title">Total users</p>
-                    <p class="stat-cards-info__progress">
-                        {{--  <span class="stat-cards-info__profit warning">
+                        </p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <article class="stat-cards-item">
+                    <div class="stat-cards-icon success">
+                        <i data-feather="feather" aria-hidden="true"></i>
+                    </div>
+                    <div class="stat-cards-info">
+                        <p class="stat-cards-info__num">{{ $users }}</p>
+                        <p class="stat-cards-info__title">Comments</p>
+                        <p class="stat-cards-info__progress">
+                            {{--  <span class="stat-cards-info__profit warning">
                             <i data-feather="trending-up" aria-hidden="true"></i>0.00%
                         </span>
                         Last month  --}}
-                    </p>
-                </div>
-            </article>
+                        </p>
+                    </div>
+                </article>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        {{--  <div class="col-lg-9">
+        <div class="row">
+            {{--  <div class="col-lg-9">
             <div class="chart">
                 <canvas id="myChart" aria-label="Site statistics" role="img"></canvas>
             </div>
@@ -434,6 +495,6 @@
                 </ul>
             </article>
         </div>  --}}
+        </div>
     </div>
-</div>
 @endsection
