@@ -18,69 +18,95 @@
         </div>
     </div>
 
-    <div class="card mt-3 shadow-sm border-0 rounded-3">
-        <div class="card-body">
-            <div class="row gy-4">
-                <!-- Left Form Section -->
-                <div class="col-lg-5 col-md-6 col-12">
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show py-2">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    @endif
-
-                    <form action="#" method="POST">
-                        @csrf
-
-                        <div class="mb-3">
-                            <label class="form-label mb-1">Date <span class="text-danger">*</span></label>
-                            <input class="form-control form-control-sm" type="date" name="date"
-                                   value="{{ old('date', \Carbon\Carbon::now()->format('Y-m-d')) }}">
-                            @error('date') <small class="text-danger">{{ $message }}</small> @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label mb-1">Subject Code <span class="text-danger">*</span></label>
-                            <input class="form-control form-control-sm" type="text" name="subject_code"
-                                   value="{{ old('subject_code') }}">
-                            @error('subject_code') <small class="text-danger">{{ $message }}</small> @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label mb-1">Paper Code <span class="text-danger">*</span></label>
-                            <input class="form-control form-control-sm" type="text" name="paper_code"
-                                   value="{{ old('paper_code') }}">
-                            @error('paper_code') <small class="text-danger">{{ $message }}</small> @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label mb-1">Index <span class="text-danger">*</span></label>
-                            <input class="form-control form-control-sm" type="text" name="index"
-                                   value="{{ old('index') }}">
-                            @error('index') <small class="text-danger">{{ $message }}</small> @enderror
-                        </div>
-
-                        <div class="d-flex flex-wrap gap-2">
-                            {{-- @can('create_delete_index') --}}
-                            <button type="submit" class="btn btn-primary btn-sm px-3">Submit</button>
-                            {{-- @endcan --}}
-                            <button type="reset" class="btn btn-outline-secondary btn-sm px-3">Clear</button>
-                        </div>
-                    </form>
-                </div>
-
-                {{--  <!-- Right Section (Empty or Future Use) -->  --}}
-                <div class="col-lg-7 col-md-6 col-12">
-                    <div class="text-center text-muted small mt-4 mt-md-0">
-                        <!-- Placeholder for data or charts -->
-                        <i class="fa-solid fa-clipboard-list fa-2x mb-2"></i>
-                        <p>No additional data yet.</p>
+  <div class="card mt-3 shadow-sm border-0 rounded-3">
+    <div class="card-body">
+        <div class="row gy-4">
+            <!-- Left Form Section -->
+            <div class="col-lg-5 col-md-6 col-12">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show py-2">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
+                @endif
+
+                <form action="#" method="POST">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label class="form-label mb-1">Date <span class="text-danger">*</span></label>
+                        <input class="form-control form-control-sm" type="date" name="date"
+                               value="{{ old('date', \Carbon\Carbon::now()->format('Y-m-d')) }}">
+                        @error('date') <small class="text-danger">{{ $message }}</small> @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label mb-1">Session <span class="text-danger">*</span></label>
+                        <select class="form-select form-select-sm" name="session" required>
+                            <option value="" disabled selected>Select Session</option>
+                            <option value="Morning" {{ old('session') == 'Morning' ? 'selected' : '' }}>Morning</option>
+                            <option value="Afternoon" {{ old('session') == 'Afternoon' ? 'selected' : '' }}>Afternoon</option>
+                            <option value="Evening" {{ old('session') == 'Evening' ? 'selected' : '' }}>Evening</option>
+                        </select>
+                        @error('session') <small class="text-danger">{{ $message }}</small> @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label mb-1">Subject Code <span class="text-danger">*</span></label>
+                        <input class="form-control form-control-sm" type="text" name="subject_code"
+                               value="{{ old('subject_code') }}">
+                        @error('subject_code') <small class="text-danger">{{ $message }}</small> @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label mb-1">Paper Code <span class="text-danger">*</span></label>
+                        <input class="form-control form-control-sm" type="text" name="paper_code"
+                               value="{{ old('paper_code') }}">
+                        @error('paper_code') <small class="text-danger">{{ $message }}</small> @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label mb-1">Index <span class="text-danger">*</span></label>
+                        <input class="form-control form-control-sm" type="text" name="index"
+                               value="{{ old('index') }}">
+                        @error('index') <small class="text-danger">{{ $message }}</small> @enderror
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="submit" class="btn btn-primary btn-sm px-3">Submit</button>
+                        <button type="reset" class="btn btn-outline-secondary btn-sm px-3">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Section -->
+            <div class="col-lg-7 col-md-6 col-12">
+                <div class="text-center text-muted small mt-4 mt-md-0">
+                    <article class="stat-cards-item mx-5 mt-5" style="border:1px solid">
+                        <div class="stat-cards-icon primary">
+                           <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="stat-cards-primary">
+                            <p class="stat-cards-info__num">150</p>
+                            <p class="stat-cards-info__title">Total Applicants for subject - General English</p>
+                        </div>
+                    </article>
+
+                    <article class="stat-cards-item mt-3 mx-5" style="border:1px solid">
+                        <div class="stat-cards-icon success">
+                            <i class="fa-solid fa-user-minus"></i>
+                        </div>
+                        <div class="stat-cards-success">
+                            <p class="stat-cards-info__num">2</p>
+                            <p class="stat-cards-info__title">Absentees for subject - General English</p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Exam Table -->
     <div class="card mt-4 shadow-sm border-0 rounded-3">

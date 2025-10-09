@@ -41,16 +41,80 @@
     transform: scale(1.15);
   }
 
-    .page-center {
-        background-image: url(../assets/img/ex.jpg);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+.page-right {
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(assets/img/login1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+.login-container {
+    display: flex;
+    justify-content: space-between; /* Left and right columns */
+    align-items: center;
+    max-width: 900px;              /* Adjust as needed */
+    width: 100%;
+    gap: 50px;                     /* Space between columns */
+}
+
+.login-left {
+    flex: 1;
+    text-align: left;
+    color: #fff;                   /* Optional: make text visible on image */
+}
+
+.sign-up__title {
+    color: #fff;
+    font-weight: 600;
+    font-size: 2rem;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+}
+
+.sign-up__subtitle {
+    color: #dddadaff;
+    font-size: 1.2rem;
+    font-weight: 200;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+}
+
+.login-right {
+    flex: 1;
+    max-width: 400px;
+}
+
+.sign-up {
+    margin-top: 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
     }
 
-    .sign-up {
-        align-content: left;
+    .login-left, .login-right {
+        flex: unset;
+        width: 100%;
+        text-align: center; /* optional for mobile */
     }
+}
+
+
+
+@media (max-width: 576px) {
+    .navbar-brand span {
+        font-size: 0.9rem;   /* smaller text for phones */
+    }
+}
+
 
     {{--  article {
         position: relative;

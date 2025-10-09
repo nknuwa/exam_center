@@ -7,10 +7,14 @@
         </a>
 
         {{-- Toggler (hamburger icon) --}}
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+        <button class="navbar-toggler border-0 ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
             aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        {{--  <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>  --}}
 
         {{-- Navbar content --}}
         <div class="collapse navbar-collapse" id="mainNavbar">
@@ -18,33 +22,37 @@
                 {{-- Home --}}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('home') }}">
-                        <i class="fa-solid fa-house me-1"></i> Home
+                        {{--  <i class="fa-solid fa-house me-1"></i>   --}}
+                        Home
                     </a>
                 </li>
 
                 {{-- Absentees --}}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('absentees.all') }}">
-                        <i class="fa-solid fa-building-columns me-1"></i> Absentees
+                        {{--  <i class="fa-solid fa-building-columns me-1"></i>   --}}
+                        Absentees
                     </a>
                 </li>
 
                {{-- Center Change --}}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#">
-                        <i class="fa-solid fa-building-columns me-1"></i> Center Change
+                        {{--  <i class="fa-solid fa-building-columns me-1"></i>   --}}
+                        Center Change
                     </a>
                 </li>
 
                 {{-- Medium Change --}}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#">
-                        <i class="fa-solid fa-language me-1"></i> Medium Change
+                        {{--  <i class="fa-solid fa-language me-1"></i>  --}}
+                         Medium Change
                     </a>
                 </li>
 
                 {{-- Profile / User Dropdown --}}
-                <li class="nav-item dropdown ms-lg-3">
+                <li class="nav-item">
                     <a class="nav-link dropdown-toggle d-flex align-items-center text-white" href="#"
                         id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-user-tie me-1"></i>
