@@ -43,7 +43,7 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 /* Home Route*/
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-/* subcategory Route*/
+/* absentees Route*/
 Route::prefix('absentees')->group(function () {
     Route::get('/', [AbsentController::class, 'index'])->name('absentees.all');
     Route::get('/create', [OlExamController::class, 'create'])->name('ol.create');
@@ -55,6 +55,11 @@ Route::prefix('absentees')->group(function () {
     Route::get('/exams/download/csv', [OlExamController::class, 'downloadAllCsv'])->name('exams.download.csv');
     Route::get('/exams/download/excel', [OlExamController::class, 'downloadAllExcel'])->name('exams.download.excel');
     Route::get('/exams/download/pdf', [OlExamController::class, 'downloadAllPdf'])->name('exams.download.pdf');
+
+});
+
+Route::prefix('medium')->group(function () {
+    Route::get('/', [MediumController::class, 'index'])->name('medium.all');
 
 });
 
