@@ -19,7 +19,7 @@
             </div>
 
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="{{ route('absentees.all') }}">
+                <a href="{{ route('medium.all') }}">
                     <div class="card text-white bg-success h-100 text-center">
                         <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
                             style="height: 100px;">
@@ -33,7 +33,7 @@
             </div>
 
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="{{ route('absentees.all') }}">
+                <a href="{{ route('center.all') }}">
                     <div class="card text-dark bg-warning h-100 text-center">
                         <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
                             style="height: 100px;">
@@ -47,7 +47,7 @@
             </div>
 
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="{{ route('absentees.all') }}">
+                <a href="{{ route('message.all') }}">
                     <div class="card text-white bg-danger h-100 text-center">
                     <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
                         style="height: 100px;">

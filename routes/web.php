@@ -8,6 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OlExamController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\MediumController;
+use App\Http\Controllers\CenterController;
+use App\Http\Controllers\CommentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +66,15 @@ Route::prefix('medium')->group(function () {
 
 });
 
+Route::prefix('center')->group(function () {
+    Route::get('/', [CenterController::class, 'index'])->name('center.all');
+
+});
+
+Route::prefix('message')->group(function () {
+    Route::get('/', [CommentsController::class, 'index'])->name('message.all');
+
+});
 /* user Route*/
 Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('users.all');

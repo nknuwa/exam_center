@@ -37,7 +37,7 @@
 
                {{-- Center Change --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">
+                    <a class="nav-link text-white" href="{{ route('center.all') }}">
                         {{--  <i class="fa-solid fa-building-columns me-1"></i>   --}}
                         Center Change
                     </a>
@@ -45,9 +45,17 @@
 
                 {{-- Medium Change --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">
+                    <a class="nav-link text-white" href="{{ route('medium.all') }}">
                         {{--  <i class="fa-solid fa-language me-1"></i>  --}}
                          Medium Change
+                    </a>
+                </li>
+
+                {{-- Message --}}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('message.all') }}">
+                        {{--  <i class="fa-solid fa-language me-1"></i>  --}}
+                         Messages
                     </a>
                 </li>
 

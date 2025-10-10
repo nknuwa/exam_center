@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MediumController extends Controller
+class CenterController extends Controller
 {
     public function index() {
-        return view('pages.medium.index');
+        return view('pages.center.index');
     }
 }

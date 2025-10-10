@@ -13,7 +13,7 @@
                     </li>
                     <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Exam Details</li>
                 </ol>
-                <h6 class="fw-bold mb-0 text-dark">Absent Candidate</h6>
+                <h6 class="fw-bold mb-0 text-dark">Change Medium</h6>
             </nav>
         </div>
     </div>
@@ -41,17 +41,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label mb-1">Session <span class="text-danger">*</span></label>
-                        <select class="form-select form-select-sm" name="session" required>
-                            <option value="" disabled selected>Select Session</option>
-                            <option value="Morning" {{ old('session') == 'Morning' ? 'selected' : '' }}>Morning</option>
-                            <option value="Afternoon" {{ old('session') == 'Afternoon' ? 'selected' : '' }}>Afternoon</option>
-                            <option value="Evening" {{ old('session') == 'Evening' ? 'selected' : '' }}>Evening</option>
-                        </select>
-                        @error('session') <small class="text-danger">{{ $message }}</small> @enderror
-                    </div>
-
-                    <div class="mb-3">
                         <label class="form-label mb-1">Subject Code <span class="text-danger">*</span></label>
                         <input class="form-control form-control-sm" type="text" name="subject_code"
                                value="{{ old('subject_code') }}">
@@ -70,6 +59,20 @@
                         <input class="form-control form-control-sm" type="text" name="index"
                                value="{{ old('index') }}">
                         @error('index') <small class="text-danger">{{ $message }}</small> @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label mb-1">Old Medium <span class="text-danger">*</span></label>
+                        <input class="form-control form-control-sm" type="text" name="o_medium"
+                               value="{{ old('o_medium') }}">
+                        @error('o_medium') <small class="text-danger">{{ $message }}</small> @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label mb-1">New Medium <span class="text-danger">*</span></label>
+                        <input class="form-control form-control-sm" type="text" name="n_medium"
+                               value="{{ old('n_medium') }}">
+                        @error('n_medium') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
 
                     <div class="d-flex flex-wrap gap-2">
@@ -94,11 +97,11 @@
 
                     <article class="stat-cards-item mt-3 mx-5" style="border:1px solid">
                         <div class="stat-cards-icon success">
-                            <i class="fa-solid fa-user-minus"></i>
+                            <i class="fa-solid fa-language me-1"></i>
                         </div>
                         <div class="stat-cards-success">
                             <p class="stat-cards-info__num">2</p>
-                            <p class="stat-cards-info__title">Absentees for subject - General English</p>
+                            <p class="stat-cards-info__title">Medium Changes</p>
                         </div>
                     </article>
                 </div>
