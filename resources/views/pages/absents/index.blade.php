@@ -32,7 +32,10 @@
 
                 <form action="#" method="POST">
                     @csrf
-
+                    <div class="mb-3">
+                        <input class="form-control form-control-sm" type="hidden" name="center_id"
+                               value="center_id">
+                    </div>
                     <div class="mb-3">
                         <label class="form-label mb-1">Date <span class="text-danger">*</span></label>
                         <input class="form-control form-control-sm" type="date" name="date"
