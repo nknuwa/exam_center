@@ -15,11 +15,13 @@ class CreateAbsentCandidatesTable extends Migration
     {
         Schema::create('absent_candidates', function (Blueprint $table) {
             $table->id();
+            $table->string('center_no');
             $table->date('date');
+            $table->string('session');
             $table->string('subject_code');
             $table->string('paper_code');
             $table->string('index_no');
-            $table->string('center_no');
+            
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

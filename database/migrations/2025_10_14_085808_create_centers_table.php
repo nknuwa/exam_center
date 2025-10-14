@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExamsTable extends Migration
+class CreateCentersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateExamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('exams', function (Blueprint $table) {
+        Schema::create('centers', function (Blueprint $table) {
             $table->id();
-            $table->integer('index_no');
+            $table->date('date');
+            $table->string('session');
             $table->string('center_no');
-            $table->string('subject_no');
+            $table->string('index_no');
+            $table->string('subject_code');
             $table->string('paper_code');
+            $table->string('medium_no');
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ class CreateExamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exams');
+        Schema::dropIfExists('centers');
     }
 }

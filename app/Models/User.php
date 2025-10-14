@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Centers;
+
 
 class User extends Authenticatable
 {
@@ -27,6 +29,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'center_id',
+        'status',
     ];
 
     /**
@@ -58,4 +62,10 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function center()
+    {
+        return $this->belongsTo(Centers::class);
+    }
+
 }

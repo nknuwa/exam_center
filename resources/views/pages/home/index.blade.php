@@ -70,7 +70,7 @@
                         <i data-feather="bar-chart-2" aria-hidden="true"></i>
                     </div>
                     <div class="stat-cards-info">
-                        <p class="stat-cards-info__num">{{ $exam_data }}</p>
+                        {{--  <p class="stat-cards-info__num">{{ $exam_data }}</p>  --}}
                         <p class="stat-cards-info__title">Today Absentees</p>
                         <p class="stat-cards-info__progress">
                             {{--  <span class="stat-cards-info__profit success">
@@ -87,7 +87,7 @@
                         <i data-feather="file" aria-hidden="true"></i>
                     </div>
                     <div class="stat-cards-info">
-                        <p class="stat-cards-info__num">{{ $exam }}</p>
+                        {{--  <p class="stat-cards-info__num">{{ $exam }}</p>  --}}
                         <p class="stat-cards-info__title">Today Center Changes</p>
                         <p class="stat-cards-info__progress">
                             {{--  <span class="stat-cards-info__profit success">
@@ -104,7 +104,7 @@
                         <i data-feather="file" aria-hidden="true"></i>
                     </div>
                     <div class="stat-cards-info">
-                        <p class="stat-cards-info__num">{{ $today }}</p>
+                        {{--  <p class="stat-cards-info__num">{{ $today }}</p>  --}}
                         <p class="stat-cards-info__title">Today Medium Changes</p>
                         <p class="stat-cards-info__progress">
                             {{--  <span class="stat-cards-info__profit danger">
@@ -121,7 +121,7 @@
                         <i data-feather="feather" aria-hidden="true"></i>
                     </div>
                     <div class="stat-cards-info">
-                        <p class="stat-cards-info__num">{{ $users }}</p>
+                        {{--  <p class="stat-cards-info__num">{{ $users }}</p>  --}}
                         <p class="stat-cards-info__title">Comments</p>
                         <p class="stat-cards-info__progress">
                             {{--  <span class="stat-cards-info__profit warning">
