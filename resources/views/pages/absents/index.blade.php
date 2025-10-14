@@ -16,6 +16,9 @@
                 <h6 class="fw-bold mb-0 text-dark">Absent Candidate</h6>
             </nav>
         </div>
+        <div class="col-md-4 float-end">
+            <button class="btn btn-danger float-end">Back</button>
+        </div>
     </div>
 
   <div class="card mt-3 shadow-sm border-0 rounded-3">
@@ -30,50 +33,42 @@
                     </div>
                 @endif
 
-                <form action="#" method="POST">
+                <form action="#" method="">
                     @csrf
-                    <div class="mb-3">
-                        <input class="form-control form-control-sm" type="hidden" name="center_id"
-                               value="center_id">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label mb-1">Date <span class="text-danger">*</span></label>
-                        <input class="form-control form-control-sm" type="date" name="date"
-                               value="{{ old('date', \Carbon\Carbon::now()->format('Y-m-d')) }}">
-                        @error('date') <small class="text-danger">{{ $message }}</small> @enderror
-                    </div>
+                   <div class="mb-3">
+    <label for="center_no" class="form-label">Center</label>
+    <select id="center_no" class="form-select form-select-sm">
+        <option value="">Select Center</option>
+        @foreach($centers as $center)
+            <option value="{{ $center->center_no }}">{{ $center->center_no }}</option>
+        @endforeach
+    </select>
+</div>
 
-                    <div class="mb-3">
-                        <label class="form-label mb-1">Session <span class="text-danger">*</span></label>
-                        <select class="form-select form-select-sm" name="session" required>
-                            <option value="" disabled selected>Select Session</option>
-                            <option value="Morning" {{ old('session') == 'Morning' ? 'selected' : '' }}>Morning</option>
-                            <option value="Afternoon" {{ old('session') == 'Afternoon' ? 'selected' : '' }}>Afternoon</option>
-                            <option value="Evening" {{ old('session') == 'Evening' ? 'selected' : '' }}>Evening</option>
-                        </select>
-                        @error('session') <small class="text-danger">{{ $message }}</small> @enderror
-                    </div>
+<div class="mb-3">
+    <label for="exam_date" class="form-label">Date *</label>
+    <input type="date" id="date" class="form-control form-control-sm">
+</div>
 
-                    <div class="mb-3">
-                        <label class="form-label mb-1">Subject Code <span class="text-danger">*</span></label>
-                        <input class="form-control form-control-sm" type="text" name="subject_code"
-                               value="{{ old('subject_code') }}">
-                        @error('subject_code') <small class="text-danger">{{ $message }}</small> @enderror
-                    </div>
+<div class="mb-3">
+    <label for="session" class="form-label">Session *</label>
+    <select id="session" class="form-select form-select-sm">
+        <option value="">Select Session</option>
+        <option value="MORNIN">Morning</option>
+        <option value="EVENIN">Evening</option>
+    </select>
+</div>
 
-                    <div class="mb-3">
-                        <label class="form-label mb-1">Paper Code <span class="text-danger">*</span></label>
-                        <input class="form-control form-control-sm" type="text" name="paper_code"
-                               value="{{ old('paper_code') }}">
-                        @error('paper_code') <small class="text-danger">{{ $message }}</small> @enderror
-                    </div>
+<div class="mb-3">
+    <label for="subject_code" class="form-label">Subject Code *</label>
+    <input type="text" id="subject_code" class="form-control form-control-sm" readonly>
+</div>
 
-                    <div class="mb-3">
-                        <label class="form-label mb-1">Index <span class="text-danger">*</span></label>
-                        <input class="form-control form-control-sm" type="text" name="index"
-                               value="{{ old('index') }}">
-                        @error('index') <small class="text-danger">{{ $message }}</small> @enderror
-                    </div>
+<div class="mb-3">
+    <label for="paper_code" class="form-label">Paper Code *</label>
+    <input type="text" id="paper_code" class="form-control form-control-sm" readonly>
+</div>
+
 
                     <div class="d-flex flex-wrap gap-2">
                         <button type="submit" class="btn btn-primary btn-sm px-3">Submit</button>

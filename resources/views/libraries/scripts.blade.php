@@ -26,187 +26,40 @@
 
 <script>
     $(document).ready(function() {
-        $('#index_no').focus();
+        $('#center_no, #date, #session').on('change', function() {
+            let center_no = $('#center_no').val();
+            let exam_date = $('#date').val();
+            let session = $('#session').val();
 
-        function fetchIndex(indexNo) {
-            if (!indexNo) return;
-
-            $.ajax({
-                url: "{{ route('get.exam.data', '') }}/" + indexNo,
-                type: "GET",
-                success: function(result) {
-                    if (result.found === false) {
-                        $('#center_no').val('');
-                        $('#subject_list').html('');
-                        $('#paper_list').html('');
-                        $('#index_error').removeClass('d-none').text(
-                            "Invalid index number");
-                        $('#index_no').addClass('is-invalid').focus().select();
-                    } else if (result.found === true && result.has_active === false) {
-                        $('#center_no').val(result.center_no || '');
-                        $('#subject_list').html('');
-                        $('#paper_list').html('');
-                        $('#index_error').removeClass('d-none').text(
-                            "All subjects for this Index No are already added.");
-                        $('#index_no').addClass('is-invalid').focus().select();
-                    } else {
-                        $('#index_error').addClass('d-none').text('');
-                        $('#index_no').removeClass('is-invalid');
-                        $('#center_no').val(result.center_no || '');
-
-                        let subjectsHtml = '';
-                        result.subjects.forEach(function(s) {
-                            subjectsHtml +=
-                                `<span class="badge bg-info m-1 subject-item" data-subject="${s.subject_no}">${s.subject_no}</span>`;
-                        });
-                        $('#subject_list').html(subjectsHtml);
-                        $('#paper_list').html('');
-                    }
-                },
-                error: function() {
-                    $('#center_no').val('');
-                    $('#subject_list').html('');
-                    $('#paper_list').html('');
-
-                    $('#index_error').removeClass('d-none').text("Invalid index number");
-                    $('#index_no').addClass('is-invalid').focus().select();
-                }
-            });
-        }
-
-        $('#index_no').on('blur', function() {
-            fetchIndex($(this).val().trim());
-        });
-
-        $('#index_no').on('keydown', function(e) {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                fetchIndex($(this).val().trim());
-            }
-        });
-
-        //subject badge is clicked
-        $(document).on('click', '.subject-item', function() {
-            let subjectNo = $(this).data('subject');
-            $('#subject_no').val(subjectNo).focus();
-            loadPapers(subjectNo);
-        });
-
-        //subject typed and enter
-        $('#subject_no').on('keydown', function(e) {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                let subjectNo = $(this).val();
-                let indexNo = $('#index_no').val();
-                if (!indexNo || !subjectNo) return;
-
+            if(center_no && exam_date && session) {
                 $.ajax({
-                    url: "{{ route('get.exam.data', '') }}/" + indexNo,
-                    type: "GET",
-                    success: function(result) {
-                        let subjectData = result.subjects.find(s => s.subject_no ==
-                            subjectNo);
-                        if (subjectData) {
-                            $('#subject_error').addClass('d-none').text('');
-                            $('#subject_no').removeClass('is-invalid');
-
-                            loadPapers(subjectNo);
-                            $('#paper_code').focus();
-                        } else {
-                            $('#paper_list').html('');
-                            $('#subject_error').removeClass('d-none').text(
-                                "Entered subject number is invalid");
-                            $('#subject_no').addClass('is-invalid').focus().select();
-                        }
+                    url: '{{ route("get.paper.details") }}',
+                    type: 'GET',
+                    data: {
+                        center_no: center_no,
+                        exam_date: exam_date,
+                        session: session
+                    },
+                    success: function(response) {
+                        console.log('AJAX Response:', response); // Debug
+                        $('#subject_code').val(response.subject_code || '');
+                        $('#paper_code').val(response.paper_code || '');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                        $('#subject_code').val('');
+                        $('#paper_code').val('');
                     }
                 });
+            } else {
+                // Clear fields if inputs are incomplete
+                $('#subject_code').val('');
+                $('#paper_code').val('');
             }
         });
-
-        //paper code type & enter
-        $('#paper_code').on('keydown', function(e) {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                let paperCode = $(this).val();
-                let subjectNo = $('#subject_no').val();
-                let indexNo = $('#index_no').val();
-                if (!indexNo || !subjectNo || !paperCode) return;
-
-                $.ajax({
-                    url: "{{ route('get.exam.data', '') }}/" + indexNo,
-                    type: "GET",
-                    success: function(result) {
-                        let subjectData = result.subjects.find(s => s.subject_no ==
-                            subjectNo);
-                        if (subjectData) {
-                            let validPaper = subjectData.papers.find(p => p == paperCode);
-                            if (validPaper) {
-                                $('#paper_error').addClass('d-none').text('');
-                                $('#paper_code').removeClass('is-invalid');
-
-                            } else {
-                                $('#paper_error').removeClass('d-none').text(
-                                    "Entered paper code is invalid");
-                                $('#paper_code').addClass('is-invalid').focus().select();
-                            }
-                        }
-                    }
-                });
-            }
-        });
-
-
-
-        //paper badge is clicked
-        $(document).on('click', '.paper-item', function() {
-            $('#paper_code').val($(this).data('paper')).removeClass('is-invalid');
-            $('#paper_error').addClass('d-none').text('');
-            $('#paper_code').focus();
-        });
-
-        //function load paper codes
-        function loadPapers(subjectNo) {
-            let indexNo = $('#index_no').val();
-            if (!indexNo) return;
-
-            $.ajax({
-                url: "{{ route('get.exam.data', '') }}/" + indexNo,
-                type: "GET",
-                success: function(result) {
-                    let subjectData = result.subjects.find(s => s.subject_no == subjectNo);
-                    if (subjectData) {
-                        let papersHtml = '';
-                        subjectData.papers.forEach(function(p) {
-                            papersHtml +=
-                                `<span class="badge bg-secondary m-1 paper-item" data-paper="${p}">${p}</span>`;
-
-                        });
-                        $('#paper_list').html(papersHtml);
-                    } else {
-                        $('paper_list').html('');
-                    }
-                }
-            });
-        }
-
-        //move to next input with enter
-        $('form').on('keydown', 'input', function(e) {
-            if (e.key === "Enter") {
-                e.preventDefault();
-
-                let inputs = $('form').find(':input:visible:not([disables])');
-                let idx = inputs.index(this);
-
-                if (idx === inputs.length - 1) {
-                    $('form').submit();
-                } else {
-                    inputs.eq(idx + 1).focus();
-                }
-            }
-        });
-
     });
 </script>
+
 
 {{--  <script>
     $(document).ready(function() {

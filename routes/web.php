@@ -49,9 +49,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 /* absentees Route*/
 Route::prefix('absentees')->group(function () {
     Route::get('/', [AbsentController::class, 'index'])->name('absentees.all');
-    Route::get('/create', [OlExamController::class, 'create'])->name('ol.create');
-    Route::get('/get-center-no/{index_no}', [OlExamController::class, 'getCenterNo'])->name('get.center.no');
-    Route::get('/get-exam-data/{index_no}', [OlExamController::class, 'getExamData'])->name('get.exam.data');
+    Route::get('/get-paper-details', [AbsentController::class, 'getPaperDetails'])->name('get.paper.details');
+
 
     Route::post('/store', [OlExamController::class, 'store'])->name('ol.store');
 
