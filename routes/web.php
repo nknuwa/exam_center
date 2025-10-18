@@ -52,7 +52,7 @@ Route::prefix('absentees')->group(function () {
     Route::get('/get-paper-details', [AbsentController::class, 'getPaperDetails'])->name('get.paper.details');
 
 
-    Route::post('/store', [OlExamController::class, 'store'])->name('ol.store');
+    Route::post('/store', [AbsentController::class, 'store'])->name('absentees.store');
 
     Route::get('/exams/download/csv', [OlExamController::class, 'downloadAllCsv'])->name('exams.download.csv');
     Route::get('/exams/download/excel', [OlExamController::class, 'downloadAllExcel'])->name('exams.download.excel');

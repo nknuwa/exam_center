@@ -21,89 +21,94 @@
         </div>
     </div>
 
-  <div class="card mt-3 shadow-sm border-0 rounded-3">
-    <div class="card-body">
-        <div class="row gy-4">
-            <!-- Left Form Section -->
-            <div class="col-lg-5 col-md-6 col-12">
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show py-2">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <div class="card mt-3 shadow-sm border-0 rounded-3">
+        <div class="card-body">
+            <div class="row gy-4">
+                <!-- Left Form Section -->
+                <div class="col-lg-5 col-md-6 col-12">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show py-2">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    @endif
+
+                    <form action="{{route('absentees.store')}}" method="POST">
+                        @csrf
+                    <div class="mb-3">
+                            <label for="center_no" class="form-label">Center</label>
+                            <select id="center_no" name="center_no" class="form-select form-select-sm">
+                                <option value="">Select Center</option>
+                                @foreach($centers as $center)
+                                    <option value="{{ $center->center_no }}">{{ $center->center_no }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exam_date" class="form-label">Date *</label>
+                            <input type="date" id="date" name="date" class="form-control form-control-sm">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="session" class="form-label">Session *</label>
+                            <select id="session" name="session" class="form-select form-select-sm">
+                                <option value="">Select Session</option>
+                                <option value="MORNING">Morning</option>
+                                <option value="EVENING">Evening</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="subject_code" class="form-label">Subject Code *</label>
+                            <input type="text" id="subject_code" name="subject_code" class="form-control form-control-sm" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="paper_code" class="form-label">Paper Code *</label>
+                            <input type="text" id="paper_code" name="paper_code" class="form-control form-control-sm" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="index_no" class="form-label">Index Number *</label>
+                            <input type="text" id="index_no" name="index_no" class="form-control form-control-sm">
+                        </div>
+
+
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="submit" class="btn btn-primary btn-md px-3">Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary btn-md px-3">Clear</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Section -->
+                <div class="col-lg-7 col-md-6 col-12">
+                    <div class="text-center text-muted small mt-4 mt-md-0">
+                        <article class="stat-cards-item mx-5 mt-5" style="border:1px solid">
+                            <div class="stat-cards-icon primary">
+                            <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div class="stat-cards-primary">
+                                <p class="stat-cards-info__num">150</p>
+                                <p class="stat-cards-info__title">Total Applicants for subject - General English</p>
+                            </div>
+                        </article>
+
+                        <article class="stat-cards-item mt-3 mx-5" style="border:1px solid">
+                            <div class="stat-cards-icon success">
+                                <i class="fa-solid fa-user-minus"></i>
+                            </div>
+                            <div class="stat-cards-success">
+                                <p class="stat-cards-info__num">2</p>
+                                <p class="stat-cards-info__title">Absentees for subject - General English</p>
+                            </div>
+                        </article>
                     </div>
-                @endif
-
-                <form action="#" method="">
-                    @csrf
-                   <div class="mb-3">
-    <label for="center_no" class="form-label">Center</label>
-    <select id="center_no" class="form-select form-select-sm">
-        <option value="">Select Center</option>
-        @foreach($centers as $center)
-            <option value="{{ $center->center_no }}">{{ $center->center_no }}</option>
-        @endforeach
-    </select>
-</div>
-
-<div class="mb-3">
-    <label for="exam_date" class="form-label">Date *</label>
-    <input type="date" id="date" class="form-control form-control-sm">
-</div>
-
-<div class="mb-3">
-    <label for="session" class="form-label">Session *</label>
-    <select id="session" class="form-select form-select-sm">
-        <option value="">Select Session</option>
-        <option value="MORNIN">Morning</option>
-        <option value="EVENIN">Evening</option>
-    </select>
-</div>
-
-<div class="mb-3">
-    <label for="subject_code" class="form-label">Subject Code *</label>
-    <input type="text" id="subject_code" class="form-control form-control-sm" readonly>
-</div>
-
-<div class="mb-3">
-    <label for="paper_code" class="form-label">Paper Code *</label>
-    <input type="text" id="paper_code" class="form-control form-control-sm" readonly>
-</div>
-
-
-                    <div class="d-flex flex-wrap gap-2">
-                        <button type="submit" class="btn btn-primary btn-sm px-3">Submit</button>
-                        <button type="reset" class="btn btn-outline-secondary btn-sm px-3">Clear</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Right Section -->
-            <div class="col-lg-7 col-md-6 col-12">
-                <div class="text-center text-muted small mt-4 mt-md-0">
-                    <article class="stat-cards-item mx-5 mt-5" style="border:1px solid">
-                        <div class="stat-cards-icon primary">
-                           <i class="fa-solid fa-users"></i>
-                        </div>
-                        <div class="stat-cards-primary">
-                            <p class="stat-cards-info__num">150</p>
-                            <p class="stat-cards-info__title">Total Applicants for subject - General English</p>
-                        </div>
-                    </article>
-
-                    <article class="stat-cards-item mt-3 mx-5" style="border:1px solid">
-                        <div class="stat-cards-icon success">
-                            <i class="fa-solid fa-user-minus"></i>
-                        </div>
-                        <div class="stat-cards-success">
-                            <p class="stat-cards-info__num">2</p>
-                            <p class="stat-cards-info__title">Absentees for subject - General English</p>
-                        </div>
-                    </article>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <!-- Exam Table -->
