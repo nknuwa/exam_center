@@ -10,13 +10,14 @@ class AbsentCandidates extends Model
     use HasFactory;
 
     protected $fillable = [
+        'center_no',
         'date',
+        'session',
         'subject_code',
         'paper_code',
         'index_no',
-        'center_no',
         'user_id',
     ];
 
-    
+
 }

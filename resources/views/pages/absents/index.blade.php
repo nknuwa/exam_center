@@ -35,11 +35,11 @@
 
                     <form action="{{route('absentees.store')}}" method="POST">
                         @csrf
-                    <div class="mb-3">
+                        <div class="mb-3">
                             <label for="center_no" class="form-label">Center</label>
                             <select id="center_no" name="center_no" class="form-select form-select-sm">
                                 <option value="">Select Center</option>
-                                @foreach($centers as $center)
+                                @foreach($exam_db as $center)
                                     <option value="{{ $center->center_no }}">{{ $center->center_no }}</option>
                                 @endforeach
                             </select>
@@ -47,15 +47,16 @@
 
                         <div class="mb-3">
                             <label for="exam_date" class="form-label">Date *</label>
-                            <input type="date" id="date" name="date" class="form-control form-control-sm">
+                           <input type="text" name="date" id="date" class="form-control form-control-sm" placeholder="Select Date" autocomplete="off">
+
                         </div>
 
                         <div class="mb-3">
                             <label for="session" class="form-label">Session *</label>
                             <select id="session" name="session" class="form-select form-select-sm">
                                 <option value="">Select Session</option>
-                                <option value="MORNING">Morning</option>
-                                <option value="EVENING">Evening</option>
+                                <option value="SESSION-I">SESSION-I</option>
+                                <option value="SESSION-II">SESSION-II</option>
                             </select>
                         </div>
 
@@ -72,6 +73,9 @@
                         <div class="mb-3">
                             <label for="index_no" class="form-label">Index Number *</label>
                             <input type="text" id="index_no" name="index_no" class="form-control form-control-sm">
+                            @error('index_no')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
                         </div>
 
 
@@ -118,25 +122,31 @@
                 <table id="examTable" class="table table-bordered table-striped table-sm align-middle mb-3">
                     <thead class="table-light">
                         <tr>
-                            <th>Index No</th>
                             <th>Center No</th>
+                            <th>Date</th>
+                            <th>Session</th>
                             <th>Subject No</th>
                             <th>Paper Code</th>
+                            <th>Index No</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @forelse($exams as $exam)
+                        @forelse($absentees as $absent)
                             <tr>
-                                <td>{{ $exam->index_no }}</td>
-                                <td>{{ $exam->center_no }}</td>
-                                <td>{{ $exam->subject_no }}</td>
-                                <td>{{ $exam->paper_code }}</td>
+                                <td>{{ $absent->center_no }}</td>
+                                <td>{{ $absent->date }}</td>
+                                <td>{{ $absent->session }}</td>
+                                <td>{{ $absent->subject_code }}</td>
+                                <td>{{ $absent->paper_code }}</td>
+                                <td>{{ $absent->index_no }}</td>
+
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="4" class="text-center text-muted">No Exams Found</td>
                             </tr>
-                        @endforelse --}}
+                        @endforelse
                     </tbody>
                 </table>
             </div>

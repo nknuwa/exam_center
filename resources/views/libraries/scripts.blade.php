@@ -15,6 +15,8 @@
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
 <!-- Chart library -->
 <script src="{{ asset('assets/plugins/chart.min.js') }}"></script>
 <!-- Icons library -->
@@ -59,6 +61,15 @@
         });
     });
 </script>
+
+<script>
+$('#date').datepicker({
+    format: 'yyyy-mm-dd',    // Laravel-friendly format
+    autoclose: true,
+    todayHighlight: true
+});
+</script>
+
 
 
 {{--  <script>

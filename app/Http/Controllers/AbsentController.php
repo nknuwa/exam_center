@@ -2,18 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\ExamDb;
 use App\Models\Centers;
-
+use Illuminate\Http\Request;
+use App\Models\AbsentCandidates;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AbsentController extends Controller
 {
-    public function index() {
-        $response['centers'] = Centers::select('center_no')->distinct()->get();
-        return view('pages.absents.index')->with($response);;
+    /**
+     * Show Absentees index page
+     */
+    public function index()
+    {
+        $response['exam_db'] = ExamDb::select('center_no')->distinct()->get();
+        $response['absentees'] = AbsentCandidates::where('user_id', Auth::id())->get();
+        return view('pages.absents.index')->with($response);
     }
 
+    /**
+     * Fetch subject and paper details for given center/date/session
+     */
     public function getPaperDetails(Request $request)
     {
         try {
@@ -21,64 +33,77 @@ class AbsentController extends Controller
             $exam_date = $request->exam_date;
             $session_input = strtoupper(trim($request->session));
 
-            // Auto-correct session
-            $valid_sessions = [
-                'MORNING' => ['MORNIN', 'MORNING'],
-                'AFTERNOON' => ['AFTERNON', 'AFTERNOON']
-            ];
+            // Normalize date (handle dd/mm/yyyy or yyyy-mm-dd)
+            $exam_date = date('Y-m-d', strtotime(str_replace('/', '-', $exam_date)));
 
-            $session = $session_input;
-            foreach ($valid_sessions as $key => $aliases) {
-                if (in_array($session_input, $aliases)) {
-                    $session = $key;
-                    break;
-                }
+            // Validate session input
+            $valid_sessions = ['SESSION-I', 'SESSION-II'];
+            if (!in_array($session_input, $valid_sessions)) {
+                return response()->json(['subject_code' => '', 'paper_code' => ''], 422);
             }
 
-            $data = DB::table('centers')
-                ->where('center_no', $center_no)
+            // Fetch data from correct table
+            $data = ExamDb::where('center_no', $center_no)
                 ->whereDate('date', $exam_date)
-                ->where('session', $session)
+                ->where('session', $session_input)
                 ->select('subject_code', 'paper_code')
                 ->first();
 
             return response()->json($data ?? ['subject_code' => '', 'paper_code' => '']);
         } catch (\Exception $e) {
-            // Log error for debugging
-            \Log::error('getPaperDetails Error: '.$e->getMessage(), [
+            Log::error('getPaperDetails Error: ' . $e->getMessage(), [
                 'request' => $request->all()
             ]);
             return response()->json(['subject_code' => '', 'paper_code' => ''], 500);
         }
     }
 
+    /**
+     * Store absent candidate record
+     */
     public function store(Request $request)
     {
-        //dd($request);
+        // Validate form input
         $request->validate([
-            'center_no' => 'required',
-            'date' => 'required|date',
-            'session' => 'required',
-            'subject_no' => 'required',
-            'paper_code' => [
-                'required',
-            ],
-            'index_no'   => 'required|digits:8',
+            'center_no'     => 'required',
+            'date'          => 'required|date',
+            'session'       => 'required',
+            'subject_code'  => 'required',
+            'paper_code'    => 'required',
+            'index_no'      => 'required',
         ]);
 
+        $candidateExists = ExamDb::where('center_no', $request->center_no)
+        ->whereDate('date', $request->date)
+        ->where('session', strtoupper($request->session))
+        ->where('subject_code', $request->subject_code)
+        ->where('paper_code', $request->paper_code)
+        ->where('index_no', $request->index_no)
+        ->exists();
 
-        AbsentCandidates::create([
-            'center_no'  => $request->center_no,
-            'date' => $request->date,
-            'session' => $request->session,
-            'subject_no' => $request->subject_no,
-            'paper_code' => $request->paper_code,
-            'index_no'   => $request->index_no,
-
+    if (!$candidateExists) {
+        // Step 4: Throw validation error if index_no is invalid for that paper
+        throw ValidationException::withMessages([
+            'index_no' => 'This Index Number does not exist under the selected Subject and Paper.',
         ]);
-
-        session()->flash('success', 'Index added successfully!');
-        return redirect()->route('absentees.all');
     }
 
+        // Create absentee record
+        AbsentCandidates::create([
+            'center_no'    => $request->center_no,
+            'date'         => $request->date,
+            'session'      => $request->session,
+            'subject_code' => $request->subject_code,
+            'paper_code'   => $request->paper_code,
+            'index_no'     => $request->index_no,
+            'user_id'      => Auth::id(),
+        ]);
+
+        // Optional debug check
+        // dd($absentees);
+
+        return redirect()
+            ->route('absentees.all')
+            ->with('success', 'Absent candidate added successfully.');
+    }
 }
