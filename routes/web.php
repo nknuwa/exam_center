@@ -62,6 +62,12 @@ Route::prefix('absentees')->group(function () {
 
 Route::prefix('medium')->group(function () {
     Route::get('/', [MediumController::class, 'index'])->name('medium.all');
+    Route::get('/get-paper-details', [MediumController::class, 'getPaperDetails'])->name('get.paper_medium.details');
+Route::get('/get-medium', [MediumController::class, 'getMedium'])->name('get.medium');
+    Route::post('/store', [MediumController::class, 'store'])->name('medium.store');
+
+
+
 
 });
 

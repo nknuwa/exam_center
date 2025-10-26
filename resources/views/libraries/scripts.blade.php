@@ -38,7 +38,7 @@ $(document).ready(function() {
 });
 </script>
 
-{{-- get paper detail --}}
+{{-- get paper detail absentees --}}
 <script>
 $(document).ready(function() {
     $('#date, #session').on('change', function() {
@@ -107,6 +107,77 @@ $(document).ready(function() {
         });
     });
 </script>  --}}
+
+{{-- get paper details medium --}}
+<script>
+$(document).ready(function() {
+
+    // Auto-fill Subject & Paper Codes
+    $('#center_no, #date, #session').on('change', function() {
+        let center_no = $('#center_no').val();
+        let exam_date = $('#date').val();
+        let session = $('#session').val();
+
+        if (center_no && exam_date && session) {
+            $.ajax({
+                url: '{{ route("get.paper_medium.details") }}',
+                type: 'GET',
+                data: {
+                    center_no: center_no,
+                    exam_date: exam_date,
+                    session: session
+                },
+                success: function(response) {
+                    $('#subject_code').val(response.subject_code || '');
+                    $('#paper_code').val(response.paper_code || '');
+                },
+                error: function() {
+                    $('#subject_code').val('');
+                    $('#paper_code').val('');
+                }
+            });
+        }
+    });
+
+    $(document).ready(function() {
+    // Trigger when index_no changes
+    $('#index_no').on('blur', function() {
+        let center_no   = $('#center_no').val();
+        let exam_date   = $('#date').val();
+        let session     = $('#session').val();
+        let subject_code = $('#subject_code').val();
+        let paper_code   = $('#paper_code').val();
+        let index_no     = $('#index_no').val();
+
+        if(center_no && exam_date && session && subject_code && paper_code && index_no) {
+            $.ajax({
+                url: '{{ route("get.medium") }}',
+                type: 'GET',
+                data: {
+                    center_no: center_no,
+                    exam_date: exam_date,
+                    session: session,
+                    subject_code: subject_code,
+                    paper_code: paper_code,
+                    index_no: index_no
+                },
+                success: function(response) {
+                    console.log('Medium Response:', response);
+                    $('#medium_no').val(response.medium_no || '');
+                },
+                error: function() {
+                    $('#medium_no').val('');
+                }
+            });
+        } else {
+            $('#medium_no').val('');
+        }
+    });
+});
+
+});
+</script>
+
 
 <script>
 $('#date').datepicker({
