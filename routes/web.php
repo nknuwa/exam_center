@@ -73,6 +73,9 @@ Route::get('/get-medium', [MediumController::class, 'getMedium'])->name('get.med
 
 Route::prefix('center')->group(function () {
     Route::get('/', [CenterController::class, 'index'])->name('center.all');
+    Route::get('/get-paper-details', [CenterController::class, 'getPaperDetails'])->name('get.paper_center.details');
+    Route::get('/get-center-details', [CenterController::class, 'getCenterDetails'])->name('get.center.details');
+
 
 });
 

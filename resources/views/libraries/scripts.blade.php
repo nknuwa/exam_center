@@ -29,47 +29,47 @@
 
 <!-- Initialize Select2 -->
 <script>
-$(document).ready(function() {
-    $('.select2').select2({
-        placeholder: "Select an option",
-        allowClear: true,
-        width: '100%'
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Select an option",
+            allowClear: true,
+            width: '100%'
+        });
     });
-});
 </script>
 
 {{-- get paper detail absentees --}}
 <script>
-$(document).ready(function() {
-    $('#date, #session').on('change', function() {
-        let exam_date = $('#date').val();
-        let session = $('#session').val();
+    $(document).ready(function() {
+        $('#date, #session').on('change', function() {
+            let exam_date = $('#date').val();
+            let session = $('#session').val();
 
-        if (exam_date && session) {
-            $.ajax({
-                url: '{{ route("get.paper.details") }}',
-                type: 'GET',
-                data: {
-                    exam_date: exam_date,
-                    session: session
-                },
-                success: function(response) {
-                    console.log('AJAX Response:', response);
-                    $('#subject_code').val(response.subject_code || '');
-                    $('#paper_code').val(response.paper_code || '');
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error:', error);
-                    $('#subject_code').val('');
-                    $('#paper_code').val('');
-                }
-            });
-        } else {
-            $('#subject_code').val('');
-            $('#paper_code').val('');
-        }
+            if (exam_date && session) {
+                $.ajax({
+                    url: '{{ route('get.paper.details') }}',
+                    type: 'GET',
+                    data: {
+                        exam_date: exam_date,
+                        session: session
+                    },
+                    success: function(response) {
+                        console.log('AJAX Response:', response);
+                        $('#subject_code').val(response.subject_code || '');
+                        $('#paper_code').val(response.paper_code || '');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                        $('#subject_code').val('');
+                        $('#paper_code').val('');
+                    }
+                });
+            } else {
+                $('#subject_code').val('');
+                $('#paper_code').val('');
+            }
+        });
     });
-});
 </script>
 
 {{--  <script>
@@ -110,81 +110,112 @@ $(document).ready(function() {
 
 {{-- get paper details medium --}}
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    // Auto-fill Subject & Paper Codes
-    $('#center_no, #date, #session').on('change', function() {
-        let center_no = $('#center_no').val();
+        // Auto-fill Subject & Paper Codes
+        $('#center_no, #date, #session').on('change', function() {
+            let center_no = $('#center_no').val();
+            let exam_date = $('#date').val();
+            let session = $('#session').val();
+
+            if (center_no && exam_date && session) {
+                $.ajax({
+                    url: '{{ route('get.paper_medium.details') }}',
+                    type: 'GET',
+                    data: {
+                        center_no: center_no,
+                        exam_date: exam_date,
+                        session: session
+                    },
+                    success: function(response) {
+                        $('#subject_code').val(response.subject_code || '');
+                        $('#paper_code').val(response.paper_code || '');
+                    },
+                    error: function() {
+                        $('#subject_code').val('');
+                        $('#paper_code').val('');
+                    }
+                });
+            }
+        });
+
+        $(document).ready(function() {
+            // Trigger when index_no changes
+            $('#index_no').on('blur', function() {
+                let center_no = $('#center_no').val();
+                let exam_date = $('#date').val();
+                let session = $('#session').val();
+                let subject_code = $('#subject_code').val();
+                let paper_code = $('#paper_code').val();
+                let index_no = $('#index_no').val();
+
+                if (center_no && exam_date && session && subject_code && paper_code &&
+                    index_no) {
+                    $.ajax({
+                        url: '{{ route('get.medium') }}',
+                        type: 'GET',
+                        data: {
+                            center_no: center_no,
+                            exam_date: exam_date,
+                            session: session,
+                            subject_code: subject_code,
+                            paper_code: paper_code,
+                            index_no: index_no
+                        },
+                        success: function(response) {
+                            console.log('Medium Response:', response);
+                            $('#medium_no').val(response.medium_no || '');
+                        },
+                        error: function() {
+                            $('#medium_no').val('');
+                        }
+                    });
+                } else {
+                    $('#medium_no').val('');
+                }
+            });
+        });
+
+    });
+</script>
+
+<script>
+$(document).ready(function() {
+    $('#date, #session').on('change', function() {
         let exam_date = $('#date').val();
         let session = $('#session').val();
 
-        if (center_no && exam_date && session) {
+        if(exam_date && session){
             $.ajax({
-                url: '{{ route("get.paper_medium.details") }}',
+                url: '{{ route("get.paper_center.details") }}',
                 type: 'GET',
-                data: {
-                    center_no: center_no,
-                    exam_date: exam_date,
-                    session: session
-                },
-                success: function(response) {
+                data: { date: exam_date, session: session },
+                success: function(response){
                     $('#subject_code').val(response.subject_code || '');
                     $('#paper_code').val(response.paper_code || '');
                 },
-                error: function() {
+                error: function(){
                     $('#subject_code').val('');
                     $('#paper_code').val('');
                 }
             });
-        }
-    });
-
-    $(document).ready(function() {
-    // Trigger when index_no changes
-    $('#index_no').on('blur', function() {
-        let center_no   = $('#center_no').val();
-        let exam_date   = $('#date').val();
-        let session     = $('#session').val();
-        let subject_code = $('#subject_code').val();
-        let paper_code   = $('#paper_code').val();
-        let index_no     = $('#index_no').val();
-
-        if(center_no && exam_date && session && subject_code && paper_code && index_no) {
-            $.ajax({
-                url: '{{ route("get.medium") }}',
-                type: 'GET',
-                data: {
-                    center_no: center_no,
-                    exam_date: exam_date,
-                    session: session,
-                    subject_code: subject_code,
-                    paper_code: paper_code,
-                    index_no: index_no
-                },
-                success: function(response) {
-                    console.log('Medium Response:', response);
-                    $('#medium_no').val(response.medium_no || '');
-                },
-                error: function() {
-                    $('#medium_no').val('');
-                }
-            });
         } else {
-            $('#medium_no').val('');
+            $('#subject_code').val('');
+            $('#paper_code').val('');
         }
     });
-});
-
 });
 </script>
 
 
+
+
 <script>
-$('#date').datepicker({
-    format: 'yyyy-mm-dd',    // Laravel-friendly format
-    autoclose: true,
-    todayHighlight: true
-});
+    $('#date').datepicker({
+        format: 'yyyy-mm-dd', // Laravel-friendly format
+        autoclose: true,
+        todayHighlight: true
+    });
 </script>
 
 
