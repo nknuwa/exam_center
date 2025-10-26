@@ -29,7 +29,11 @@ class AbsentController extends Controller
     public function getPaperDetails(Request $request)
     {
         try {
-            $center_no = trim($request->center_no);
+            $user = Auth::user(); // get logged-in user
+
+            // Use user's center_no directly (ignore the one from request)
+            $center_no = $user->center_no;
+
             $exam_date = $request->exam_date;
             $session_input = strtoupper(trim($request->session));
 
@@ -42,7 +46,7 @@ class AbsentController extends Controller
                 return response()->json(['subject_code' => '', 'paper_code' => ''], 422);
             }
 
-            // Fetch data from correct table
+            // Fetch data for that user's center only
             $data = ExamDb::where('center_no', $center_no)
                 ->whereDate('date', $exam_date)
                 ->where('session', $session_input)
@@ -57,6 +61,7 @@ class AbsentController extends Controller
             return response()->json(['subject_code' => '', 'paper_code' => ''], 500);
         }
     }
+
 
     /**
      * Store absent candidate record
@@ -74,19 +79,33 @@ class AbsentController extends Controller
         ]);
 
         $candidateExists = ExamDb::where('center_no', $request->center_no)
-        ->whereDate('date', $request->date)
-        ->where('session', strtoupper($request->session))
-        ->where('subject_code', $request->subject_code)
-        ->where('paper_code', $request->paper_code)
-        ->where('index_no', $request->index_no)
-        ->exists();
+            ->whereDate('date',  $request->date)
+            ->where('session', $request->session)
+            ->where('subject_code', $request->subject_code)
+            ->where('paper_code', $request->paper_code)
+            ->where('index_no', $request->index_no)
+            ->exists();
 
-    if (!$candidateExists) {
-        // Step 4: Throw validation error if index_no is invalid for that paper
-        throw ValidationException::withMessages([
-            'index_no' => 'This Index Number does not exist under the selected Subject and Paper.',
-        ]);
-    }
+        if (!$candidateExists) {
+            throw ValidationException::withMessages([
+                'index_no' => 'This Index Number does not exist under the selected Subject and Paper.',
+            ]);
+        }
+
+        // Check for duplicate absentee record
+        $duplicate = AbsentCandidates::where('center_no', $request->center_no)
+            ->whereDate('date',  $request->date)
+            ->where('session', $request->session)
+            ->where('subject_code', $request->subject_code)
+            ->where('paper_code', $request->paper_code)
+            ->where('index_no', $request->index_no)
+            ->exists();
+
+        if ($duplicate) {
+            throw ValidationException::withMessages([
+                'index_no' => 'This candidate has already been marked as absent for the selected paper.',
+            ]);
+        }
 
         // Create absentee record
         AbsentCandidates::create([

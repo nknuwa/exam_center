@@ -38,8 +38,41 @@ $(document).ready(function() {
 });
 </script>
 
-
+{{-- get paper detail --}}
 <script>
+$(document).ready(function() {
+    $('#date, #session').on('change', function() {
+        let exam_date = $('#date').val();
+        let session = $('#session').val();
+
+        if (exam_date && session) {
+            $.ajax({
+                url: '{{ route("get.paper.details") }}',
+                type: 'GET',
+                data: {
+                    exam_date: exam_date,
+                    session: session
+                },
+                success: function(response) {
+                    console.log('AJAX Response:', response);
+                    $('#subject_code').val(response.subject_code || '');
+                    $('#paper_code').val(response.paper_code || '');
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                    $('#subject_code').val('');
+                    $('#paper_code').val('');
+                }
+            });
+        } else {
+            $('#subject_code').val('');
+            $('#paper_code').val('');
+        }
+    });
+});
+</script>
+
+{{--  <script>
     $(document).ready(function() {
         $('#center_no, #date, #session').on('change', function() {
             let center_no = $('#center_no').val();
@@ -73,7 +106,7 @@ $(document).ready(function() {
             }
         });
     });
-</script>
+</script>  --}}
 
 <script>
 $('#date').datepicker({

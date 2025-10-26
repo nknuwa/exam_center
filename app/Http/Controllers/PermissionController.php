@@ -24,6 +24,6 @@ class PermissionController extends Controller
         ]);
 
         $response['alert-success'] = 'Permissions created successfully';
-                return view('pages.admin.permissions.index')->with($response);
+               return redirect()->route('permissions.all')->with($response);
     }
 }
