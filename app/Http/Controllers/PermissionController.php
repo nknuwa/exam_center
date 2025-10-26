@@ -8,8 +8,8 @@ use Spatie\Permission\Models\Permission;
 class PermissionController extends Controller
 {
     public function index() {
-        $response['permissions'] = Permission::all(); 
-        return view('pages.admin.permissions.index');
+        $response['permissions'] = Permission::all();
+        return view('pages.admin.permissions.index')->with($response);
     }
 
     public function store(Request $request){
@@ -24,6 +24,6 @@ class PermissionController extends Controller
         ]);
 
         $response['alert-success'] = 'Permissions created successfully';
-                return view('pages.admin.permissions')->with($response);
+                return view('pages.admin.permissions.index')->with($response);
     }
 }

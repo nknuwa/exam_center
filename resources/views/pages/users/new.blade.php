@@ -19,74 +19,102 @@
             </div>
             <div class="col-lg-2">
                 <a href="{{ route('users.all') }}"
-                class="btn btn-danger mb-0 ms-lg-auto me-lg-0 me-auto mt-lg-0 mt-2 float-end">Back</a>
+                    class="btn btn-danger mb-0 ms-lg-auto me-lg-0 me-auto mt-lg-0 mt-2 float-end">Back</a>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-8">
-            <div class="card mt-5 ml-7 mr-7">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col-8">
-                            <h4 class="mb-0">Create User</h4>
+                <div class="card mt-5 ml-7 mr-7">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h4 class="mb-0">Create User</h4>
+                            </div>
                         </div>
                     </div>
+                    <div class="card-body ">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{ route('users.store') }}" method="POST">
+                            @csrf
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="email" value="{{ old('email') }}" class="form-control"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Confirm Password</label>
+                                    <input type="password" name="password_confirmation" class="form-control" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Center</label>
+                                    <select name="center_no" class="form-control select2" required>
+                                        <option value="">-- Select Center --</option>
+                                        @foreach ($centers as $center)
+                                            <option value="{{ $center }}">{{ $center }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Role</label>
+                                    <select name="role_id" class="form-control" required>
+                                        <option value="">-- Select Role --</option>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}"
+                                                {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                                                {{ $role->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="text" name="phone_no" value="{{ old('phone_no') }}"
+                                        class="form-control" placeholder="+94123456789">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="1" {{ old('status', 1) == 1 ? 'selected' : '' }}>Active
+                                        </option>
+                                        <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Inactive</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary mt-2">Create User</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
                 </div>
-                <div class="card-body ">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <form class="form" method="POST" action="{{ route('users.store') }}">
-                        @csrf
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Name:</label>
-
-                            <div class="col-sm-8">
-                                 <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="name"
-                        value="{{ old('name') }}" required autofocus autocomplete="name">
-                            </div>
-                        </div>
-                        <div class="form-group row mt-2">
-                            <label class="col-sm-4 col-form-label">Email Address:<span class="text-danger">*</span></label>
-
-                            <div class="col-sm-8">
-                               <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email"
-                        value="{{ old('email') }}" required autocomplete="username">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mt-2">
-                            <label class="col-sm-4 col-form-label">Password:<span class="text-danger">*</span></label>
-
-                            <div class="col-sm-8">
-                                <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password"
-                        required autocomplete="new-password">
-
-                            </div>
-                        </div>
-                        <div class="form-group row mt-2">
-                            <label class="col-sm-4 col-form-label"> Confirm Password:<span
-                                    class="text-danger">*</span></label>
-
-                            <div class="col-sm-8">
-                               <input type="password" class="form-control" placeholder="Password" aria-label="Password"
-                        name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <button type="submit" class="btn btn-info btn-round float-end mt-3">Create</button>
-                        </div>
-                    </form>
-                </div>
-
             </div>
-        </div>
         </div>
     </div>
 

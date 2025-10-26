@@ -19,6 +19,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('center_no')->nullable();
+            $table->unsignedBigInteger('role_id')->nullable();
+
+            $table->string('phone_no', 30)->nullable();
+            $table->tinyInteger('status')->default(1); // 1 active, 0 inactive
+
+            $table->timestamp('phone_verified_at')->nullable();
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();

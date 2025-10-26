@@ -9,6 +9,8 @@ class ExamDb extends Model
 {
     use HasFactory;
 
+    protected $table = 'exam_dbs';
+
     protected $fillable = [
         'date',
         'session',

@@ -75,20 +75,20 @@
                                                                         {{ $user->email }}
                                                                     </td>
                                                                     <td>
-                                                                        {{--  @if (!empty($user->getRoleNames()))
-                                                    @foreach ($user->getRoleNames() as $rolename)
-                                                    <label class="badge bg-primary mx-1 rolename">{{ $rolename }}</label>
-
-                                                    @endforeach
-                                                    @endif  --}}
+                                                                        @if (!empty($user->getRoleNames()))
+                                                                            @foreach ($user->getRoleNames() as $rolename)
+                                                                                <label
+                                                                                    class="badge bg-primary mx-1 rolename">{{ $rolename }}</label>
+                                                                            @endforeach
+                                                                        @endif
                                                                     </td>
                                                                     <td class="text-center">
 
 
-                                                                        {{--  <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-info edit">
-                                                        <i class="fa-solid fa-pen-to-square"></i>
-                                                    </a>
-                                                    <a href="javascript:void(0)"
+                                                                        <a href="{{ route('users.edit', $user->id) }}"
+                                                                            class="btn btn-sm btn-info edit">
+                                                                        </a>
+                                                                        {{--  <a href="javascript:void(0)"
                                                         onclick="confirmDelete('{{ route('users.delete', $user->id) }}','Do you want to delete this user- {{ $user->name }}?')"
                                                         class="btn btn-sm btn-danger delete">
                                                         <i class="fa-solid fa-trash-can"></i>

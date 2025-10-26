@@ -129,8 +129,12 @@
                   <a href="{{ route('users.all') }}">Users</a>
                 </li>
                 <li>
-                  <a href="{{ route('permissions.all') }}">Permission</a>
+                  <a href="{{ route('permissions.all') }}">Assign Permission</a>
                 </li>
+                <li>
+                  <a href="{{ route('roles.all') }}">Assign Role</a>
+                </li>
+
               </ul>
             </li>
             {{--  <li>

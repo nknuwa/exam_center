@@ -21,21 +21,28 @@
     <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
     <div class="page-flex">
         <!-- ! Sidebar -->
-        {{--  @include('components.side')  --}}
+        @can('read_sidebar')
+            @include('components.side')
+        @endcan
         <div class="main-wrapper">
             <!-- ! Main nav -->
-            @include('components.nav')
+            @can('read_navbar')
+                @include('components.nav')
+            @endcan
+            @can('read_navbar_user')
+                @include('components.nav_user')
+            @endcan
             <!-- ! Main -->
             <main class="main users chart-page" id="skip-target">
-                 @yield('content')
+                @yield('content')
             </main>
             <!-- ! Footer -->
             @include('components.footer')
         </div>
     </div>
-     @stack('modals')
+    @stack('modals')
 
-   @include('libraries.scripts')
+    @include('libraries.scripts')
 </body>
 
 </html>
