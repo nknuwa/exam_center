@@ -45,6 +45,37 @@
                                 @enderror
                             </div>  --}}
 
+                             @php
+                                $user = Auth::user(); // get full user object, not just ID
+                            @endphp
+
+                            @if ($user->hasRole('super-admin'))
+                                {{-- Super Admin: show all centers --}}
+                                <div class="mb-3">
+                                    <label for="center_no" class="form-label">Center</label>
+                                    <select id="center_no" name="center_no" class="form-select form-select-sm select2">
+                                        <option value="">Select Center</option>
+                                        @foreach ($exam_db as $center)
+                                            <option value="{{ $center->center_no }}">{{ $center->center_no }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @else
+                                {{-- Normal User: show only assigned center --}}
+                                <div class="mb-3">
+                                    <label for="center_no" class="form-label">Center</label>
+                                    <select id="center_no" name="center_no" class="form-select form-select-sm select2"
+                                        readonly>
+                                        @if ($user->center_no)
+                                            <option value="{{ $user->center_no }}" selected>{{ $user->center_no }}
+                                            </option>
+                                        @else
+                                            <option value="">No Center Assigned</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            @endif
+
 
 
 

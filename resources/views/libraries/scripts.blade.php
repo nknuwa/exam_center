@@ -178,33 +178,38 @@
 
     });
 </script>
-
+{{-- fetch data in center --}}
 <script>
-$(document).ready(function() {
-    $('#date, #session').on('change', function() {
-        let exam_date = $('#date').val();
-        let session = $('#session').val();
+    $(document).ready(function() {
+        $('#date, #session').on('change', function() {
+            let exam_date = $('#date').val();
+            let session = $('#session').val();
 
-        if(exam_date && session){
-            $.ajax({
-                url: '{{ route("get.paper_center.details") }}',
-                type: 'GET',
-                data: { date: exam_date, session: session },
-                success: function(response){
-                    $('#subject_code').val(response.subject_code || '');
-                    $('#paper_code').val(response.paper_code || '');
-                },
-                error: function(){
-                    $('#subject_code').val('');
-                    $('#paper_code').val('');
-                }
-            });
-        } else {
-            $('#subject_code').val('');
-            $('#paper_code').val('');
-        }
+            if (exam_date && session) {
+                $.ajax({
+                    url: '{{ route('get.paper_center.details') }}',
+                    type: 'GET',
+                    data: {
+                        exam_date: exam_date,
+                        session: session
+                    },
+                    success: function(response) {
+                        console.log('AJAX Response:', response);
+                        $('#subject_code').val(response.subject_code || '');
+                        $('#paper_code').val(response.paper_code || '');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                        $('#subject_code').val('');
+                        $('#paper_code').val('');
+                    }
+                });
+            } else {
+                $('#subject_code').val('');
+                $('#paper_code').val('');
+            }
+        });
     });
-});
 </script>
 
 

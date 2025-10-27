@@ -23,13 +23,10 @@ class AbsentController extends Controller
         return view('pages.absents.index')->with($response);
     }
 
-    /**
-     * Fetch subject and paper details for given center/date/session
-     */
     public function getPaperDetails(Request $request)
     {
         try {
-            $user = Auth::user(); // get logged-in user
+            $user = Auth::user(); 
 
             // Use user's center_no directly (ignore the one from request)
             $center_no = $user->center_no;
