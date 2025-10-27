@@ -209,6 +209,34 @@
                 $('#paper_code').val('');
             }
         });
+
+        $('#index_no').on('blur', function() {
+            let index_no = $(this).val();
+
+            if (index_no) {
+                $.ajax({
+                    url: '{{ route('get.center.by.index') }}',
+                    type: 'GET',
+                    data: {
+                        index_no: index_no
+                    },
+                    success: function(response) {
+                        console.log('Center Response:', response);
+                        if (response.center_no) {
+                            $('#current_center_no').val(response.center_no);
+                        } else {
+                            $('#current_center_no').val('');
+                            alert('No center found for this index number.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Center Fetch Error:', error);
+                        $('#current_center_no').val('');
+                    }
+                });
+            }
+        });
+
     });
 </script>
 

@@ -51,4 +51,22 @@ class CenterController extends Controller
         }
     }
 
+    public function getCenterByIndex(Request $request)
+    {
+        $index_no = $request->index_no;
+
+        // Example: look up student or candidate record by index number
+        $candidate = ExamDb::where('index_no', $index_no)->first();
+
+        if ($candidate) {
+            return response()->json([
+                'center_no' => $candidate->center_no,
+            ]);
+        } else {
+            return response()->json([
+                'center_no' => null,
+                'message' => 'Index not found',
+            ], 404);
+        }
+    }
 }

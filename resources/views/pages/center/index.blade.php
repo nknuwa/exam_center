@@ -45,7 +45,7 @@
                                 @enderror
                             </div>  --}}
 
-                             @php
+                            @php
                                 $user = Auth::user(); // get full user object, not just ID
                             @endphp
 
@@ -114,21 +114,16 @@
 
                             <div class="mb-3">
                                 <label class="form-label mb-1">Index <span class="text-danger">*</span></label>
-                                <input class="form-control form-control-sm" type="text" name="index_no"
+                                <input class="form-control form-control-sm" type="text" name="index_no" id="index_no"
                                     value="{{ old('index_no') }}">
-                                @error('index_no')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label mb-1">New Center <span class="text-danger">*</span></label>
-                                <input class="form-control form-control-sm" type="text" name="center_no"
-                                    value="{{ old('center_no') }}">
-                                @error('center_no')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                                <label class="form-label mb-1">Current Center <span class="text-danger">*</span></label>
+                                <input class="form-control form-control-sm" type="text" name="current_center_no"
+                                    id="current_center_no" value="{{ old('center_no') }}">
                             </div>
+
 
                             @php
                                 $user = Auth::user(); // get full user object, not just ID
@@ -160,15 +155,6 @@
                                     </select>
                                 </div>
                             @endif
-
-                            <div class="mb-3">
-                                <label class="form-label mb-1">New Center <span class="text-danger">*</span></label>
-                                <input class="form-control form-control-sm" type="text" name="new_center_no"
-                                    value="{{ old('new_center_no') }}">
-                                @error('n_center')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
 
                             <div class="d-flex flex-wrap gap-2">
                                 <button type="submit" class="btn btn-primary btn-sm px-3">Submit</button>

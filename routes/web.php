@@ -57,31 +57,24 @@ Route::prefix('absentees')->group(function () {
     Route::get('/exams/download/csv', [OlExamController::class, 'downloadAllCsv'])->name('exams.download.csv');
     Route::get('/exams/download/excel', [OlExamController::class, 'downloadAllExcel'])->name('exams.download.excel');
     Route::get('/exams/download/pdf', [OlExamController::class, 'downloadAllPdf'])->name('exams.download.pdf');
-
 });
 
 Route::prefix('medium')->group(function () {
     Route::get('/', [MediumController::class, 'index'])->name('medium.all');
     Route::get('/get-paper-details', [MediumController::class, 'getPaperDetails'])->name('get.paper_medium.details');
-Route::get('/get-medium', [MediumController::class, 'getMedium'])->name('get.medium');
+    Route::get('/get-medium', [MediumController::class, 'getMedium'])->name('get.medium');
     Route::post('/store', [MediumController::class, 'store'])->name('medium.store');
-
-
-
-
 });
 
 Route::prefix('center')->group(function () {
     Route::get('/', [CenterController::class, 'index'])->name('center.all');
     Route::get('/get-paper-details', [CenterController::class, 'getPaperDetails'])->name('get.paper_center.details');
     Route::get('/get-center-details', [CenterController::class, 'getCenterDetails'])->name('get.center.details');
-
-
+    Route::get('/get-center-by-index', [CenterController::class, 'getCenterByIndex'])->name('get.center.by.index');
 });
 
 Route::prefix('message')->group(function () {
     Route::get('/', [CommentsController::class, 'index'])->name('message.all');
-
 });
 /* user Route*/
 Route::prefix('users')->group(function () {
