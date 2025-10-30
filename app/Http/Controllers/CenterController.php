@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CenterChange;
 use App\Models\ExamDb;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -68,5 +69,68 @@ class CenterController extends Controller
                 'message' => 'Index not found',
             ], 404);
         }
+    }
+
+    public function store(Request $request)
+    {
+        // Validate form input
+        $request->validate([
+            'date'          => 'required|date',
+            'session'       => 'required',
+            'subject_code'  => 'required',
+            'paper_code'    => 'required',
+            'index_no'      => 'required',
+            'center_no'     => 'required',
+            'new_center_no'     => 'required',
+        ]);
+
+        $centerExists = ExamDb::where('center_no', $request->center_no)
+            ->whereDate('date',  $request->date)
+            ->where('session', $request->session)
+            ->where('subject_code', $request->subject_code)
+            ->where('paper_code', $request->paper_code)
+            ->where('index_no', $request->index_no)
+            ->exists();
+
+        if (!$centerExists) {
+            throw ValidationException::withMessages([
+                'index_no' => 'This Index Number does not exist under the selected Subject and Paper.',
+            ]);
+        }
+
+        // Check for duplicate absentee record
+        $duplicate = CenterChange::whereDate('date',  $request->date)
+            ->where('session', $request->session)
+            ->where('subject_code', $request->subject_code)
+            ->where('paper_code', $request->paper_code)
+            ->where('index_no', $request->index_no)
+            ->where('center_no', $request->center_no)
+            ->where('new_center_no', $request->new_center_no)
+            ->exists();
+
+        if ($duplicate) {
+            throw ValidationException::withMessages([
+                'index_no' => 'This candidate has already been marked as absent for the selected paper.',
+            ]);
+        }
+
+        // Create absentee record
+        CenterChange::create([
+            'date'         => $request->date,
+            'session'      => $request->session,
+            'subject_code' => $request->subject_code,
+            'paper_code'   => $request->paper_code,
+            'index_no'     => $request->index_no,
+            'center_no'    => $request->center_no,
+            'new_center_no'    => $request->new_center_no,
+            'user_id'      => Auth::id(),
+        ]);
+
+        // Optional debug check
+        dd($request);
+
+        return redirect()
+            ->route('center.all')
+            ->with('success', 'Candidate Center change successfully.');
     }
 }

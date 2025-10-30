@@ -71,6 +71,8 @@ Route::prefix('center')->group(function () {
     Route::get('/get-paper-details', [CenterController::class, 'getPaperDetails'])->name('get.paper_center.details');
     Route::get('/get-center-details', [CenterController::class, 'getCenterDetails'])->name('get.center.details');
     Route::get('/get-center-by-index', [CenterController::class, 'getCenterByIndex'])->name('get.center.by.index');
+    Route::post('/store', [CenterController::class, 'store'])->name('centers.store');
+
 });
 
 Route::prefix('message')->group(function () {
