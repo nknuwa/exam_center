@@ -20,7 +20,7 @@ class CreateCenterChangesTable extends Migration
             $table->string('subject_code');
             $table->string('paper_code');
             $table->string('index_no');
-            $table->string('center_no');
+            $table->string('current_center_no');
             $table->string('new_center_no');
 
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');

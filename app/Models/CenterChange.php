@@ -15,7 +15,7 @@ class CenterChange extends Model
         'subject_code',
         'paper_code',
         'index_no',
-        'center_no',
+        'current_center_no',
         'new_center_no',
         'user_id',
     ];

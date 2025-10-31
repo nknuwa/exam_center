@@ -72,65 +72,54 @@ class CenterController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validate form input
-        $request->validate([
-            'date'          => 'required|date',
-            'session'       => 'required',
-            'subject_code'  => 'required',
-            'paper_code'    => 'required',
-            'index_no'      => 'required',
-            'center_no'     => 'required',
-            'new_center_no'     => 'required',
-        ]);
+{
+    $request->validate([
+        'date' => 'required|date',
+        'session' => 'required|string',
+        'subject_code' => 'required|string',
+        'paper_code' => 'required|string',
+        'index_no' => 'required|string',
+        'current_center_no' => 'required|string',
+        'new_center_no' => 'required|string',
+    ]);
 
-        $centerExists = ExamDb::where('center_no', $request->center_no)
-            ->whereDate('date',  $request->date)
-            ->where('session', $request->session)
-            ->where('subject_code', $request->subject_code)
-            ->where('paper_code', $request->paper_code)
-            ->where('index_no', $request->index_no)
-            ->exists();
+    // Ensure candidate exists
+    $exists = ExamDb::where('index_no', $request->index_no)
+        ->where('subject_code', $request->subject_code)
+        ->where('paper_code', $request->paper_code)
+        ->exists();
 
-        if (!$centerExists) {
-            throw ValidationException::withMessages([
-                'index_no' => 'This Index Number does not exist under the selected Subject and Paper.',
-            ]);
-        }
-
-        // Check for duplicate absentee record
-        $duplicate = CenterChange::whereDate('date',  $request->date)
-            ->where('session', $request->session)
-            ->where('subject_code', $request->subject_code)
-            ->where('paper_code', $request->paper_code)
-            ->where('index_no', $request->index_no)
-            ->where('center_no', $request->center_no)
-            ->where('new_center_no', $request->new_center_no)
-            ->exists();
-
-        if ($duplicate) {
-            throw ValidationException::withMessages([
-                'index_no' => 'This candidate has already been marked as absent for the selected paper.',
-            ]);
-        }
-
-        // Create absentee record
-        CenterChange::create([
-            'date'         => $request->date,
-            'session'      => $request->session,
-            'subject_code' => $request->subject_code,
-            'paper_code'   => $request->paper_code,
-            'index_no'     => $request->index_no,
-            'center_no'    => $request->center_no,
-            'new_center_no'    => $request->new_center_no,
-            'user_id'      => Auth::id(),
-        ]);
-
-        // Optional debug check
-        dd($request);
-
-        return redirect()
-            ->route('center.all')
-            ->with('success', 'Candidate Center change successfully.');
+    if (! $exists) {
+        return back()->withErrors(['index_no' => 'Index number not found for this paper.'])->withInput();
     }
+
+    // Prevent duplicate record
+    $duplicate = CenterChange::where([
+        'date' => $request->date,
+        'session' => $request->session,
+        'index_no' => $request->index_no,
+        'subject_code' => $request->subject_code,
+        'paper_code' => $request->paper_code,
+        'current_center_no' => $request->current_center_no,
+        'new_center_no' => $request->new_center_no,
+    ])->exists();
+
+    if ($duplicate) {
+        return back()->withErrors(['index_no' => 'This center change already exists.'])->withInput();
+    }
+
+    CenterChange::create([
+        'date' => $request->date,
+        'session' => $request->session,
+        'subject_code' => $request->subject_code,
+        'paper_code' => $request->paper_code,
+        'index_no' => $request->index_no,
+        'current_center_no' => $request->current_center_no,
+        'new_center_no' => $request->new_center_no,
+        'user_id' => Auth::id(),
+    ]);
+
+    return redirect()->route('center.all')->with('success', 'Center changed successfully!');
+}
+
 }
