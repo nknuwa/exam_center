@@ -93,8 +93,11 @@
 
                             <div class="mb-3">
                                 <label for="subject_code" class="form-label">Subject Code *</label>
-                                <input type="text" id="subject_code" name="subject_code"
-                                    class="form-control form-control-sm" readonly value="{{ old('subject_code') }}">
+                                <select id="subject_code" name="subject_code" class="form-control">
+                                    <option value="">Select Subject</option>
+                                </select>
+                                {{--  <input type="text" id="subject_code" name="subject_code"
+                                    class="form-control form-control-sm" readonly value="{{ old('subject_code') }}">  --}}
                                 @error('subject_code')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

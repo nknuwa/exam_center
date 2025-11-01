@@ -17,7 +17,7 @@
                 </nav>
             </div>
             <div class="col-md-4 float-end">
-                <button class="btn btn-danger float-end">Back</button>
+                <button class="btn btn-danger float-end" href="{{ route('home') }}">Back</button>
             </div>
         </div>
 
@@ -103,7 +103,8 @@
 
                             <div class="mb-3">
                                 <label class="form-label mb-1">Subject Code</label>
-                                <input id="subject_code" type="text" name="subject_code" class="form-control" readonly>
+                                
+                                {{--  <input id="subject_code" type="text" name="subject_code" class="form-control" readonly>  --}}
                             </div>
 
                             <div class="mb-3">
@@ -121,7 +122,7 @@
                             <div class="mb-3">
                                 <label class="form-label mb-1">Current Center <span class="text-danger">*</span></label>
                                 <input class="form-control form-control-sm" type="text" name="current_center_no"
-                                    id="current_center_no" value="{{ old('center_no') }}">
+                                    id="current_center_no" value="{{ old('center_no') }}" readonly>
                             </div>
 
 
@@ -133,7 +134,8 @@
                                 {{-- Super Admin: show all centers --}}
                                 <div class="mb-3">
                                     <label for="center_no" class="form-label">Center</label>
-                                    <select id="new_center_no" name="new_center_no" class="form-select form-select-sm select2">
+                                    <select id="new_center_no" name="new_center_no"
+                                        class="form-select form-select-sm select2">
                                         <option value="">Select Center</option>
                                         @foreach ($exam_db as $center)
                                             <option value="{{ $center->center_no }}">{{ $center->center_no }}</option>
@@ -144,8 +146,8 @@
                                 {{-- Normal User: show only assigned center --}}
                                 <div class="mb-3">
                                     <label for="center_no" class="form-label">Center</label>
-                                    <select id="new_center_no" name="new_center_no" class="form-select form-select-sm select2"
-                                        readonly>
+                                    <select id="new_center_no" name="new_center_no"
+                                        class="form-select form-select-sm select2" readonly>
                                         @if ($user->center_no)
                                             <option value="{{ $user->center_no }}" selected>{{ $user->center_no }}
                                             </option>
@@ -199,25 +201,31 @@
                     <table id="examTable" class="table table-bordered table-striped table-sm align-middle mb-3">
                         <thead class="table-light">
                             <tr>
-                                <th>Index No</th>
-                                <th>Center No</th>
+                                <th>Date</th>
+                                <th>Session</th>
                                 <th>Subject No</th>
                                 <th>Paper Code</th>
+                                <th>Index No</th>
+                                <th>Current Center</th>
+                                <th>New Center</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @forelse($exams as $exam)
-                            <tr>
-                                <td>{{ $exam->index_no }}</td>
-                                <td>{{ $exam->center_no }}</td>
-                                <td>{{ $exam->subject_no }}</td>
-                                <td>{{ $exam->paper_code }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="text-center text-muted">No Exams Found</td>
-                            </tr>
-                        @endforelse --}}
+                            @forelse($centers as $center)
+                                <tr>
+                                    <td>{{ $center->date }}</td>
+                                    <td>{{ $center->session }}</td>
+                                    <td>{{ $center->subject_code }}</td>
+                                    <td>{{ $center->paper_code }}</td>
+                                    <td>{{ $center->index_no }}</td>
+                                    <td>{{ $center->current_center_no }}</td>
+                                    <td>{{ $center->new_center_no }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">No center changes Found</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

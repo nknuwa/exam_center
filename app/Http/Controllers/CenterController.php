@@ -13,7 +13,8 @@ class CenterController extends Controller
 {
     public function index()
     {
-        return view('pages.center.index');
+        $response['centers'] = CenterChange::where('user_id', Auth::id())->get();
+        return view('pages.center.index')->with($response);
     }
 
     public function getPaperDetails(Request $request)
