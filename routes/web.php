@@ -77,6 +77,10 @@ Route::prefix('center')->group(function () {
 
 Route::prefix('message')->group(function () {
     Route::get('/', [CommentsController::class, 'index'])->name('message.all');
+    Route::get('/get-paper-details', [CommentsController::class, 'getPaperDetails'])->name('get.paper_note.details');
+    Route::post('/store', [CommentsController::class, 'store'])->name('message.store');
+
+
 });
 /* user Route*/
 Route::prefix('users')->group(function () {
