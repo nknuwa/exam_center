@@ -32,6 +32,15 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                         @endif
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <form action="{{ route('medium.store') }}" method="POST">
                             @csrf
@@ -100,8 +109,11 @@
 
                             <div class="mb-3">
                                 <label class="form-label mb-1">Subject Code <span class="text-danger">*</span></label>
-                                <input class="form-control form-control-sm" type="text" name="subject_code"
-                                    id="subject_code" value="{{ old('subject_code') }}" readonly>
+                                <select id="subject_code" name="subject_code" class="form-control">
+                                    <option value="">Select Subject</option>
+                                </select>
+                                {{--  <input class="form-control form-control-sm" type="text" name="subject_code"
+                                    id="subject_code" value="{{ old('subject_code') }}" readonly>  --}}
                                 @error('subject_code')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -120,6 +132,7 @@
                                 <label class="form-label mb-1">Index <span class="text-danger">*</span></label>
                                 <input class="form-control form-control-sm" type="text" name="index_no"
                                     value="{{ old('index') }}" id="index_no">
+                                <small id="index-error" class="text-danger"></small>
                                 @error('index')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -184,7 +197,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="examTable" class="table table-bordered table-striped table-sm align-middle mb-3">
-                         <thead class="table-light">
+                        <thead class="table-light">
                             <tr>
                                 <th>Center No</th>
                                 <th>Date</th>

@@ -134,147 +134,181 @@
 <script>
     $(document).ready(function() {
 
-        // Auto-fill Subject & Paper Codes
-        $('#center_no, #date, #session').on('change', function() {
-            let center_no = $('#center_no').val();
+        // When date or session changes
+        $('#date, #session').on('change', function() {
             let exam_date = $('#date').val();
             let session = $('#session').val();
 
-            if (center_no && exam_date && session) {
+            if (exam_date && session) {
                 $.ajax({
                     url: '{{ route('get.paper_medium.details') }}',
                     type: 'GET',
                     data: {
-                        center_no: center_no,
-                        exam_date: exam_date,
-                        session: session
+                        exam_date,
+                        session
                     },
                     success: function(response) {
-                        $('#subject_code').val(response.subject_code || '');
-                        $('#paper_code').val(response.paper_code || '');
+                        let subjectSelect = $('#subject_code');
+                        subjectSelect.empty().append(
+                            '<option value="">Select Subject</option>');
+
+                        if (response.subjects && response.subjects.length > 0) {
+                            response.subjects.forEach(function(item) {
+                                subjectSelect.append(
+                                    `<option value="${item.subject_code}" data-paper="${item.paper_code}">
+                                    ${item.subject_code}
+                                </option>`
+                                );
+                            });
+                        }
+
+                        $('#paper_code').val('');
                     },
                     error: function() {
-                        $('#subject_code').val('');
+                        $('#subject_code').empty().append(
+                            '<option value="">Select Subject</option>');
                         $('#paper_code').val('');
                     }
                 });
             }
         });
 
-        $(document).ready(function() {
-            // Trigger when index_no changes
-            $('#index_no').on('blur', function() {
-                let center_no = $('#center_no').val();
+        // When subject selected → auto-fill paper code
+        $('#subject_code').on('change', function() {
+            let paperCode = $(this).find(':selected').data('paper');
+            $('#paper_code').val(paperCode || '');
+        });
+
+        // When index entered → get medium number (debounced)
+        let mediumTimeout;
+        $('#index_no').on('keyup blur', function() {
+            clearTimeout(mediumTimeout);
+            mediumTimeout = setTimeout(function() {
                 let exam_date = $('#date').val();
                 let session = $('#session').val();
                 let subject_code = $('#subject_code').val();
                 let paper_code = $('#paper_code').val();
                 let index_no = $('#index_no').val();
 
-                if (center_no && exam_date && session && subject_code && paper_code &&
-                    index_no) {
+                if (exam_date && session && subject_code && paper_code && index_no) {
                     $.ajax({
                         url: '{{ route('get.medium') }}',
                         type: 'GET',
                         data: {
-                            center_no: center_no,
-                            exam_date: exam_date,
-                            session: session,
-                            subject_code: subject_code,
-                            paper_code: paper_code,
-                            index_no: index_no
+                            exam_date,
+                            session,
+                            subject_code,
+                            paper_code,
+                            index_no
                         },
                         success: function(response) {
-                            console.log('Medium Response:', response);
                             $('#medium_no').val(response.medium_no || '');
                         },
-                        error: function() {
-                            $('#medium_no').val('');
+                        error: function(xhr) {
+                            if (xhr.status === 404) {
+                                $('#medium_no').val('');
+                                $('#index-error').text(
+                                    'Index not found for this center/date/session/subject.'
+                                );
+                            } else {
+                                $('#index-error').text(
+                                    'An unexpected error occurred.');
+                            }
                         }
                     });
                 } else {
                     $('#medium_no').val('');
                 }
-            });
+            }, 400); // delay typing calls (0.4s)
         });
+
+
 
     });
 </script>
+
+
 {{-- fetch data in center --}}
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    // Prevent accidental form reload
-    $('#examForm').on('submit', function(e) {
-        e.preventDefault();
-    });
+        // Prevent accidental form reload
+        $('#examForm').on('submit', function(e) {
+            e.preventDefault();
+        });
 
-    // When date or session changes
-    $('#date, #session').on('change', function() {
-        let exam_date = $('#date').val();
-        let session = $('#session').val();
+        // When date or session changes
+        $('#date, #session').on('change', function() {
+            let exam_date = $('#date').val();
+            let session = $('#session').val();
 
-        if (exam_date && session) {
-            $.ajax({
-                url: '{{ route('get.paper_center.details') }}',
-                type: 'GET',
-                data: { exam_date, session },
-                success: function(response) {
-                    console.log('AJAX Response:', response);
-                    let subjectSelect = $('#subject_code');
-                    subjectSelect.empty().append('<option value="">Select Subject</option>');
+            if (exam_date && session) {
+                $.ajax({
+                    url: '{{ route('get.paper_center.details') }}',
+                    type: 'GET',
+                    data: {
+                        exam_date,
+                        session
+                    },
+                    success: function(response) {
+                        console.log('AJAX Response:', response);
+                        let subjectSelect = $('#subject_code');
+                        subjectSelect.empty().append(
+                            '<option value="">Select Subject</option>');
 
-                    if (response.subjects?.length > 0) {
-                        response.subjects.forEach(function(item) {
-                            subjectSelect.append(
-                                `<option value="${item.subject_code}" data-paper="${item.paper_code}">
+                        if (response.subjects?.length > 0) {
+                            response.subjects.forEach(function(item) {
+                                subjectSelect.append(
+                                    `<option value="${item.subject_code}" data-paper="${item.paper_code}">
                                     ${item.subject_code}
                                 </option>`
-                            );
-                        });
+                                );
+                            });
+                        }
+
+                        $('#paper_code').val('');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', error);
                     }
+                });
+            }
+        });
 
-                    $('#paper_code').val('');
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error:', error);
-                }
-            });
-        }
-    });
+        // When subject selected, auto-fill paper code
+        $('#subject_code').on('change', function() {
+            let paperCode = $(this).find(':selected').data('paper');
+            $('#paper_code').val(paperCode || '');
+        });
 
-    // When subject selected, auto-fill paper code
-    $('#subject_code').on('change', function() {
-        let paperCode = $(this).find(':selected').data('paper');
-        $('#paper_code').val(paperCode || '');
-    });
+        // On index_no blur, get center number
+        $('#index_no').on('blur', function() {
+            let index_no = $(this).val();
 
-    // On index_no blur, get center number
-    $('#index_no').on('blur', function() {
-        let index_no = $(this).val();
-
-        if (index_no) {
-            $.ajax({
-                url: '{{ route('get.center.by.index') }}',
-                type: 'GET',
-                data: { index_no },
-                success: function(response) {
-                    console.log('Center Response:', response);
-                    if (response.center_no) {
-                        $('#current_center_no').val(response.center_no);
-                    } else {
+            if (index_no) {
+                $.ajax({
+                    url: '{{ route('get.center.by.index') }}',
+                    type: 'GET',
+                    data: {
+                        index_no
+                    },
+                    success: function(response) {
+                        console.log('Center Response:', response);
+                        if (response.center_no) {
+                            $('#current_center_no').val(response.center_no);
+                        } else {
+                            $('#current_center_no').val('');
+                            alert('No center found for this index number.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Center Fetch Error:', error);
                         $('#current_center_no').val('');
-                        alert('No center found for this index number.');
                     }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Center Fetch Error:', error);
-                    $('#current_center_no').val('');
-                }
-            });
-        }
+                });
+            }
+        });
     });
-});
 </script>
 
 {{--  <script>
@@ -359,6 +393,42 @@ $(document).ready(function() {
     });
 </script>  --}}
 
+{{-- clear btn --}}
+<script>
+    $(document).ready(function() {
+        $(document).on('click', 'button[type="reset"]', function(e) {
+            e.preventDefault();
+
+            // find the nearest form
+            let form = $(this).closest('form');
+            if (form.length) {
+                // reset all inputs to their initial values
+                form[0].reset();
+
+                // clear all text-danger messages, spans, etc.
+                form.find('.text-danger').text('');
+
+                // clear all dynamically populated select elements
+                form.find('select').each(function() {
+                    if (!$(this).find('option[selected]').length) {
+                        $(this).html('<option value="">Select</option>');
+                    }
+                });
+
+                // clear readonly or AJAX-filled fields
+                form.find('input[readonly]').val('');
+
+                // optional: clear hidden fields
+                form.find('input[type="hidden"]').val('');
+
+                // optional: clear custom error blocks
+                form.find('.alert-danger').fadeOut(200, function() {
+                    $(this).remove();
+                });
+            }
+        });
+    });
+</script>
 
 
 

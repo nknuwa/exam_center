@@ -14,7 +14,7 @@ class MediumController extends Controller
 {
     public function index()
     {
-         $response['mediumChanges'] = MediumChange::where('user_id', Auth::id())->get();
+        $response['mediumChanges'] = MediumChange::where('user_id', Auth::id())->get();
         return view('pages.medium.index')->with($response);
     }
 
@@ -22,35 +22,38 @@ class MediumController extends Controller
     {
         try {
             $user = Auth::user();
-            $center_no = $user->hasRole('super-admin')
-                ? $request->center_no
-                : $user->center_no;
+            $center_no = $user->center_no;
 
             $exam_date = date('Y-m-d', strtotime(str_replace('/', '-', $request->exam_date)));
             $session_input = strtoupper(trim($request->session));
 
-            $data = ExamDb::where('center_no', $center_no)
+            $subjects = ExamDb::where('center_no', $center_no)
                 ->whereDate('date', $exam_date)
                 ->where('session', $session_input)
                 ->select('subject_code', 'paper_code')
-                ->first();
+                ->distinct()
+                ->get();
 
-            return response()->json($data ?? ['subject_code' => '', 'paper_code' => '']);
+            return response()->json(['subjects' => $subjects]);
         } catch (\Exception $e) {
-            Log::error('getPaperDetails Error: ' . $e->getMessage());
-            return response()->json(['subject_code' => '', 'paper_code' => ''], 500);
+            \Log::error('Error fetching paper details: ' . $e->getMessage());
+            return response()->json(['subjects' => []], 500);
         }
     }
+
+
 
     public function getMedium(Request $request)
     {
         try {
-            $center_no   = trim($request->center_no);
-            $exam_date   = date('Y-m-d', strtotime(str_replace('/', '-', $request->exam_date)));
-            $session     = strtoupper(trim($request->session));
+            $user = Auth::user();
+            $center_no = $user->center_no;
+
+            $exam_date = date('Y-m-d', strtotime(str_replace('/', '-', $request->exam_date)));
+            $session = strtoupper(trim($request->session));
             $subject_code = trim($request->subject_code);
-            $paper_code   = trim($request->paper_code);
-            $index_no     = trim($request->index_no);
+            $paper_code = trim($request->paper_code);
+            $index_no = trim($request->index_no);
 
             $record = ExamDb::where('center_no', $center_no)
                 ->whereDate('date', $exam_date)
@@ -74,6 +77,7 @@ class MediumController extends Controller
 
 
 
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -86,7 +90,7 @@ class MediumController extends Controller
             'medium_no'     => 'required|string',
             'new_medium_no' => 'required|string',
         ]);
-       // dd($validated);
+        // dd($validated);
 
 
         // Check if already exists
