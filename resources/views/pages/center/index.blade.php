@@ -17,7 +17,7 @@
                 </nav>
             </div>
             <div class="col-md-4 float-end">
-                <button class="btn btn-danger float-end" href="{{ route('home') }}">Back</button>
+                <button class="btn btn-danger float-end" onclick="window.location='{{ route('home') }}'">Back</button>
             </div>
         </div>
 
@@ -32,6 +32,17 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                         @endif
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
 
                         <form action="{{ route('centers.store') }}" method="POST">
                             @csrf
@@ -103,7 +114,9 @@
 
                             <div class="mb-3">
                                 <label class="form-label mb-1">Subject Code</label>
-                                
+                                <select id="subject_code" name="subject_code" class="form-control">
+                                    <option value="">Select Subject</option>
+                                </select>
                                 {{--  <input id="subject_code" type="text" name="subject_code" class="form-control" readonly>  --}}
                             </div>
 
@@ -117,6 +130,10 @@
                                 <label class="form-label mb-1">Index <span class="text-danger">*</span></label>
                                 <input class="form-control form-control-sm" type="text" name="index_no" id="index_no"
                                     value="{{ old('index_no') }}">
+
+                                @error('index_no')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="mb-3">

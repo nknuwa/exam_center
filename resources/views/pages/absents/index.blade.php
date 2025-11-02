@@ -17,7 +17,7 @@
                 </nav>
             </div>
             <div class="col-md-4 float-end">
-                <button class="btn btn-danger float-end" href="{{ route('home') }}">Back</button>
+                <button class="btn btn-danger float-end" onclick="window.location='{{ route('home') }}'">Back</button>
             </div>
         </div>
 

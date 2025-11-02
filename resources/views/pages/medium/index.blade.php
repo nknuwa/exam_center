@@ -16,6 +16,9 @@
                     <h6 class="fw-bold mb-0 text-dark">Change Medium</h6>
                 </nav>
             </div>
+            <div class="col-md-4 float-end">
+                <button class="btn btn-danger float-end" onclick="window.location='{{ route('home') }}'">Back</button>
+            </div>
         </div>
 
         <div class="card mt-3 shadow-sm border-0 rounded-3">

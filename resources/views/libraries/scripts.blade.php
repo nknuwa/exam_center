@@ -202,7 +202,84 @@
 </script>
 {{-- fetch data in center --}}
 <script>
+$(document).ready(function() {
+
+    // Prevent accidental form reload
+    $('#examForm').on('submit', function(e) {
+        e.preventDefault();
+    });
+
+    // When date or session changes
+    $('#date, #session').on('change', function() {
+        let exam_date = $('#date').val();
+        let session = $('#session').val();
+
+        if (exam_date && session) {
+            $.ajax({
+                url: '{{ route('get.paper_center.details') }}',
+                type: 'GET',
+                data: { exam_date, session },
+                success: function(response) {
+                    console.log('AJAX Response:', response);
+                    let subjectSelect = $('#subject_code');
+                    subjectSelect.empty().append('<option value="">Select Subject</option>');
+
+                    if (response.subjects?.length > 0) {
+                        response.subjects.forEach(function(item) {
+                            subjectSelect.append(
+                                `<option value="${item.subject_code}" data-paper="${item.paper_code}">
+                                    ${item.subject_code}
+                                </option>`
+                            );
+                        });
+                    }
+
+                    $('#paper_code').val('');
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                }
+            });
+        }
+    });
+
+    // When subject selected, auto-fill paper code
+    $('#subject_code').on('change', function() {
+        let paperCode = $(this).find(':selected').data('paper');
+        $('#paper_code').val(paperCode || '');
+    });
+
+    // On index_no blur, get center number
+    $('#index_no').on('blur', function() {
+        let index_no = $(this).val();
+
+        if (index_no) {
+            $.ajax({
+                url: '{{ route('get.center.by.index') }}',
+                type: 'GET',
+                data: { index_no },
+                success: function(response) {
+                    console.log('Center Response:', response);
+                    if (response.center_no) {
+                        $('#current_center_no').val(response.center_no);
+                    } else {
+                        $('#current_center_no').val('');
+                        alert('No center found for this index number.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Center Fetch Error:', error);
+                    $('#current_center_no').val('');
+                }
+            });
+        }
+    });
+});
+</script>
+
+{{--  <script>
     $(document).ready(function() {
+        // When date or session changes
         $('#date, #session').on('change', function() {
             let exam_date = $('#date').val();
             let session = $('#session').val();
@@ -217,19 +294,39 @@
                     },
                     success: function(response) {
                         console.log('AJAX Response:', response);
-                        $('#subject_code').val(response.subject_code || '');
-                        $('#paper_code').val(response.paper_code || '');
+                        let subjectSelect = $('#subject_code');
+                        subjectSelect.empty();
+                        subjectSelect.append('<option value="">Select Subject</option>');
+
+                        if (response.subjects && response.subjects.length > 0) {
+                            response.subjects.forEach(function(item) {
+                                subjectSelect.append(
+                                    `<option value="${item.subject_code}" data-paper="${item.paper_code}">
+                                    ${item.subject_code}
+                                </option>`
+                                );
+                            });
+                        }
+
+                        $('#paper_code').val('');
                     },
                     error: function(xhr, status, error) {
                         console.error('AJAX Error:', error);
-                        $('#subject_code').val('');
+                        $('#subject_code').empty().append(
+                            '<option value="">Select Subject</option>');
                         $('#paper_code').val('');
                     }
                 });
             } else {
-                $('#subject_code').val('');
+                $('#subject_code').empty().append('<option value="">Select Subject</option>');
                 $('#paper_code').val('');
             }
+        });
+
+        // When subject code selected, fill the paper code
+        $('#subject_code').on('change', function() {
+            let paperCode = $(this).find(':selected').data('paper');
+            $('#paper_code').val(paperCode || '');
         });
 
         $('#index_no').on('blur', function() {
@@ -260,7 +357,9 @@
         });
 
     });
-</script>
+</script>  --}}
+
+
 
 
 
