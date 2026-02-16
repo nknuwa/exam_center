@@ -11,7 +11,9 @@ class CommentsController extends Controller
 {
     public function index()
     {
-        return view('pages.comments.index');
+
+        $response['comments'] = SpecialNote::where('user_id', Auth::id())->get();
+        return view('pages.comments.index')->with($response);
     }
 
     public function getPaperDetails(Request $request)
@@ -67,6 +69,8 @@ class CommentsController extends Controller
             'message'      => $validated['message'],
             'user_id'      => $user->id,
         ]);
+
+       // dd($request);
 
         return back()->with('success', 'Special note saved successfully!');
     }

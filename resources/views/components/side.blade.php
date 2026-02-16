@@ -39,27 +39,33 @@
               </ul>
             </li>
             <li>
-              <a class="show-cat-btn" href="##">
-                <span class="icon folder" aria-hidden="true"></span>Center Change
+              <a class="show-cat-btn" href="{{route('center.all')}}">
+                <span class="icon folder" aria-hidden="true"></span>Center Entry
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Center Change</span>
-                  {{--  <span class="icon arrow-down" aria-hidden="true"></span>  --}}
+                   <span class="icon arrow-down" aria-hidden="true"></span>
                 </span>
               </a>
-              {{--  <ul class="cat-sub-menu">
+               <ul class="cat-sub-menu">
                 <li>
-                  <a href="categories.html">Center Change</a>
+                  <a href="{{route('center.all')}}">Center Change</a>
                 </li>
-              </ul>  --}}
+              </ul>
             </li>
             <li>
-              <a class="show-cat-btn" href="##">
-                <span class="icon image" aria-hidden="true"></span>Medium Change
+              <a class="show-cat-btn" href="{{route('center.all')}}">
+                <span class="icon image" aria-hidden="true"></span>Medium Entry
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Medium Change</span>
-                  {{--  <span class="icon arrow-down" aria-hidden="true"></span>  --}}
+                   <span class="icon arrow-down" aria-hidden="true"></span>
                 </span>
               </a>
+
+              <ul class="cat-sub-menu">
+                <li>
+                  <a href="{{route('medium.all')}}">Medium Change</a>
+                </li>
+              </ul>
               {{--  <ul class="cat-sub-menu">
                 <li>
                   <a href="media-01.html"></a>

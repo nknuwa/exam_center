@@ -23,36 +23,77 @@ class AbsentController extends Controller
         return view('pages.absents.index')->with($response);
     }
 
+    // public function getPaperDetails(Request $request)
+    // {
+    //     try {
+    //         $user = Auth::user();
+    //         $center_no = $user->center_no;
+
+    //         $exam_date = date('Y-m-d', strtotime(str_replace('/', '-', $request->exam_date)));
+    //         $session_input = strtoupper(trim($request->session));
+
+    //         $valid_sessions = ['SESSION-I', 'SESSION-II'];
+    //         if (!in_array($session_input, $valid_sessions)) {
+    //             return response()->json(['subjects' => []], 422);
+    //         }
+
+    //         // Fetch all subjects for this center/date/session
+    //         $subjects = ExamDb::where('center_no', $center_no)
+    //             ->whereDate('date', $exam_date)
+    //             ->where('session', $session_input)
+    //             ->select('subject_code', 'paper_code')
+    //             ->distinct()
+    //             ->get();
+
+    //         return response()->json(['subjects' => $subjects]);
+    //     } catch (\Exception $e) {
+    //         Log::error('getPaperDetails Error: ' . $e->getMessage(), [
+    //             'request' => $request->all()
+    //         ]);
+    //         return response()->json(['subjects' => []], 500);
+    //     }
+    // }
+
+
     public function getPaperDetails(Request $request)
-    {
-        try {
-            $user = Auth::user();
-            $center_no = $user->center_no;
+{
+    try {
+        $user = Auth::user();
 
-            $exam_date = date('Y-m-d', strtotime(str_replace('/', '-', $request->exam_date)));
-            $session_input = strtoupper(trim($request->session));
+        $exam_date = date('Y-m-d', strtotime(str_replace('/', '-', $request->exam_date)));
 
-            $valid_sessions = ['SESSION-I', 'SESSION-II'];
-            if (!in_array($session_input, $valid_sessions)) {
-                return response()->json(['subjects' => []], 422);
-            }
+        $session_input = strtoupper(trim($request->session));
 
-            // Fetch all subjects for this center/date/session
-            $subjects = ExamDb::where('center_no', $center_no)
-                ->whereDate('date', $exam_date)
-                ->where('session', $session_input)
-                ->select('subject_code', 'paper_code')
-                ->distinct()
-                ->get();
 
-            return response()->json(['subjects' => $subjects]);
-        } catch (\Exception $e) {
-            Log::error('getPaperDetails Error: ' . $e->getMessage(), [
-                'request' => $request->all()
-            ]);
-            return response()->json(['subjects' => []], 500);
+
+        $valid_sessions = ['SESSION-I', 'SESSION-II'];
+        if (!in_array($session_input, $valid_sessions)) {
+            return response()->json(['subjects' => []], 422);
         }
+
+        $query = ExamDb::whereDate('date', $exam_date)
+            ->where('session', $session_input);
+
+        // 🔥 Important: Handle Admin & Super Admin
+        if (!$user->hasAnyRole(['super-admin', 'admin'])) {
+            $query->where('center_no', $user->center_no);
+        }
+
+        $subjects = $query
+            ->select('subject_code', 'paper_code')
+            ->distinct()
+            ->get();
+
+        return response()->json(['subjects' => $subjects]);
+
+    } catch (\Exception $e) {
+
+        Log::error('getPaperDetails Error: '.$e->getMessage());
+
+        return response()->json(['subjects' => []], 500);
     }
+}
+
 
 
     // public function getPaperDetails(Request $request)

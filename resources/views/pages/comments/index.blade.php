@@ -113,7 +113,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label mb-1">Special Note <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="message" class="massage" rows="3"></textarea>
+                                <textarea class="form-control" id="message" name="message" rows="3"></textarea>
                             </div>
 
                             <div class="d-flex flex-wrap gap-2">
@@ -160,30 +160,34 @@
                         <thead class="table-light">
                             <tr>
                                 <th>Index No</th>
-                                <th>Center No</th>
+                                <th>Date</th>
+                                <th>Session</th>
                                 <th>Subject No</th>
                                 <th>Paper Code</th>
+                                <th>Message</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @forelse($exams as $exam)
+                            @forelse($comments as $comment)
                             <tr>
-                                <td>{{ $exam->index_no }}</td>
-                                <td>{{ $exam->center_no }}</td>
-                                <td>{{ $exam->subject_no }}</td>
-                                <td>{{ $exam->paper_code }}</td>
+                                <td>{{ $comment->center_no }}</td>
+                                <td>{{ $comment->date }}</td>
+                                <td>{{ $comment->session }}</td>
+                                <td>{{ $comment->subject_code }}</td>
+                                <td>{{ $comment->paper_code }}</td>
+                                <td>{{ $comment->message }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center text-muted">No Exams Found</td>
+                                <td colspan="5" class="text-center text-muted">No Exams Found</td>
                             </tr>
-                        @endforelse --}}
+                        @endforelse
                         </tbody>
                     </table>
                 </div>
 
                 <div class="d-flex flex-wrap gap-2 mt-3">
-                    <a href="{{ route('exams.download.csv') }}" class="btn btn-sm btn-primary">
+                    {{-- <a href="{{ route('exams.download.csv') }}" class="btn btn-sm btn-primary">
                         Download <i class="fa-solid fa-file-csv ms-1"></i>
                     </a>
                     <a href="{{ route('exams.download.excel') }}" class="btn btn-sm btn-success">
@@ -191,7 +195,7 @@
                     </a>
                     <a href="{{ route('exams.download.pdf') }}" class="btn btn-sm btn-danger">
                         Download <i class="fa-solid fa-file-pdf ms-1"></i>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>

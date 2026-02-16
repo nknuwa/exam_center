@@ -103,11 +103,28 @@ class UserController extends Controller
                 $user->role_id = $role->id;
 
                 // ✅ Reset center for super admin
-                if ($role->name === 'super-admin') {
+                // if ($role->name === 'super-admin') {
+                //     $user->center_no = null;
+                // }
+
+                if (in_array($role->name, ['super-admin', 'admin'])) {
                     $user->center_no = null;
                 }
 
-                $user->save();
+
+                if ($request->role_id) {
+                    $role = Role::find($request->role_id);
+                    if ($role) {
+                        $user->syncRoles([$role->name]);
+                        $user->role_id = $role->id;
+
+                        if (in_array($role->name, ['super-admin', 'admin'])) {
+                            $user->center_no = null;
+                        }
+
+                        $user->save();
+                    }
+                }
             }
         }
 

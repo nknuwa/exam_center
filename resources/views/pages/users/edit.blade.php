@@ -62,11 +62,11 @@
                                     value="{{ old('email', $user->email) }}" required>
                             </div>
 
-                            @if (!$user->hasRole('super-admin'))
+                            @if (!$user->hasAnyRole(['super-admin','admin']))
+
                                 <div class="mb-3">
                                     <label class="form-label">Center No</label>
-                                    <select name="center_no" class="form-select @error('center_no') is-invalid @enderror"
-                                        required>
+                                    <select name="center_no" class="form-select @error('center_no') is-invalid @enderror">
                                         <option value="">-- Select Center --</option>
                                         @foreach ($centers as $center)
                                             <option value="{{ $center }}"

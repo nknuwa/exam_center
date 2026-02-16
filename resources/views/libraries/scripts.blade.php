@@ -46,6 +46,9 @@
             let exam_date = $('#date').val();
             let session = $('#session').val();
 
+            console.log("Selected Date:", exam_date);
+    console.log("Selected Session:", session);
+
             if (exam_date && session) {
                 $.ajax({
                     url: '{{ route('get.paper.details') }}',
@@ -668,23 +671,24 @@
 </script>  --}}
 
 <script>
-    $(document).ready(function() {
-        $('#examTable').DataTable({
-            language: {
-                emptyTable: "No data available in the table",
-                paginate: {
-                    previous: '<i class="fa-solid fa-angles-left"></i>',
-                    next: '<i class="fa-solid fa-angles-right"></i>'
-                }
-            },
-            pageLength: 10,
-            lengthMenu: [5, 10, 20],
-            order: [
-                [0, "desc"]
-            ] // Sort by Subject No column
-        });
+$(document).ready(function() {
+    $('#examTable').DataTable({
+        language: {
+            emptyTable: "No data available in the table",
+            paginate: {
+                previous: '<i class="fa-solid fa-angles-left"></i>',
+                next: '<i class="fa-solid fa-angles-right"></i>'
+            }
+        },
+        pageLength: 10,
+        lengthMenu: [5, 10, 20],
+        order: [
+            [0, "desc"]
+        ]
     });
+});
 </script>
+
 
 {{--  <script>
 $(document).ready(function () {
