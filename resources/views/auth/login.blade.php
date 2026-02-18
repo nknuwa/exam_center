@@ -1,47 +1,43 @@
 @extends('layouts.guest')
 
 @section('content')
+    <main class="page-right">
+        <div class="login-container">
+            <!-- Left column: Title -->
+            <div class="login-left">
+                <h1 class="sign-up__title">Welcome to Exam Center Management System</h1>
+                <p class="sign-up__subtitle">Sign in to your account to continue</p>
+            </div>
 
-   <main class="page-right">
-    <div class="login-container">
-        <!-- Left column: Title -->
-        <div class="login-left">
-            <h1 class="sign-up__title">Welcome to Exam Center Management System</h1>
-            <p class="sign-up__subtitle">Sign in to your account to continue</p>
+            <!-- Right column: Form -->
+            <div class="login-right">
+                <article class="sign-up">
+                    <form class="sign-up-form form" method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <label class="form-label-wrapper">
+                            <p class="form-label">Email</p>
+                            <input type="email" name="email" value="{{ old('email') }}" required
+                                class="form-control form-control-lg" placeholder="Email">
+                            @error('email')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </label>
+
+                        <label class="form-label-wrapper">
+                            <p class="form-label">Password</p>
+                            <input type="password" name="password" required autocomplete="current-password"
+                                class="form-control form-control-lg" placeholder="Password">
+                            @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </label>
+
+                        <button class="form-btn primary-default-btn transparent-btn mt-3">Sign in</button>
+                    </form>
+                </article>
+            </div>
         </div>
-
-        <!-- Right column: Form -->
-        <div class="login-right">
-            <article class="sign-up">
-                <form class="sign-up-form form" method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <label class="form-label-wrapper">
-                        <p class="form-label">Email</p>
-                        <input type="email" name="email" value="{{ old('email') }}" required
-                            class="form-control form-control-lg" placeholder="Email">
-                        @error('email')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </label>
-
-                    <label class="form-label-wrapper">
-                        <p class="form-label">Password</p>
-                        <input type="password" name="password" required autocomplete="current-password"
-                            class="form-control form-control-lg" placeholder="Password">
-                        @error('password')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </label>
-
-                    <button class="form-btn primary-default-btn transparent-btn mt-3">Sign in</button>
-                </form>
-            </article>
-        </div>
-    </div>
-</main>
-
-
-
+    </main>
 @endsection
 
 

@@ -187,7 +187,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center text-muted">No Exams Found</td>
+                                    <td></td>
+                                    {{-- <td colspan="6" class="text-center text-muted">No Exams Found</td> --}}
                                 </tr>
                             @endforelse
                         </tbody>

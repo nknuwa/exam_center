@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbsentController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\MediumController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Middleware\Authenticate;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,13 @@ use App\Http\Controllers\CommentsController;
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/login-logs', [AuthenticatedSessionController::class, 'index'])
+        ->name('login.logs');
+});
+
 
 /* Home Route*/
 Route::get('/', [HomeController::class, 'index'])->name('home');

@@ -21,17 +21,17 @@
     <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
     <div class="page-flex">
         <!-- ! Sidebar -->
-        {{-- @can('read_sidebar') --}}
+        @can('read_sidebar')
             @include('components.side')
-        {{-- @endcan --}}
+        @endcan
         <div class="main-wrapper">
             <!-- ! Main nav -->
-            {{-- @can('read_navbar') --}}
+            @can('read_navbar')
                 @include('components.nav')
-            {{-- @endcan --}}
-            {{-- @can('read_navbar_user')
+            @endcan
+            @can('read_navbar_user')
                 @include('components.nav_user')
-            @endcan --}}
+            @endcan
             <!-- ! Main -->
             <main class="main users chart-page" id="skip-target">
                 @yield('content')
