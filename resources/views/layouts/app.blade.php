@@ -43,6 +43,47 @@
     @stack('modals')
 
     @include('libraries.scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+$(function(){
+
+$('form').on('submit',function(e){
+
+e.preventDefault();
+
+let form=this;
+
+Swal.fire({
+
+title:'Save Candidate?',
+
+text:'Do you want to save this record?',
+
+icon:'question',
+
+showCancelButton:true,
+
+confirmButtonText:'Yes',
+
+cancelButtonText:'No'
+
+}).then((result)=>{
+
+if(result.isConfirmed){
+
+form.submit();
+
+}
+
+});
+
+});
+
+});
+
+</script>
 </body>
 
 </html>

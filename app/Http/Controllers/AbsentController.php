@@ -200,8 +200,12 @@ class AbsentController extends Controller
         // dd($absentees);
 
         return redirect()
-            ->route('absentees.all')
+            ->back()
             ->with('success', 'Absent candidate added successfully.');
+
+        // return redirect()
+        //     ->route('absentees.all')
+        //     ->with('success', 'Absent candidate added successfully.');
     }
 
     public function downloadExcel()

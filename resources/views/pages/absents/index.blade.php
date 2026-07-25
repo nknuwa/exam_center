@@ -21,17 +21,21 @@
             </div>
         </div>
 
-        <div class="card mt-3 shadow-sm border-0 rounded-3">
-            <div class="card-body">
+        <div class="card shadow-lg border-0 rounded-4">
+
+            <div class="card-header bg-primary text-white rounded-top-4">
+
+                <h5 class="mb-0">
+                    <i class="fa fa-user-minus"></i>
+                    Add Absent Candidate
+                </h5>
+
+            </div>
+            <div class="card-body p-4">
                 <div class="row gy-4">
                     <!-- Left Form Section -->
                     <div class="col-lg-5 col-md-6 col-12">
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show py-2">
-                                {{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        @endif
+
 
                         <form action="{{ route('absentees.store') }}" method="POST">
                             @csrf
@@ -123,8 +127,21 @@
 
 
                             <div class="d-flex flex-wrap gap-2">
-                                <button type="submit" class="btn btn-primary btn-md px-3">Submit</button>
-                                <button type="reset" class="btn btn-outline-secondary btn-md px-3">Clear</button>
+                                <button class="btn btn-primary px-4">
+
+                                    <i class="fa fa-save"></i>
+
+                                    Save Candidate
+
+                                </button>
+
+                                <button type="reset" class="btn btn-light border px-4">
+
+                                    <i class="fa fa-rotate-left"></i>
+
+                                    Reset
+
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -195,7 +212,7 @@
                     </table>
                 </div>
 
-                 <div class="d-flex flex-wrap gap-2 mt-3">
+                <div class="d-flex flex-wrap gap-2 mt-3">
                     {{-- <a href="{{ route('exams.download.csv') }}" class="btn btn-sm btn-primary">
                         Download <i class="fa-solid fa-file-csv ms-1"></i>
                     </a> --}}
@@ -210,3 +227,93 @@
         </div>
     </div>
 @endsection
+@if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                background: '#3cf8a0ac',
+                timerProgressBar: true
+            });
+
+            Toast.fire({
+                icon: 'success',
+                title: "{{ session('success') }}"
+            });
+
+        });
+    </script>
+@endif
+@if (session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true
+            });
+
+            Toast.fire({
+                icon: 'error',
+                title: "{{ session('error') }}"
+            });
+
+        });
+    </script>
+@endif
+{{-- @if (session('success'))
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: "{{ session('success') }}",
+        confirmButtonColor: '#0d6efd'
+    });
+
+});
+
+</script>
+
+@endif --}}
+{{-- @if (session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+                confirmButtonColor: '#dc3545'
+            });
+
+        });
+    </script>
+@endif --}}
+@if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            Swal.fire({
+
+                icon: 'error',
+
+                title: 'Validation Error',
+
+                html: `{!! implode('<br>', $errors->all()) !!}`
+
+            });
+
+        });
+    </script>
+@endif
