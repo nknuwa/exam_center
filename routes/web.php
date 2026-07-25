@@ -63,9 +63,9 @@ Route::prefix('absentees')->group(function () {
 
     Route::post('/store', [AbsentController::class, 'store'])->name('absentees.store');
 
-    Route::get('/exams/download/csv', [OlExamController::class, 'downloadAllCsv'])->name('exams.download.csv');
-    Route::get('/exams/download/excel', [OlExamController::class, 'downloadAllExcel'])->name('exams.download.excel');
-    Route::get('/exams/download/pdf', [OlExamController::class, 'downloadAllPdf'])->name('exams.download.pdf');
+    // Route::get('/exams/download/csv', [AbsentController::class, 'downloadCsv'])->name('exams.download.csv');
+    Route::get('/exams/download/excel', [AbsentController::class, 'downloadExcel'])->name('exams.download.excel');
+    Route::get('/exams/download/pdf', [AbsentController::class, 'downloadPdf'])->name('exams.download.pdf');
 });
 
 Route::prefix('medium')->group(function () {

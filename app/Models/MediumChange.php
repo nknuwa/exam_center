@@ -20,4 +20,9 @@ class MediumChange extends Model
         'new_medium_no',
         'user_id',
     ];
+
+    public function user()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
 }

@@ -195,17 +195,17 @@
                     </table>
                 </div>
 
-                {{--  <div class="d-flex flex-wrap gap-2 mt-3">
-                    <a href="{{ route('exams.download.csv') }}" class="btn btn-sm btn-primary">
+                 <div class="d-flex flex-wrap gap-2 mt-3">
+                    {{-- <a href="{{ route('exams.download.csv') }}" class="btn btn-sm btn-primary">
                         Download <i class="fa-solid fa-file-csv ms-1"></i>
-                    </a>
+                    </a> --}}
                     <a href="{{ route('exams.download.excel') }}" class="btn btn-sm btn-success">
                         Download <i class="fa-solid fa-file-excel ms-1"></i>
                     </a>
                     <a href="{{ route('exams.download.pdf') }}" class="btn btn-sm btn-danger">
                         Download <i class="fa-solid fa-file-pdf ms-1"></i>
                     </a>
-                </div>  --}}
+                </div>
             </div>
         </div>
     </div>

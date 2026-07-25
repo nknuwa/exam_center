@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Exports\AbsenteesExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AbsentController extends Controller
 {
@@ -21,6 +24,12 @@ class AbsentController extends Controller
         $response['exam_db'] = ExamDb::select('center_no')->distinct()->get();
         $response['absentees'] = AbsentCandidates::where('user_id', Auth::id())->get();
         return view('pages.absents.index')->with($response);
+    }
+
+    public function All()
+    {
+        $response['absentees'] = AbsentCandidates::all();
+        return view('pages.absents.all')->with($response);
     }
 
     // public function getPaperDetails(Request $request)
@@ -56,43 +65,42 @@ class AbsentController extends Controller
 
 
     public function getPaperDetails(Request $request)
-{
-    try {
-        $user = Auth::user();
+    {
+        try {
+            $user = Auth::user();
 
-        $exam_date = date('Y-m-d', strtotime(str_replace('/', '-', $request->exam_date)));
+            $exam_date = date('Y-m-d', strtotime(str_replace('/', '-', $request->exam_date)));
 
-        $session_input = strtoupper(trim($request->session));
+            $session_input = strtoupper(trim($request->session));
 
 
 
-        $valid_sessions = ['SESSION-I', 'SESSION-II'];
-        if (!in_array($session_input, $valid_sessions)) {
-            return response()->json(['subjects' => []], 422);
+            $valid_sessions = ['SESSION-I', 'SESSION-II'];
+            if (!in_array($session_input, $valid_sessions)) {
+                return response()->json(['subjects' => []], 422);
+            }
+
+            $query = ExamDb::whereDate('date', $exam_date)
+                ->where('session', $session_input);
+
+            // 🔥 Important: Handle Admin & Super Admin
+            if (!$user->hasAnyRole(['super-admin', 'admin'])) {
+                $query->where('center_no', $user->center_no);
+            }
+
+            $subjects = $query
+                ->select('subject_code', 'paper_code')
+                ->distinct()
+                ->get();
+
+            return response()->json(['subjects' => $subjects]);
+        } catch (\Exception $e) {
+
+            Log::error('getPaperDetails Error: ' . $e->getMessage());
+
+            return response()->json(['subjects' => []], 500);
         }
-
-        $query = ExamDb::whereDate('date', $exam_date)
-            ->where('session', $session_input);
-
-        // 🔥 Important: Handle Admin & Super Admin
-        if (!$user->hasAnyRole(['super-admin', 'admin'])) {
-            $query->where('center_no', $user->center_no);
-        }
-
-        $subjects = $query
-            ->select('subject_code', 'paper_code')
-            ->distinct()
-            ->get();
-
-        return response()->json(['subjects' => $subjects]);
-
-    } catch (\Exception $e) {
-
-        Log::error('getPaperDetails Error: '.$e->getMessage());
-
-        return response()->json(['subjects' => []], 500);
     }
-}
 
 
 
@@ -194,5 +202,20 @@ class AbsentController extends Controller
         return redirect()
             ->route('absentees.all')
             ->with('success', 'Absent candidate added successfully.');
+    }
+
+    public function downloadExcel()
+    {
+        return Excel::download(new AbsenteesExport, 'absentees_report.xlsx');
+    }
+
+    public function downloadPDF()
+    {
+        $absentees = AbsentCandidates::all(); // or your filtered query
+
+        $pdf = Pdf::loadView('pdf.absentees', compact('absentees'))
+            ->setPaper('A4', 'landscape'); // landscape better for wide tables
+
+        return $pdf->download('absentees_report.pdf');
     }
 }

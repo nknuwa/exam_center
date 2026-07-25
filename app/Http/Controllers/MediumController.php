@@ -18,6 +18,12 @@ class MediumController extends Controller
         return view('pages.medium.index')->with($response);
     }
 
+    public function All()
+    {
+        $response['medium'] = MediumChange::all();
+        return view('pages.medium.all')->with($response);
+    }
+
     public function getPaperDetails(Request $request)
     {
         try {

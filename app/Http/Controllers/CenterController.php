@@ -17,6 +17,12 @@ class CenterController extends Controller
         return view('pages.center.index')->with($response);
     }
 
+    public function All()
+    {
+        $response['centers'] = CenterChange::all();
+        return view('pages.center.all')->with($response);
+    }
+
     public function getPaperDetails(Request $request)
     {
         try {
