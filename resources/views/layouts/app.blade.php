@@ -45,27 +45,7 @@
     @include('libraries.scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        $("form:not(.remove-form)").submit(function(e) {
-
-            e.preventDefault();
-
-            Swal.fire({
-                title: 'Save Candidate?',
-                text: 'Do you want to save this record?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, Save'
-            }).then((result) => {
-
-                if (result.isConfirmed) {
-                    this.submit();
-                }
-
-            });
-
-        });
-    </script>
+    
 </body>
 
 </html>

@@ -529,6 +529,28 @@
 </script>
 
 <script>
+        $("#candidateForm").submit(function(e) {
+
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Save Candidate?',
+                text: 'Do you want to save this record?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Save'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+
+            });
+
+        });
+    </script>
+
+<script>
 document.querySelectorAll('.remove-form').forEach(form => {
 
     form.addEventListener('submit', function(e){

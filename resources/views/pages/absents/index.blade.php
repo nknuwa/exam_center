@@ -53,7 +53,7 @@
                     <div class="col-lg-12 col-md-12 col-12">
 
 
-                        <form action="{{ route('absentees.store') }}" method="POST">
+                        <form action="{{ route('absentees.store') }}" method="POST" id="candidateForm">
                             @csrf
                             @php
                                 $user = Auth::user(); // get full user object, not just ID
