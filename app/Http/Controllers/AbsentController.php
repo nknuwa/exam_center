@@ -222,4 +222,15 @@ class AbsentController extends Controller
 
         return $pdf->download('absentees_report.pdf');
     }
+
+    public function destroy($id)
+    {
+        $absent = AbsentCandidates::findOrFail($id);
+
+        $absent->delete();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Candidate removed successfully.');
+    }
 }

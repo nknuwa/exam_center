@@ -49,7 +49,7 @@
             let session = $('#session').val();
 
             console.log("Selected Date:", exam_date);
-    console.log("Selected Session:", session);
+            console.log("Selected Session:", session);
 
             if (exam_date && session) {
                 $.ajax({
@@ -487,36 +487,35 @@
     });
 </script> --}}
 <script>
-$('button[type="reset"]').click(function(e){
+    $('button[type="reset"]').click(function(e) {
 
-e.preventDefault();
+        e.preventDefault();
 
-let form=this.form;
+        let form = this.form;
 
-Swal.fire({
+        Swal.fire({
 
-title:'Clear Form?',
+            title: 'Clear Form?',
 
-text:'All entered data will be removed.',
+            text: 'All entered data will be removed.',
 
-icon:'warning',
+            icon: 'warning',
 
-showCancelButton:true,
+            showCancelButton: true,
 
-confirmButtonText:'Yes'
+            confirmButtonText: 'Yes'
 
-}).then((result)=>{
+        }).then((result) => {
 
-if(result.isConfirmed){
+            if (result.isConfirmed) {
 
-form.reset();
+                form.reset();
 
-}
+            }
 
-});
+        });
 
-});
-
+    });
 </script>
 
 
@@ -527,6 +526,34 @@ form.reset();
         autoclose: true,
         todayHighlight: true
     });
+</script>
+
+<script>
+document.querySelectorAll('.remove-form').forEach(form => {
+
+    form.addEventListener('submit', function(e){
+
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Remove Candidate?',
+            text: "This candidate will be removed from the list.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Remove'
+        }).then((result)=>{
+
+            if(result.isConfirmed){
+                form.submit();
+            }
+
+        });
+
+    });
+
+});
 </script>
 
 
@@ -703,22 +730,22 @@ form.reset();
 </script>  --}}
 
 <script>
-$(document).ready(function() {
-    $('#examTable').DataTable({
-        language: {
-            emptyTable: "No data available in the table",
-            paginate: {
-                previous: '<i class="fa-solid fa-angles-left"></i>',
-                next: '<i class="fa-solid fa-angles-right"></i>'
-            }
-        },
-        pageLength: 10,
-        lengthMenu: [5, 10, 20],
-        order: [
-            [0, "desc"]
-        ]
+    $(document).ready(function() {
+        $('#examTable').DataTable({
+            language: {
+                emptyTable: "No data available in the table",
+                paginate: {
+                    previous: '<i class="fa-solid fa-angles-left"></i>',
+                    next: '<i class="fa-solid fa-angles-right"></i>'
+                }
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 20],
+            order: [
+                [0, "desc"]
+            ]
+        });
     });
-});
 </script>
 
 

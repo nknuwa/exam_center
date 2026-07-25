@@ -46,44 +46,26 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        $("form:not(.remove-form)").submit(function(e) {
 
-$(function(){
+            e.preventDefault();
 
-$('form').on('submit',function(e){
+            Swal.fire({
+                title: 'Save Candidate?',
+                text: 'Do you want to save this record?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Save'
+            }).then((result) => {
 
-e.preventDefault();
+                if (result.isConfirmed) {
+                    this.submit();
+                }
 
-let form=this;
+            });
 
-Swal.fire({
-
-title:'Save Candidate?',
-
-text:'Do you want to save this record?',
-
-icon:'question',
-
-showCancelButton:true,
-
-confirmButtonText:'Yes',
-
-cancelButtonText:'No'
-
-}).then((result)=>{
-
-if(result.isConfirmed){
-
-form.submit();
-
-}
-
-});
-
-});
-
-});
-
-</script>
+        });
+    </script>
 </body>
 
 </html>

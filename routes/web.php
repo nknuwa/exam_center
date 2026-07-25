@@ -66,6 +66,8 @@ Route::prefix('absentees')->group(function () {
     // Route::get('/exams/download/csv', [AbsentController::class, 'downloadCsv'])->name('exams.download.csv');
     Route::get('/exams/download/excel', [AbsentController::class, 'downloadExcel'])->name('exams.download.excel');
     Route::get('/exams/download/pdf', [AbsentController::class, 'downloadPdf'])->name('exams.download.pdf');
+
+    Route::delete('/absentees/{id}',[AbsentController::class, 'destroy'])->name('absentees.destroy');
 });
 
 Route::prefix('medium')->group(function () {

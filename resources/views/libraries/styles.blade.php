@@ -228,11 +228,114 @@
 
     }
 
-    .form-label{
+    .form-label {
 
-font-weight:600;
+        font-weight: 600;
 
-color:#555;
+        color: #555;
 
-}
+    }
+
+    .reset:hover {
+        background: #000;
+        color: #fff;
+    }
+
+
+    .modern-table {
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+
+    .modern-table thead th {
+
+        background: #f8f9fa;
+        color: #495057;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 15px;
+        border: none;
+
+    }
+
+
+    .modern-table tbody tr {
+
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: 0.3s;
+
+    }
+
+
+    .modern-table tbody tr:hover {
+
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+
+    }
+
+
+    .modern-table tbody td {
+
+        padding: 15px;
+        border: none;
+
+    }
+
+
+    .modern-table tbody tr td:first-child {
+
+        border-radius: 12px 0 0 12px;
+
+    }
+
+
+    .modern-table tbody tr td:last-child {
+
+        border-radius: 0 12px 12px 0;
+
+    }
+
+
+    .paper-badge {
+
+        background: #eef2ff;
+        color: #4338ca;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+
+    }
+
+
+    .bg-danger-subtle {
+
+        background: #ffe5e5;
+
+    }
+
+
+    .bg-primary-subtle {
+
+        background: #e7f0ff;
+
+    }
+
+
+    .bg-success-subtle {
+
+        background: #dcfce7;
+
+    }
+
+
+    .bg-warning-subtle {
+
+        background: #fff7d6;
+
+    }
 </style>
