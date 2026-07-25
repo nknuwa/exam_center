@@ -84,6 +84,9 @@ Route::prefix('center')->group(function () {
     Route::get('/get-center-by-index', [CenterController::class, 'getCenterByIndex'])->name('get.center.by.index');
     Route::post('/store', [CenterController::class, 'store'])->name('centers.store');
 
+    Route::get('/exams/download/excel', [CenterController::class, 'downloadExcel'])->name('exams.download.excel');
+    Route::get('/exams/download/pdf', [CenterController::class, 'downloadPdf'])->name('exams.download.pdf');
+
 });
 
 Route::prefix('message')->group(function () {

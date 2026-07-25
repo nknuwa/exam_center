@@ -529,53 +529,75 @@
 </script>
 
 <script>
-        $("#candidateForm").submit(function(e) {
-
-            e.preventDefault();
-
-            Swal.fire({
-                title: 'Save Candidate?',
-                text: 'Do you want to save this record?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, Save'
-            }).then((result) => {
-
-                if (result.isConfirmed) {
-                    this.submit();
-                }
-
-            });
-
-        });
-    </script>
-
-<script>
-document.querySelectorAll('.remove-form').forEach(form => {
-
-    form.addEventListener('submit', function(e){
+    $("#candidateForm").submit(function(e) {
 
         e.preventDefault();
 
         Swal.fire({
-            title: 'Remove Candidate?',
-            text: "This candidate will be removed from the list.",
-            icon: 'warning',
+            title: 'Save Candidate?',
+            text: 'Do you want to save this record?',
+            icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, Remove'
-        }).then((result)=>{
+            confirmButtonText: 'Yes, Save'
+        }).then((result) => {
 
-            if(result.isConfirmed){
-                form.submit();
+            if (result.isConfirmed) {
+                this.submit();
             }
 
         });
 
     });
+</script>
 
-});
+<script>
+    $("#centerForm").submit(function(e) {
+
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Change Center',
+            text: 'Do you want to save this record?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Save'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                this.submit();
+            }
+
+        });
+
+    });
+</script>
+
+<script>
+    document.querySelectorAll('.remove-form').forEach(form => {
+
+        form.addEventListener('submit', function(e) {
+
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Remove Candidate?',
+                text: "This candidate will be removed from the list.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Remove'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+
+            });
+
+        });
+
+    });
 </script>
 
 

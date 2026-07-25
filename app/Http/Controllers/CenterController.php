@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Exports\CentersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CenterController extends Controller
 {
@@ -122,5 +125,20 @@ class CenterController extends Controller
         ]);
 
         return redirect()->route('center.all')->with('success', 'Center changed successfully!');
+    }
+
+     public function downloadExcel()
+    {
+        return Excel::download(new CentersExport, 'centers_report.xlsx');
+    }
+
+    public function downloadPDF()
+    {
+        $centers = CenterChange::all(); // or your filtered query
+
+        $pdf = Pdf::loadView('pdf.centers', compact('centers'))
+            ->setPaper('A4', 'landscape'); // landscape better for wide tables
+
+        return $pdf->download('centers_report.pdf');
     }
 }

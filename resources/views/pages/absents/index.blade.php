@@ -23,14 +23,6 @@
 
         <div class="card shadow-lg border-0 rounded-4 mt-2">
 
-            {{-- <div class="card-header bg-primary text-white rounded-top-4">
-
-                <h5 class="mb-0">
-                    <i class="fa fa-user-minus"></i>
-                    Add Absent Candidate
-                </h5>
-
-            </div> --}}
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
