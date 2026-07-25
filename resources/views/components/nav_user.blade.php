@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+{{-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm"> --}}
+    <nav class="navbar navbar-expand-lg modern-navbar">
     <div class="container-fluid px-3 px-md-4">
         {{-- Logo / Title --}}
         <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
