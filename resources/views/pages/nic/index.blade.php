@@ -362,7 +362,7 @@
                     </a>
 
 
-                    <a href="{{ route('nic.download.pdf') }}" class="btn btn-danger rounded-pill px-4">
+                    <a href="{{ route('medium.download.pdf') }}" class="btn btn-danger rounded-pill px-4">
 
                         <i class="fa-solid fa-file-pdf me-1"></i>
                         PDF

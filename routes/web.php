@@ -79,6 +79,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 /* absentees Route*/
 Route::prefix('absentees')->group(function () {
     Route::get('/', [AbsentController::class, 'index'])->name('absentees.all');
+    Route::get('/all', [AbsentController::class, 'All'])->name('absentees.allData');
     Route::get('/get-paper-details', [AbsentController::class, 'getPaperDetails'])->name('get.paper.details');
 
 
@@ -93,6 +94,7 @@ Route::prefix('absentees')->group(function () {
 
 Route::prefix('medium')->group(function () {
     Route::get('/', [MediumController::class, 'index'])->name('medium.all');
+        Route::get('/all', [MediumController::class, 'All'])->name('medium.allData');
     Route::get('/get-paper-details', [MediumController::class, 'getPaperDetails'])->name('get.paper_medium.details');
     Route::get('/get-medium', [MediumController::class, 'getMedium'])->name('get.medium');
     Route::post('/store', [MediumController::class, 'store'])->name('medium.store');
@@ -103,6 +105,7 @@ Route::prefix('medium')->group(function () {
 
 Route::prefix('center')->group(function () {
     Route::get('/', [CenterController::class, 'index'])->name('center.all');
+    Route::get('/all', [CenterController::class, 'All'])->name('center.allData');
     Route::get('/get-paper-details', [CenterController::class, 'getPaperDetails'])->name('get.paper_center.details');
     Route::get('/get-center-details', [CenterController::class, 'getCenterDetails'])->name('get.center.details');
     Route::get('/get-center-by-index', [CenterController::class, 'getCenterByIndex'])->name('get.center.by.index');
@@ -115,6 +118,7 @@ Route::prefix('center')->group(function () {
 
 Route::prefix('message')->group(function () {
     Route::get('/', [CommentsController::class, 'index'])->name('message.all');
+    Route::get('/all', [CommentsController::class, 'All'])->name('message.allData');
     Route::get('/get-paper-details', [CommentsController::class, 'getPaperDetails'])->name('get.paper_note.details');
     Route::post('/store', [CommentsController::class, 'store'])->name('message.store');
 
@@ -127,6 +131,7 @@ Route::prefix('message')->group(function () {
 /* NIC Route*/
 Route::prefix('nic')->group(function () {
     Route::get('/', [NicController::class, 'index'])->name('nic.all');
+    Route::get('/all', [NicController::class, 'All'])->name('nic.allData');
     Route::get('/get-paper-details', [NicController::class, 'getPaperDetails'])->name('get.paper.details');
     Route::get('/nic/get-candidate', [NicController::class, 'getCandidate'])->name('nic.getCandidate');
 

@@ -16,6 +16,7 @@ class CenterController extends Controller
 {
     public function index()
     {
+        $response['exam_db'] = ExamDb::select('center_no')->distinct()->get();
         $response['centers'] = CenterChange::where('user_id', Auth::id())->get();
         return view('pages.center.index')->with($response);
     }

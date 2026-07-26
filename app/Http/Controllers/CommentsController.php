@@ -14,10 +14,17 @@ class CommentsController extends Controller
 {
     public function index()
     {
-
+        $response['exam_db'] = ExamDb::select('center_no')->distinct()->get();
         $response['comments'] = SpecialNote::where('user_id', Auth::id())->get();
         return view('pages.comments.index')->with($response);
     }
+
+    public function All()
+    {
+        $response['comments'] = SpecialNote::all();
+        return view('pages.comments.all')->with($response);
+    }
+
 
     public function getPaperDetails(Request $request)
     {

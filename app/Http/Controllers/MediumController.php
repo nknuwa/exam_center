@@ -17,13 +17,14 @@ class MediumController extends Controller
 {
     public function index()
     {
+        $response['exam_db'] = ExamDb::select('center_no')->distinct()->get();
         $response['mediumChanges'] = MediumChange::where('user_id', Auth::id())->get();
         return view('pages.medium.index')->with($response);
     }
 
     public function All()
     {
-        $response['medium'] = MediumChange::all();
+        $response['mediumChanges'] = MediumChange::all();
         return view('pages.medium.all')->with($response);
     }
 

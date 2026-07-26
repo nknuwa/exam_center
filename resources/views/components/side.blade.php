@@ -34,7 +34,7 @@
                   <a href="{{route('absentees.all')}}">Absentees</a>
                 </li>
                 <li>
-                  <a href="new-post.html">AL</a>
+                  <a href="{{route('absentees.allData')}}">All Absent Candidates</a>
                 </li>
               </ul>
             </li>
@@ -42,7 +42,7 @@
               <a class="show-cat-btn" href="{{route('center.all')}}">
                 <span class="icon folder" aria-hidden="true"></span>Center Entry
                 <span class="category__btn transparent-btn" title="Open list">
-                  <span class="sr-only">Center Change</span>
+                  <span class="sr-only">Open list</span>
                    <span class="icon arrow-down" aria-hidden="true"></span>
                 </span>
               </a>
@@ -50,10 +50,13 @@
                 <li>
                   <a href="{{route('center.all')}}">Center Change</a>
                 </li>
+                <li>
+                  <a href="{{route('center.allData')}}">All Center Changes</a>
+                </li>
               </ul>
             </li>
             <li>
-              <a class="show-cat-btn" href="{{route('center.all')}}">
+              <a class="show-cat-btn" href="{{route('medium.all')}}">
                 <span class="icon image" aria-hidden="true"></span>Medium Entry
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Medium Change</span>
@@ -65,40 +68,47 @@
                 <li>
                   <a href="{{route('medium.all')}}">Medium Change</a>
                 </li>
-              </ul>
-              {{--  <ul class="cat-sub-menu">
                 <li>
-                  <a href="media-01.html"></a>
-                </li>
-                <li>
-                  <a href="media-02.html">Media-02</a>
-                </li>
-              </ul>  --}}
-            {{--  </li>
-            <li>
-              <a class="show-cat-btn" href="##">
-                <span class="icon paper" aria-hidden="true"></span>Pages
-                <span class="category__btn transparent-btn" title="Open list">
-                  <span class="sr-only">Open list</span>
-                  <span class="icon arrow-down" aria-hidden="true"></span>
-                </span>
-              </a>
-              <ul class="cat-sub-menu">
-                <li>
-                  <a href="pages.html">All pages</a>
-                </li>
-                <li>
-                  <a href="new-page.html">Add new page</a>
+                  <a href="{{route('medium.allData')}}">All Medium Changes</a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="comments.html">
-                <span class="icon message" aria-hidden="true"></span>
-                Comments
+              <a class="show-cat-btn" href="{{route('message.all')}}">
+                <span class="icon image" aria-hidden="true"></span>Note Entry
+                <span class="category__btn transparent-btn" title="Open list">
+                  <span class="sr-only">Open list</span>
+                   <span class="icon arrow-down" aria-hidden="true"></span>
+                </span>
               </a>
-              <span class="msg-counter">7</span>
-            </li>  --}}
+
+              <ul class="cat-sub-menu">
+                <li>
+                  <a href="{{route('message.all')}}">Special Notes</a>
+                </li>
+                <li>
+                  <a href="{{route('message.allData')}}">All Notes</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a class="show-cat-btn" href="{{route('nic.all')}}">
+                <span class="icon image" aria-hidden="true"></span>NIC Entry
+                <span class="category__btn transparent-btn" title="Open list">
+                  <span class="sr-only">Open list</span>
+                   <span class="icon arrow-down" aria-hidden="true"></span>
+                </span>
+              </a>
+
+              <ul class="cat-sub-menu">
+                <li>
+                  <a href="{{route('nic.all')}}">NIC Change</a>
+                </li>
+                <li>
+                  <a href="{{route('nic.allData')}}">All NIC Changes</a>
+                </li>
+              </ul>
+            </li>
           </ul>
           <span class="system-menu__title">system</span>
           <ul class="sidebar-body-menu">
