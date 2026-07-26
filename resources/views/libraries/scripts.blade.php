@@ -668,6 +668,50 @@
 </script>
 
 <script>
+    $("#profileUpdate").submit(function(e) {
+
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Profile Update',
+            text: 'Do you want to save this record?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Save'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                this.submit();
+            }
+
+        });
+
+    });
+</script>
+
+<script>
+    $("#passwordUpdate").submit(function(e) {
+
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Password Update',
+            text: 'Do you want to change password?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Save'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                this.submit();
+            }
+
+        });
+
+    });
+</script>
+
+<script>
     document.querySelectorAll('.remove-form').forEach(form => {
 
         form.addEventListener('submit', function(e) {

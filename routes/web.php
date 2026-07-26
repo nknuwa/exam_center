@@ -14,6 +14,7 @@ use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\NicController;
 use App\Http\Middleware\Authenticate;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,18 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/login-logs', [AuthenticatedSessionController::class, 'index'])
         ->name('login.logs');
+});
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/profile', [ProfileController::class, 'index'])
+        ->name('profile.show');
+
+    Route::put('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'changePassword'])
+    ->name('profile.password');
+
 });
 
 
