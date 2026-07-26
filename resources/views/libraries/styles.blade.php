@@ -339,92 +339,207 @@
 
     }
 
-    /* Modern Navbar */
+    /* =====================================
+   MODERN GRADIENT NAVBAR
+===================================== */
+
     .modern-navbar {
-        background: linear-gradient(135deg, #111827, #1f2937);
-        padding: 12px 0;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+        background: linear-gradient(135deg,
+                #1d1d1e 0%,
+                #3a3a3a 50%,
+                #696969 100%);
+
+                /* background:linear-gradient(135deg,#111827,#374151,#4b5563); */
+                /* background:linear-gradient(135deg,#065f46,#10b981,#34d399); */
+
+        min-height: 70px;
+
+        box-shadow:
+            0 8px 25px rgba(0, 0, 0, .15);
+
     }
 
 
     /* Logo */
+
     .navbar-brand {
-        font-size: 17px;
+
         letter-spacing: .3px;
+        font-size: 17px;
+
     }
 
     .navbar-brand img {
-        width: 38px !important;
-        height: 38px;
-        object-fit: contain;
-        background: rgba(255, 255, 255, .1);
-        padding: 5px;
-        border-radius: 10px;
+
+        filter: drop-shadow(0 3px 5px rgba(0, 0, 0, .3));
+
     }
 
 
-    /* Menu Items */
+
+    /* Navbar Links */
+
     .modern-navbar .nav-link {
-        color: #d1d5db !important;
-        font-size: 14px;
+
+        color: rgba(255, 255, 255, .9) !important;
+
         font-weight: 500;
-        padding: 10px 15px !important;
+
+        padding: 10px 16px !important;
+
+        border-radius: 12px;
+
         margin: 0 3px;
-        border-radius: 10px;
-        transition: all .3s ease;
+
+        transition: .3s ease;
+
     }
+
 
 
     /* Hover */
+
     .modern-navbar .nav-link:hover {
-        background: rgba(255, 255, 255, .12);
-        color: #ffffff !important;
-        transform: translateY(-2px);
-    }
 
-
-    /* Active menu */
-    .modern-navbar .nav-link.active {
-        background: #2563eb;
         color: white !important;
+
+        background:
+            rgba(255, 255, 255, .15);
+
+        transform: translateY(-2px);
+
     }
+
+
+
+    /* Active Menu */
+
+    .modern-navbar .nav-link.active {
+
+        background:
+            rgba(255, 255, 255, .22);
+
+        color: white !important;
+
+        font-weight: 700;
+
+        box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, .15);
+
+    }
+
 
 
     /* User Icon */
-    #userDropdown {
-        background: rgba(255, 255, 255, .12);
-        width: 40px;
-        height: 40px;
+
+    .modern-navbar .fa-user-tie {
+
+        width: 38px;
+
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+
         justify-content: center;
+
         border-radius: 50%;
-        padding: 0 !important;
+
+        background:
+            rgba(255, 255, 255, .18);
+
     }
 
-
-    #userDropdown:hover {
-        background: #2563eb;
-    }
 
 
     /* Dropdown */
+
     .dropdown-menu {
+
         border: none;
-        border-radius: 14px;
-        padding: 8px;
-        margin-top: 12px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, .15);
+
+        border-radius: 16px;
+
+        padding: 10px;
+
+        box-shadow:
+            0 15px 40px rgba(0, 0, 0, .15);
+
     }
 
 
+
     .dropdown-item {
+
         border-radius: 10px;
+
         padding: 10px 15px;
-        font-size: 14px;
+
+        transition: .3s;
+
     }
 
 
     .dropdown-item:hover {
-        background: #f1f5f9;
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+    }
+
+
+
+    /* Mobile Toggle */
+
+    .navbar-toggler {
+
+        background:
+            rgba(255, 255, 255, .15);
+
+        padding: 8px 10px;
+
+        border-radius: 10px;
+
+    }
+
+
+    .navbar-toggler-icon {
+
+        filter: brightness(0) invert(1);
+
+    }
+
+
+
+    /* Mobile Menu */
+
+    @media(max-width:991px) {
+
+        .navbar-collapse {
+
+            background:
+                rgba(30, 58, 138, .95);
+
+            margin-top: 15px;
+
+            padding: 15px;
+
+            border-radius: 18px;
+
+            backdrop-filter: blur(10px);
+
+        }
+
+
+        .modern-navbar .nav-link {
+
+            margin: 5px 0;
+
+        }
+
     }
 
 
