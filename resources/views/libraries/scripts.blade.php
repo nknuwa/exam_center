@@ -595,6 +595,28 @@
 </script>
 
 <script>
+    $("#noteForm").submit(function(e) {
+
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Change Medium',
+            text: 'Do you want to save this record?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Save'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                this.submit();
+            }
+
+        });
+
+    });
+</script>
+
+<script>
     document.querySelectorAll('.remove-form').forEach(form => {
 
         form.addEventListener('submit', function(e) {
@@ -798,6 +820,25 @@
 <script>
     $(document).ready(function() {
         $('#examTable').DataTable({
+            language: {
+                emptyTable: "No data available in the table",
+                paginate: {
+                    previous: '<i class="fa-solid fa-angles-left"></i>',
+                    next: '<i class="fa-solid fa-angles-right"></i>'
+                }
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 20],
+            order: [
+                [0, "desc"]
+            ]
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#noteTable').DataTable({
             language: {
                 emptyTable: "No data available in the table",
                 paginate: {

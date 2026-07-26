@@ -21,27 +21,38 @@
             </div>
         </div>
 
-        <div class="card mt-3 shadow-sm border-0 rounded-3">
-            <div class="card-body">
+        <div class="card shadow-lg border-0 rounded-4 mt-2">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h3 class="fw-bold mb-1">
+                            <i class="fa-solid fa-file-pen text-danger me-2"></i>
+                            Special note regarding Candidates and the Center
+                        </h3>
+                        <small class="text-muted">
+                            Examination Center Management
+                        </small>
+                    </div>
+
+                    <span class="badge bg-primary px-3 py-2">
+                        <i class="fa-solid fa-calendar-days me-1"></i>
+                        {{ date('d M Y') }}
+                    </span>
+                </div>
                 <div class="row gy-4">
                     <!-- Left Form Section -->
-                    <div class="col-lg-5 col-md-6 col-12">
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show py-2">
-                                {{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        @endif
+                    <div class="col-lg-12 col-md-12 col-12"">
 
-                        <form action="{{ route('message.store') }}" method="POST">
+                        <form action="{{ route('message.store') }}" method="POST" id="noteForm">
                             @csrf
                              @php
                                 $user = Auth::user(); // get full user object, not just ID
                             @endphp
 
+                            <div class="row g-3">
                             @if ($user->hasRole('super-admin'))
                                 {{-- Super Admin: show all centers --}}
-                                <div class="mb-3">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="center_no" class="form-label">Center</label>
                                     <select id="center_no" name="center_no" class="form-select form-select-sm select2">
                                         <option value="">Select Center</option>
@@ -52,23 +63,25 @@
                                 </div>
                             @else
                                 {{-- Normal User: show only assigned center --}}
-                                <div class="mb-3">
+                                <div class="col-lg-4 col-md-6">
                                     <label for="center_no" class="form-label">Center</label>
-                                    <select id="center_no" name="center_no" class="form-select form-select-sm select2"
+                                    <input type="text" id="center_no" name="center_no"
+                                            class="form-control form-control-sm" value="{{ $user->center_no }}" readonly>
+                                    {{-- <select id="center_no" name="center_no" class="form-select form-select-sm select2"
                                         readonly>
                                         @if ($user->center_no)
                                             <option value="{{ $user->center_no }}" selected>{{ $user->center_no }}</option>
                                         @else
                                             <option value="">No Center Assigned</option>
                                         @endif
-                                    </select>
+                                    </select> --}}
                                 </div>
                             @endif
 
-                            <div class="mb-3">
+                            <div class="col-lg-4 col-md-6">
                                 <label class="form-label mb-1">Date <span class="text-danger">*</span></label>
                                 <input type="date" name="date" id="date" class="form-control"
-                                    value="{{ old('date') }}">
+                                    value="{{ old('date', now()->format('Y-m-d')) }}">
                                 {{--  <input class="form-control form-control-sm" type="date" name="date"
                                value="{{ old('date', \Carbon\Carbon::now()->format('Y-m-d')) }}">  --}}
                                 @error('date')
@@ -76,7 +89,7 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
+                            <div class="col-lg-4 col-md-6">
                                 <label class="form-label mb-1">Session <span class="text-danger">*</span></label>
                                 <select id="session" name="session" class="form-select form-select-sm">
                                     <option value="">Select Session</option>
@@ -89,8 +102,9 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-
-                            <div class="mb-3">
+                            </div>
+                            <div class="row g-3 mt-1">
+                            <div class="col-lg-4 col-md-6">
                                 <label class="form-label mb-1">Subject Code <span class="text-danger">*</span></label>
                                 <select id="subject_code" name="subject_code" class="form-control">
                                     <option value="">Select Subject</option>
@@ -102,7 +116,7 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
+                            <div class="col-lg-4 col-md-6">
                                 <label class="form-label mb-1">Paper Code <span class="text-danger">*</span></label>
                                 <input class="form-control form-control-sm" type="text" name="paper_code" id="paper_code"
                                     value="{{ old('paper_code') }}" readonly>
@@ -111,20 +125,36 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
+                            <div class="col-lg-4 col-md-6">
                                 <label class="form-label mb-1">Special Note <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+                                <textarea class="form-control" id="message" name="message" rows="4"></textarea>
+                            </div>
                             </div>
 
-                            <div class="d-flex flex-wrap gap-2">
-                                <button type="submit" class="btn btn-primary btn-sm px-3">Submit</button>
-                                <button type="reset" class="btn btn-outline-secondary btn-sm px-3">Clear</button>
+                            <div class="row mt-4">
+                                <div class="col-md-12 d-flex justify-content-end gap-2">
+                                    <button class="btn btn-primary px-4">
+
+                                        <i class="fa fa-save"></i>
+
+                                        Save Candidate
+
+                                    </button>
+
+                                    <button type="reset" class="btn btn-light border px-4 reset">
+
+                                        <i class="fa fa-rotate-left"></i>
+
+                                        Reset
+
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
 
                     <!-- Right Section -->
-                    <div class="col-lg-7 col-md-6 col-12">
+                    {{-- <div class="col-lg-7 col-md-6 col-12">
                         <div class="text-center text-muted small mt-4 mt-md-0">
                             <article class="stat-cards-item mx-5 mt-5" style="border:1px solid">
                                 <div class="stat-cards-icon primary">
@@ -146,20 +176,46 @@
                                 </div>
                             </article>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
 
 
         <!-- Exam Table -->
-        <div class="card mt-4 shadow-sm border-0 rounded-3">
-            <div class="card-body">
+        <!-- Modern Exam Table -->
+        <div class="card mt-4 border-0 shadow-lg rounded-4 overflow-hidden">
+
+            <div class="card-header bg-white border-0 px-4 pt-4">
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <h5 class="fw-bold mb-1">
+                            <i class="fa-solid fa-comment-dots text-danger me-2"></i>
+                            Special Notes List
+                        </h5>
+                        <small class="text-muted">
+                            Examination Special Notes
+                        </small>
+                    </div>
+
+                    <span class="badge bg-danger-subtle text-danger px-3 py-2">
+                        Total : {{ count($comments) }}
+                    </span>
+
+                </div>
+            </div>
+
+
+            <div class="card-body px-4 pb-4">
+
                 <div class="table-responsive">
-                    <table id="examTable" class="table table-bordered table-striped table-sm align-middle mb-3">
-                        <thead class="table-light">
+
+                    <table id="noteTable" class="table modern-table align-middle mb-0">
+
+                        <thead>
                             <tr>
-                                <th>Index No</th>
+                                <th>Center No</th>
                                 <th>Date</th>
                                 <th>Session</th>
                                 <th>Subject No</th>
@@ -167,37 +223,176 @@
                                 <th>Message</th>
                             </tr>
                         </thead>
+
+
                         <tbody>
+
                             @forelse($comments as $comment)
-                            <tr>
-                                <td>{{ $comment->center_no }}</td>
-                                <td>{{ $comment->date }}</td>
-                                <td>{{ $comment->session }}</td>
-                                <td>{{ $comment->subject_code }}</td>
-                                <td>{{ $comment->paper_code }}</td>
-                                <td>{{ $comment->message }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center text-muted">No Exams Found</td>
-                            </tr>
-                        @endforelse
+                                <tr>
+
+                                    <td>
+                                        <span class="badge bg-primary-subtle text-primary">
+                                            {{ $comment->center_no }}
+                                        </span>
+                                    </td>
+
+
+                                    <td>
+                                        <i class="fa-regular fa-calendar text-muted me-1"></i>
+                                        {{ \Carbon\Carbon::parse($comment->date)->format('d M Y') }}
+                                    </td>
+
+
+                                    <td>
+                                        @if ($comment->session == 'SESSION-I')
+                                            <span class="badge bg-success-subtle text-success">
+                                                {{ $comment->session }}
+                                            </span>
+                                        @else
+                                            <span class="badge bg-warning-subtle text-warning">
+                                                {{ $comment->session }}
+                                            </span>
+                                        @endif
+                                    </td>
+
+
+                                    <td>
+                                        <strong>
+                                            {{ $comment->subject_code }}
+                                        </strong>
+                                    </td>
+
+
+                                    <td>
+                                        <span class="paper-badge">
+                                            {{ $comment->paper_code }}
+                                        </span>
+                                    </td>
+
+
+                                    <td>
+                                        <span class="fw-bold text-dark">
+                                            {{ $comment->message }}
+                                        </span>
+                                    </td>
+
+
+
+
+                                </tr>
+
+
+                            @empty
+
+                                <tr>
+
+                                    <td colspan="6" class="text-center py-5">
+
+                                        <div class="text-muted">
+
+                                            <i class="fa-solid fa-folder-open fa-2x mb-3"></i>
+
+                                            <h6>No Messages Found</h6>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            @endforelse
+
                         </tbody>
+
                     </table>
+
                 </div>
 
-                <div class="d-flex flex-wrap gap-2 mt-3">
-                    {{-- <a href="{{ route('exams.download.csv') }}" class="btn btn-sm btn-primary">
-                        Download <i class="fa-solid fa-file-csv ms-1"></i>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+                    <a href="{{ route('note.download.excel') }}" class="btn btn-success rounded-pill px-4">
+
+                        <i class="fa-solid fa-file-excel me-1"></i>
+                        Excel
+
                     </a>
-                    <a href="{{ route('exams.download.excel') }}" class="btn btn-sm btn-success">
-                        Download <i class="fa-solid fa-file-excel ms-1"></i>
+
+
+                    <a href="{{ route('note.download.pdf') }}" class="btn btn-danger rounded-pill px-4">
+
+                        <i class="fa-solid fa-file-pdf me-1"></i>
+                        PDF
+
                     </a>
-                    <a href="{{ route('exams.download.pdf') }}" class="btn btn-sm btn-danger">
-                        Download <i class="fa-solid fa-file-pdf ms-1"></i>
-                    </a> --}}
+
                 </div>
+
+
             </div>
+
         </div>
+
     </div>
 @endsection
+
+@if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                background: '#198754', // Green
+                color: '#ffffff',
+                timerProgressBar: true
+            });
+
+            Toast.fire({
+                icon: 'success',
+                title: "{{ session('success') }}"
+            });
+
+        });
+    </script>
+@endif
+@if (session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true
+            });
+
+            Toast.fire({
+                icon: 'error',
+                title: "{{ session('error') }}"
+            });
+
+        });
+    </script>
+@endif
+
+@if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            Swal.fire({
+
+                icon: 'error',
+
+                title: 'Validation Error',
+
+                html: `{!! implode('<br>', $errors->all()) !!}`
+
+            });
+
+        });
+    </script>
+@endif
+

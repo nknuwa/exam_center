@@ -90,7 +90,7 @@
                                     <input type="date" name="date" id="date" class="form-control"
                                         value="{{ old('date') }}">
                                     @error('date')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -104,7 +104,7 @@
                                             SESSION-II</option>
                                     </select>
                                     @error('session')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                     </select>
                                 </div>
@@ -139,7 +139,7 @@
                                     <input class="form-control form-control-sm" type="text" name="index_no"
                                         value="{{ old('index') }}" id="index_no">
                                     <small id="index-error" class="text-danger"></small>
-                                    @error('index')
+                                    @error('index_no')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>

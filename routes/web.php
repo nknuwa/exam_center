@@ -64,8 +64,8 @@ Route::prefix('absentees')->group(function () {
     Route::post('/store', [AbsentController::class, 'store'])->name('absentees.store');
 
     // Route::get('/exams/download/csv', [AbsentController::class, 'downloadCsv'])->name('exams.download.csv');
-    Route::get('/exams/download/excel', [AbsentController::class, 'downloadExcel'])->name('exams.download.excel');
-    Route::get('/exams/download/pdf', [AbsentController::class, 'downloadPdf'])->name('exams.download.pdf');
+    Route::get('/exams/download/excel', [AbsentController::class, 'downloadExcel'])->name('absentees.download.excel');
+    Route::get('/exams/download/pdf', [AbsentController::class, 'downloadPdf'])->name('absentees.download.pdf');
 
     Route::delete('/absentees/{id}',[AbsentController::class, 'destroy'])->name('absentees.destroy');
 });
@@ -87,8 +87,8 @@ Route::prefix('center')->group(function () {
     Route::get('/get-center-by-index', [CenterController::class, 'getCenterByIndex'])->name('get.center.by.index');
     Route::post('/store', [CenterController::class, 'store'])->name('centers.store');
 
-    Route::get('/exams/download/excel', [CenterController::class, 'downloadExcel'])->name('exams.download.excel');
-    Route::get('/exams/download/pdf', [CenterController::class, 'downloadPdf'])->name('exams.download.pdf');
+    Route::get('/exams/download/excel', [CenterController::class, 'downloadExcel'])->name('centers.download.excel');
+    Route::get('/exams/download/pdf', [CenterController::class, 'downloadPdf'])->name('centers.download.pdf');
 
 });
 
@@ -96,6 +96,9 @@ Route::prefix('message')->group(function () {
     Route::get('/', [CommentsController::class, 'index'])->name('message.all');
     Route::get('/get-paper-details', [CommentsController::class, 'getPaperDetails'])->name('get.paper_note.details');
     Route::post('/store', [CommentsController::class, 'store'])->name('message.store');
+
+    Route::get('/exams/download/excel', [CommentsController::class, 'downloadExcel'])->name('note.download.excel');
+    Route::get('/exams/download/pdf', [CommentsController::class, 'downloadPdf'])->name('note.download.pdf');
 
 
 });

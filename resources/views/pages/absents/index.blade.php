@@ -88,7 +88,7 @@
                                         placeholder="Select Date" autocomplete="off"
                                         value="{{ old('date', now()->format('Y-m-d')) }}">
                                     @error('date')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
 
                                 </div>
@@ -103,7 +103,7 @@
                                             SESSION-II</option>
                                     </select>
                                     @error('session')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                     </select>
                                 </div>
@@ -118,7 +118,7 @@
                                     {{--  <input type="text" id="subject_code" name="subject_code"
                                     class="form-control form-control-sm" readonly value="{{ old('subject_code') }}">  --}}
                                     @error('subject_code')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -127,7 +127,7 @@
                                     <input type="text" id="paper_code" name="paper_code"
                                         class="form-control form-control-sm" readonly value="{{ old('paper_code') }}">
                                     @error('paper_code')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -136,7 +136,7 @@
                                     <input type="text" id="index_no" name="index_no"
                                         class="form-control form-control-sm" value="{{ old('index_no') }}">
                                     @error('index_no')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                             </div>
@@ -339,7 +339,7 @@
 
                 <div class="d-flex justify-content-end gap-2 mt-4">
 
-                    <a href="{{ route('exams.download.excel') }}" class="btn btn-success rounded-pill px-4">
+                    <a href="{{ route('absentees.download.excel') }}" class="btn btn-success rounded-pill px-4">
 
                         <i class="fa-solid fa-file-excel me-1"></i>
                         Excel
@@ -347,7 +347,7 @@
                     </a>
 
 
-                    <a href="{{ route('exams.download.pdf') }}" class="btn btn-danger rounded-pill px-4">
+                    <a href="{{ route('absentees.download.pdf') }}" class="btn btn-danger rounded-pill px-4">
 
                         <i class="fa-solid fa-file-pdf me-1"></i>
                         PDF

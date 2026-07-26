@@ -6,6 +6,9 @@ use App\Models\ExamDb;
 use App\Models\SpecialNote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\NoteExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CommentsController extends Controller
 {
@@ -73,5 +76,20 @@ class CommentsController extends Controller
        // dd($request);
 
         return back()->with('success', 'Special note saved successfully!');
+    }
+
+    public function downloadExcel()
+    {
+        return Excel::download(new NoteExport, 'note_report.xlsx');
+    }
+
+    public function downloadPDF()
+    {
+        $comments = SpecialNote::all(); // or your filtered query
+
+        $pdf = Pdf::loadView('pdf.notes', compact('comments'))
+            ->setPaper('A4', 'landscape'); // landscape better for wide tables
+
+        return $pdf->download('notes_report.pdf');
     }
 }

@@ -88,7 +88,7 @@
                                         placeholder="Select Date" autocomplete="off"
                                         value="{{ old('date', now()->format('Y-m-d')) }}">
                                     @error('date')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -102,7 +102,7 @@
                                             SESSION-II</option>
                                     </select>
                                     @error('session')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                             </div>
@@ -113,6 +113,9 @@
                                     <select id="subject_code" name="subject_code" class="form-control">
                                         <option value="">Select Subject</option>
                                     </select>
+                                     @error('subject_code')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                     {{--  <input id="subject_code" type="text" name="subject_code" class="form-control" readonly>  --}}
                                 </div>
 
@@ -380,7 +383,7 @@
 
                 <div class="d-flex justify-content-end gap-2 mt-4">
 
-                    <a href="{{ route('exams.download.excel') }}" class="btn btn-success rounded-pill px-4">
+                    <a href="{{ route('centers.download.excel') }}" class="btn btn-success rounded-pill px-4">
 
                         <i class="fa-solid fa-file-excel me-1"></i>
                         Excel
@@ -388,7 +391,7 @@
                     </a>
 
 
-                    <a href="{{ route('exams.download.pdf') }}" class="btn btn-danger rounded-pill px-4">
+                    <a href="{{ route('centers.download.pdf') }}" class="btn btn-danger rounded-pill px-4">
 
                         <i class="fa-solid fa-file-pdf me-1"></i>
                         PDF
