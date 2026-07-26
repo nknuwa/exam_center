@@ -19,10 +19,10 @@
         <div class="sidebar-body">
           <ul class="sidebar-body-menu">
             <li>
-              <a class="active" href="/"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+              <a class="{{ request()->routeIs('home') ? 'active' : '' }}" href="/"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
             </li>
             <li>
-              <a class="show-cat-btn" href="{{ route('absentees.all') }}">
+              <a class="show-cat-btn {{ request()->routeIs('absentees.*') ? 'active' : '' }}" href="{{ route('absentees.all') }}">
                 <span class="icon document" aria-hidden="true"></span>Absents Entry
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Open list</span>
@@ -39,7 +39,7 @@
               </ul>
             </li>
             <li>
-              <a class="show-cat-btn" href="{{route('center.all')}}">
+              <a class="show-cat-btn {{ request()->routeIs('center.*') ? 'active' : '' }}" href="{{route('center.all')}}">
                 <span class="icon folder" aria-hidden="true"></span>Center Entry
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Open list</span>
@@ -56,7 +56,7 @@
               </ul>
             </li>
             <li>
-              <a class="show-cat-btn" href="{{route('medium.all')}}">
+              <a class="show-cat-btn {{ request()->routeIs('medium.*') ? 'active' : '' }}" href="{{route('medium.all')}}">
                 <span class="icon image" aria-hidden="true"></span>Medium Entry
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Medium Change</span>
@@ -74,7 +74,7 @@
               </ul>
             </li>
             <li>
-              <a class="show-cat-btn" href="{{route('message.all')}}">
+              <a class="show-cat-btn {{ request()->routeIs('message.*') ? 'active' : '' }}" href="{{route('message.all')}}">
                 <span class="icon image" aria-hidden="true"></span>Note Entry
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Open list</span>
@@ -92,7 +92,7 @@
               </ul>
             </li>
             <li>
-              <a class="show-cat-btn" href="{{route('nic.all')}}">
+              <a class="show-cat-btn {{ request()->routeIs('nic.*') ? 'active' : '' }}" href="{{route('nic.all')}}">
                 <span class="icon image" aria-hidden="true"></span>NIC Entry
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Open list</span>
@@ -133,7 +133,7 @@
               </ul>
             </li>  --}}
             <li>
-              <a class="show-cat-btn" href="##">
+              <a class="show-cat-btn {{ request()->routeIs('users.*') || request()->routeIs('roles.*') || request()->routeIs('permissions.*') ? 'active' : '' }}" href="##">
                 <span class="icon user-3" aria-hidden="true"></span>Users
                 <span class="category__btn transparent-btn" title="Open list">
                   <span class="sr-only">Open list</span>
