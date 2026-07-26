@@ -356,13 +356,13 @@
 
                                 <tr>
 
-                                    <td colspan="6" class="text-center py-5">
+                                    <td colspan="7" class="text-center py-5">
 
                                         <div class="text-muted">
 
                                             <i class="fa-solid fa-folder-open fa-2x mb-3"></i>
 
-                                            <h6>No Absent Candidates Found</h6>
+                                            <h6>No Center Changes Found</h6>
 
                                         </div>
 

@@ -75,6 +75,9 @@ Route::prefix('medium')->group(function () {
     Route::get('/get-paper-details', [MediumController::class, 'getPaperDetails'])->name('get.paper_medium.details');
     Route::get('/get-medium', [MediumController::class, 'getMedium'])->name('get.medium');
     Route::post('/store', [MediumController::class, 'store'])->name('medium.store');
+
+    Route::get('/exams/download/excel', [MediumController::class, 'downloadExcel'])->name('medium.download.excel');
+    Route::get('/exams/download/pdf', [MediumController::class, 'downloadPdf'])->name('medium.download.pdf');
 });
 
 Route::prefix('center')->group(function () {

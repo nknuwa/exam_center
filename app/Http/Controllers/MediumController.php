@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Exports\MediumExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class MediumController extends Controller
@@ -129,5 +132,20 @@ class MediumController extends Controller
         return redirect()
             ->route('medium.all')
             ->with('success', 'Medium change saved successfully!');
+    }
+
+    public function downloadExcel()
+    {
+        return Excel::download(new MediumExport, 'medium_report.xlsx');
+    }
+
+    public function downloadPDF()
+    {
+        $mediumChanges = MediumChange::all(); // or your filtered query
+
+        $pdf = Pdf::loadView('pdf.medium', compact('mediumChanges'))
+            ->setPaper('A4', 'landscape'); // landscape better for wide tables
+
+        return $pdf->download('medium_report.pdf');
     }
 }
