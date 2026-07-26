@@ -12,6 +12,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\MediumController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\NicController;
 use App\Http\Middleware\Authenticate;
 
 /*
@@ -101,6 +102,21 @@ Route::prefix('message')->group(function () {
     Route::get('/exams/download/pdf', [CommentsController::class, 'downloadPdf'])->name('note.download.pdf');
 
 
+});
+
+/* NIC Route*/
+Route::prefix('nic')->group(function () {
+    Route::get('/', [NicController::class, 'index'])->name('nic.all');
+    Route::get('/get-paper-details', [NicController::class, 'getPaperDetails'])->name('get.paper.details');
+    Route::get('/nic/get-candidate', [NicController::class, 'getCandidate'])->name('nic.getCandidate');
+
+    Route::post('/store', [NicController::class, 'store'])->name('nic.store');
+
+    // // Route::get('/exams/download/csv', [AbsentController::class, 'downloadCsv'])->name('exams.download.csv');
+    // Route::get('/exams/download/excel', [AbsentController::class, 'downloadExcel'])->name('absentees.download.excel');
+    // Route::get('/exams/download/pdf', [AbsentController::class, 'downloadPdf'])->name('absentees.download.pdf');
+
+    // Route::delete('/absentees/{id}',[AbsentController::class, 'destroy'])->name('absentees.destroy');
 });
 /* user Route*/
 Route::prefix('users')->group(function () {

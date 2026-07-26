@@ -60,6 +60,14 @@
                     </a>
                 </li>
 
+                {{-- Message --}}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('nic.all') }}">
+                        {{--  <i class="fa-solid fa-language me-1"></i>  --}}
+                         NIC Change
+                    </a>
+                </li>
+
                 {{-- Profile / User Dropdown --}}
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle d-flex align-items-center text-white" href="#"

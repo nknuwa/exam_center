@@ -368,6 +368,35 @@
     });
 </script>
 
+{{--get Exam ID --}}
+<script>
+    $('#index_no').on('change', function () {
+
+    $.ajax({
+        url: "{{ route('nic.getCandidate') }}",
+        type: "GET",
+        data: {
+            center_no: $('#center_no').val(),
+            date: $('#date').val(),
+            session: $('#session').val(),
+            subject_code: $('#subject_code').val(),
+            index_no: $('#index_no').val()
+        },
+        success: function (response) {
+
+            if (response.status) {
+                $('#paper_code').val(response.paper_code);
+                $('#exam_id').val(response.exam_id);
+            } else {
+                $('#paper_code').val('');
+                $('#exam_id').val('');
+            }
+        }
+    });
+
+});
+</script>
+
 {{--  <script>
     $(document).ready(function() {
         $('#date, #session').on('change', function() {
@@ -600,7 +629,29 @@
         e.preventDefault();
 
         Swal.fire({
-            title: 'Change Medium',
+            title: 'Confrim Message',
+            text: 'Do you want to save this record?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Save'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                this.submit();
+            }
+
+        });
+
+    });
+</script>
+
+<script>
+    $("#nicForm").submit(function(e) {
+
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Change Candidate NIC',
             text: 'Do you want to save this record?',
             icon: 'question',
             showCancelButton: true,
@@ -839,6 +890,25 @@
 <script>
     $(document).ready(function() {
         $('#noteTable').DataTable({
+            language: {
+                emptyTable: "No data available in the table",
+                paginate: {
+                    previous: '<i class="fa-solid fa-angles-left"></i>',
+                    next: '<i class="fa-solid fa-angles-right"></i>'
+                }
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 20],
+            order: [
+                [0, "desc"]
+            ]
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#nicTable').DataTable({
             language: {
                 emptyTable: "No data available in the table",
                 paginate: {
