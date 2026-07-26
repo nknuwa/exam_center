@@ -29,6 +29,8 @@
 <!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <!-- Initialize Select2 -->
 <script>
     $(document).ready(function() {
@@ -968,385 +970,66 @@
         });
     });
 </script>
+<script>
+
+const ctx = document.getElementById('attendanceChart');
 
 
-{{--  <script>
-$(document).ready(function () {
-    $('#examTable').DataTable({
-        paging: true,
-        searching: true,
-        ordering: true,
-        responsive: true
-    });
-});
-</script>  --}}
+new Chart(ctx, {
 
-{{--  <script>
-$(document).ready(function () {
+    type: 'doughnut',
 
-    $('#index_no').focus();
-    // Handle Index No blur
-    $('#index_no').on('blur', function () {
-        let indexNo = $(this).val();
-        if (!indexNo) return;
+    data: {
 
-        $.ajax({
-            url: "{{ route('get.exam.data', '') }}/" + indexNo,
-            type: "GET",
-            success: function (res) {
-                if (res && res.subjects.length > 0) {
-                    // Fill center no
-                    $('#center_no').val(res.center_no || '');
+        labels: [
+            'Present',
+            'Absent'
+        ],
 
-                    // Show subject list
-                    let subjectsHtml = '';
-                    res.subjects.forEach(function (s) {
-                        subjectsHtml += `<span class="badge bg-info m-1 subject-item" data-subject="${s.subject_no}">${s.subject_no}</span>`;
-                    });
-                    $('#subject_list').html(subjectsHtml);
+        datasets: [{
 
-                    // Clear old paper list
-                    $('#paper_list').html('');
-                } else {
-                    $('#center_no').val('');
-                    $('#subject_list').html('');
-                    $('#paper_list').html('');
-                }
-            },
-            error: function () {
-                $('#center_no').val('');
-                $('#subject_list').html('');
-                $('#paper_list').html('');
+            data: [
+                {{ $present ?? 0 }},
+                {{ $absent ?? 0 }}
+            ],
+
+            backgroundColor: [
+                '#10b981',
+                '#ef4444'
+            ],
+
+            borderWidth:0,
+
+            hoverOffset:8
+
+        }]
+
+    },
+
+
+    options: {
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+
+        plugins:{
+
+            legend:{
+
+                display:false
+
             }
-        });
-    });
 
-    // When subject badge is clicked
-    $(document).on('click', '.subject-item', function () {
-        let subjectNo = $(this).data('subject');
-        $('#subject_no').val(subjectNo).focus();
-        loadPapers(subjectNo);
-    });
+        },
 
-    // When subject is typed + Enter pressed
-    $('#subject_no').on('keydown', function (e) {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            let subjectNo = $(this).val();
-            if (subjectNo) {
-                loadPapers(subjectNo);
-                $('#paper_code').focus();
-            }
-        }
-    });
 
-    // When paper badge is clicked
-    $(document).on('click', '.paper-item', function () {
-        $('#paper_code').val($(this).data('paper')).focus();
-    });
+        cutout:'70%'
 
-    // Common function to load papers
-    function loadPapers(subjectNo) {
-        let indexNo = $('#index_no').val();
-        if (!indexNo) return;
-
-        $.ajax({
-            url: "{{ route('get.exam.data', '') }}/" + indexNo,
-            type: "GET",
-            success: function (res) {
-                let subjectData = res.subjects.find(s => s.subject_no == subjectNo);
-                if (subjectData) {
-                    let papersHtml = '';
-                    subjectData.papers.forEach(function (p) {
-                        papersHtml += `<span class="badge bg-secondary m-1 paper-item" data-paper="${p}">${p}</span>`;
-                    });
-                    $('#paper_list').html(papersHtml);
-                } else {
-                    $('#paper_list').html('');
-                }
-            }
-        });
     }
 
-    // Move to next input on Enter
-    $('form').on('keydown', 'input', function (e) {
-        if (e.key === "Enter") {
-            e.preventDefault();
-
-            let inputs = $('form').find(':input:visible:not([disabled])');
-            let idx = inputs.index(this);
-
-            if (idx === inputs.length - 1) {
-                // Last input → submit form
-                $('form').submit();
-            } else {
-                // Move to next input
-                inputs.eq(idx + 1).focus();
-            }
-        }
-    });
-
 });
-</script>  --}}
 
-{{--  <script>
-$(document).ready(function () {
-    // Handle Index No blur
-    $('#index_no').on('blur', function () {
-        let indexNo = $(this).val();
-        if (!indexNo) return;
+</script>
 
-        $.ajax({
-            url: "{{ route('get.exam.data', '') }}/" + indexNo,
-            type: "GET",
-            success: function (res) {
-                if (res && res.subjects.length > 0) {
-                    // Fill center no
-                    $('#center_no').val(res.center_no || '');
-
-                    // Show subject list
-                    let subjectsHtml = '';
-                    res.subjects.forEach(function (s) {
-                        subjectsHtml += `<span class="badge bg-info m-1 subject-item" data-subject="${s.subject_no}">${s.subject_no}</span>`;
-                    });
-                    $('#subject_list').html(subjectsHtml);
-
-                    // Clear old paper list
-                    $('#paper_list').html('');
-                } else {
-                    $('#center_no').val('');
-                    $('#subject_list').html('');
-                    $('#paper_list').html('');
-                }
-            },
-            error: function () {
-                $('#center_no').val('');
-                $('#subject_list').html('');
-                $('#paper_list').html('');
-            }
-        });
-    });
-
-    // When subject is selected
-    $(document).on('click', '.subject-item', function () {
-        let subjectNo = $(this).data('subject');
-        $('#subject_no').val(subjectNo).focus();
-
-        let indexNo = $('#index_no').val();
-        if (!indexNo) return;
-
-        $.ajax({
-            url: "{{ route('get.exam.data', '') }}/" + indexNo,
-            type: "GET",
-            success: function (res) {
-                let subjectData = res.subjects.find(s => s.subject_no == subjectNo);
-                if (subjectData) {
-                    let papersHtml = '';
-                    subjectData.papers.forEach(function (p) {
-                        papersHtml += `<span class="badge bg-secondary m-1 paper-item" data-paper="${p}">${p}</span>`;
-                    });
-                    $('#paper_list').html(papersHtml);
-                }
-            }
-        });
-    });
-
-    // When paper is selected
-    $(document).on('click', '.paper-item', function () {
-        $('#paper_code').val($(this).data('paper')).focus();
-    });
-
-    // Move to next input on Enter key
-    $('form').on('keydown', 'input', function (e) {
-        if (e.key === "Enter") {
-            e.preventDefault();
-
-            let inputs = $('form').find(':input:visible:not([disabled],[readonly])');
-            let idx = inputs.index(this);
-
-            if (idx === inputs.length - 1) {
-                // Last input -> submit form
-                $('form').submit();
-            } else {
-                // Move to next input
-                inputs.eq(idx + 1).focus();
-            }
-        }
-    });
-});
-</script>  --}}
-
-
-{{--  <script>
-$(document).ready(function () {
-    // Handle Index No blur
-    $('#index_no').on('blur', function () {
-        let indexNo = $(this).val();
-        if (!indexNo) return;
-
-        $.ajax({
-            url: "{{ route('get.exam.data', '') }}/" + indexNo,
-            type: "GET",
-            success: function (res) {
-                if (res && res.subjects.length > 0) {
-                    // Fill center no
-                    $('#center_no').val(res.center_no || '');
-
-                    // Show subject list
-                    let subjectsHtml = '';
-                    res.subjects.forEach(function (s) {
-                        subjectsHtml += `<span class="badge bg-info m-1 subject-item" data-subject="${s.subject_no}">${s.subject_no}</span>`;
-                    });
-                    $('#subject_list').html(subjectsHtml);
-
-                    // Clear old paper list
-                    $('#paper_list').html('');
-                } else {
-                    $('#center_no').val('');
-                    $('#subject_list').html('');
-                    $('#paper_list').html('');
-                }
-            },
-            error: function () {
-                $('#center_no').val('');
-                $('#subject_list').html('');
-                $('#paper_list').html('');
-            }
-        });
-    });
-
-    // When subject is selected
-    $(document).on('click', '.subject-item', function () {
-        let subjectNo = $(this).data('subject');
-        $('#subject_no').val(subjectNo);
-
-        let indexNo = $('#index_no').val();
-        if (!indexNo) return;
-
-        $.ajax({
-            url: "{{ route('get.exam.data', '') }}/" + indexNo,
-            type: "GET",
-            success: function (res) {
-                let subjectData = res.subjects.find(s => s.subject_no == subjectNo);
-                if (subjectData) {
-                    let papersHtml = '';
-                    subjectData.papers.forEach(function (p) {
-                        papersHtml += `<span class="badge bg-secondary m-1 paper-item" data-paper="${p}">${p}</span>`;
-                    });
-                    $('#paper_list').html(papersHtml);
-                }
-            }
-        });
-    });
-
-    // When paper is selected
-    $(document).on('click', '.paper-item', function () {
-        $('#paper_code').val($(this).data('paper'));
-    });
-
-    // Submit with Enter key
-    $('input').keypress(function (e) {
-        if (e.which === 13) {
-            e.preventDefault();
-            $('form').submit();
-        }
-    });
-});
-</script>  --}}
-
-{{--  <script>
-$(document).ready(function () {
-    $('#index_no').on('blur', function () {
-        let indexNo = $(this).val();
-
-        if (indexNo) {
-            $.ajax({
-                url: "{{ route('get.exam.data', '') }}/" + indexNo,
-                type: "GET",
-                success: function (data) {
-                    if (data.length > 0) {
-                        // Fill center no
-                        $('#center_no').val(data[0].center_no || '');
-
-                        // Build subject + paper lists
-                        let subjectsHtml = '';
-                        let papersHtml = '';
-                        data.forEach(function (item) {
-                            subjectsHtml += `<span class="badge bg-info m-1">${item.subject_no}</span>`;
-                            papersHtml   += `<span class="badge bg-secondary m-1">${item.paper_code}</span>`;
-                        });
-
-                        $('#subject_list').html(subjectsHtml);
-                        $('#paper_list').html(papersHtml);
-                    } else {
-                        $('#center_no').val('');
-                        $('#subject_list').html('');
-                        $('#paper_list').html('');
-                    }
-                },
-                error: function () {
-                    $('#center_no').val('');
-                    $('#subject_list').html('');
-                    $('#paper_list').html('');
-                }
-            });
-        } else {
-            $('#center_no').val('');
-            $('#subject_list').html('');
-            $('#paper_list').html('');
-        }
-    });
-});
-</script>  --}}
-
-{{--  <script>
-    $(document).ready(function() {
-        $('#index_no').on('blur', function() {
-            let indexNo = $(this).val();
-
-            if (indexNo) {
-                $.ajax({
-                    url: "{{ route('get.exam.data', '') }}/" + indexNo,
-                    type: "GET",
-                    success: function(data) {
-                        $('#center_no').val(data.center_no || '');
-                        $('#subject_no').val(data.subject_no || '');
-                        $('#paper_code').val(data.paper_code || '');
-                    },
-                    error: function() {
-                        $('#center_no').val('');
-                        $('#subject_no').val('');
-                        $('#paper_code').val('');
-                    }
-                });
-            } else {
-                $('#center_no').val('');
-                $('#subject_no').val('');
-                $('#paper_code').val('');
-            }
-        });
-    });
-</script>  --}}
-{{--  <script>
-    $(document).ready(function () {
-        $('#index_no').on('blur', function () {
-            let indexNo = $(this).val();
-
-            if (indexNo) {
-                $.ajax({
-                    url: "{{ route('get.center.no', '') }}/" + indexNo,
-                    type: "GET",
-                    success: function (data) {
-                        $('#center_no').val(data.center_no || '');
-                    },
-                    error: function () {
-                        $('#center_no').val('');
-                        console.error("Could not fetch center_no. Check the route.");
-                    }
-                });
-            } else {
-                $('#center_no').val('');
-            }
-        });
-    });
-</script>  --}}

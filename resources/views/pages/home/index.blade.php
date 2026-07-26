@@ -1,500 +1,490 @@
 @extends('layouts.app')
 @section('content')
     <div class="container my-4">
-        <h2 class="main-title text-center mb-4">Main Menus</h2>
+        <div class="dashboard-header mb-4">
+            <div>
+                <h2 class="fw-bold mb-1">
+                    <i class="fa-solid fa-gauge-high me-2 text-secondary"></i>
+                    Dashboard
+                </h2>
 
-        <div class="row justify-content-center g-3">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="{{ route('absentees.all') }}">
-                    <div class="card text-white bg-primary h-100 text-center">
-                        <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
-                            style="height: 100px;">
-                            <i class="fa-solid fa-user-minus fa-3x text-light"></i>
+                <p class="text-muted mb-0">
+                    Welcome back,
+                    <strong>{{ Auth::user()->name }}</strong>
+                </p>
+            </div>
+
+            <div class="text-end">
+                {{-- <span class="badge bg-primary fs-6 px-3 py-2">
+                    {{ now()->format('d M Y') }}
+                </span> --}}
+            </div>
+        </div>
+        <div class="row g-4 mb-5">
+
+            <!-- Absentees -->
+            <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                <a href="{{ route('absentees.all') }}" class="text-decoration-none">
+                    <div class="menu-card bg-primary-gradient">
+                        <div class="icon">
+                            <i class="fa-solid fa-user-minus"></i>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Mark Absentees</h5>
+
+                        <div>
+                            <h5>Mark Absentees</h5>
+                            <small>Manage absent candidates</small>
                         </div>
+
+                        <i class="fa-solid fa-arrow-right arrow"></i>
                     </div>
                 </a>
             </div>
 
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="{{ route('medium.all') }}">
-                    <div class="card text-white bg-success h-100 text-center">
-                        <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
-                            style="height: 100px;">
-                            <i class="fa-solid fa-language fa-3x text-light"></i>
+            <!-- Medium -->
+            <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                <a href="{{ route('medium.all') }}" class="text-decoration-none">
+                    <div class="menu-card bg-success-gradient">
+                        <div class="icon">
+                            <i class="fa-solid fa-language"></i>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Change Medium</h5>
+
+                        <div>
+                            <h5>Change Medium</h5>
+                            <small>Update medium details</small>
                         </div>
+
+                        <i class="fa-solid fa-arrow-right arrow"></i>
                     </div>
                 </a>
             </div>
 
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="{{ route('center.all') }}">
-                    <div class="card text-dark bg-warning h-100 text-center">
-                        <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
-                            style="height: 100px;">
-                            <i class="fa-solid fa-building-user fa-3x text-light"></i>
+            <!-- Center -->
+            <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                <a href="{{ route('center.all') }}" class="text-decoration-none">
+                    <div class="menu-card bg-warning-gradient">
+                        <div class="icon">
+                            <i class="fa-solid fa-building-user"></i>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Change Center</h5>
+
+                        <div>
+                            <h5>Change Center</h5>
+                            <small>Transfer candidates</small>
                         </div>
+
+                        <i class="fa-solid fa-arrow-right arrow"></i>
                     </div>
                 </a>
             </div>
 
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="{{ route('message.all') }}">
-                    <div class="card text-white bg-danger h-100 text-center">
-                    <div class="card-header d-flex justify-content-center align-items-center bg-transparent border-0"
-                        style="height: 100px;">
-                        <i class="fa-solid fa-comment fa-3x text-light"></i>
+            <!-- Notes -->
+            <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                <a href="{{ route('message.all') }}" class="text-decoration-none">
+                    <div class="menu-card bg-danger-gradient">
+                        <div class="icon">
+                            <i class="fa-solid fa-comment"></i>
+                        </div>
+
+                        <div>
+                            <h5>Special Notes</h5>
+                            <small>Exam messages</small>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-right arrow"></i>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Special Notes</h5>
+                </a>
+            </div>
+
+            <!-- NIC -->
+            <div class="col-12 col-sm-6 col-lg-4 col-xl">
+                <a href="{{ route('nic.all') }}" class="text-decoration-none">
+                    <div class="menu-card bg-secondary-gradient">
+                        <div class="icon">
+                            <i class="fa-solid fa-id-card"></i>
+                        </div>
+
+                        <div>
+                            <h5>NIC Change</h5>
+                            <small>Exam messages</small>
+                        </div>
+
+                        <i class="fa-solid fa-arrow-right arrow"></i>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="row g-4 mt-2">
+
+            <div class="col-md-6 col-xl-3">
+                <div class="stats-card border-primary">
+                    <div class="stats-icon bg-primary-gradient">
+                        <i class="fa-solid fa-user-minus"></i>
+                    </div>
+
+                    <div class="stats-content">
+                        <h3>{{ $today_absentees ?? 0 }}</h3>
+                        <p>Today's Absentees</p>
                     </div>
                 </div>
-                </a>
             </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="stats-card border-warning">
+                    <div class="stats-icon bg-warning-gradient">
+                        <i class="fa-solid fa-building-user"></i>
+                    </div>
+
+                    <div class="stats-content">
+                        <h3>{{ $today_centers ?? 0 }}</h3>
+                        <p>Center Changes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="stats-card border-success">
+                    <div class="stats-icon bg-success-gradient">
+                        <i class="fa-solid fa-language"></i>
+                    </div>
+
+                    <div class="stats-content">
+                        <h3>{{ $today_medium ?? 0 }}</h3>
+                        <p>Medium Changes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="stats-card border-danger">
+                    <div class="stats-icon bg-danger-gradient">
+                        <i class="fa-solid fa-comment-dots"></i>
+                    </div>
+
+                    <div class="stats-content">
+                        <h3>{{ $notes ?? 0 }}</h3>
+                        <p>Special Notes</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <br>
-        <h2 class="main-title">Dashboard</h2>
-        <div class="row stat-cards">
-            <div class="col-md-6 col-xl-3">
-                <article class="stat-cards-item">
-                    <div class="stat-cards-icon primary">
-                        <i data-feather="bar-chart-2" aria-hidden="true"></i>
-                    </div>
-                    <div class="stat-cards-info">
-                        {{--  <p class="stat-cards-info__num">{{ $exam_data }}</p>  --}}
-                        <p class="stat-cards-info__title">Today Absentees</p>
-                        <p class="stat-cards-info__progress">
-                            {{--  <span class="stat-cards-info__profit success">
-                            <i data-feather="trending-up" aria-hidden="true"></i>4.07%
+        <div class="row g-4 mb-4">
+
+            <div class="col-xl-8 col-lg-12">
+                <div class="exam-card">
+
+                    <div class="exam-header">
+                        <div>
+                            <h4>
+                                <i class="fa-solid fa-calendar-days me-2"></i>
+                                Today's Examination
+                            </h4>
+
+                            <p>
+                                Current exam information
+                            </p>
+                        </div>
+
+                        <span class="exam-badge">
+                            LIVE
                         </span>
-                        Last month  --}}
-                        </p>
                     </div>
-                </article>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <article class="stat-cards-item">
-                    <div class="stat-cards-icon warning">
-                        <i data-feather="file" aria-hidden="true"></i>
-                    </div>
-                    <div class="stat-cards-info">
-                        {{--  <p class="stat-cards-info__num">{{ $exam }}</p>  --}}
-                        <p class="stat-cards-info__title">Today Center Changes</p>
-                        <p class="stat-cards-info__progress">
-                            {{--  <span class="stat-cards-info__profit success">
-                            <i data-feather="trending-up" aria-hidden="true"></i>0.24%
-                        </span>
-                        Last month  --}}
-                        </p>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <article class="stat-cards-item">
-                    <div class="stat-cards-icon purple">
-                        <i data-feather="file" aria-hidden="true"></i>
-                    </div>
-                    <div class="stat-cards-info">
-                        {{--  <p class="stat-cards-info__num">{{ $today }}</p>  --}}
-                        <p class="stat-cards-info__title">Today Medium Changes</p>
-                        <p class="stat-cards-info__progress">
-                            {{--  <span class="stat-cards-info__profit danger">
-                            <i data-feather="trending-down" aria-hidden="true"></i>1.64%
-                        </span>
-                        Last month  --}}
-                        </p>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <article class="stat-cards-item">
-                    <div class="stat-cards-icon success">
-                        <i data-feather="feather" aria-hidden="true"></i>
-                    </div>
-                    <div class="stat-cards-info">
-                        {{--  <p class="stat-cards-info__num">{{ $users }}</p>  --}}
-                        <p class="stat-cards-info__title">Comments</p>
-                        <p class="stat-cards-info__progress">
-                            {{--  <span class="stat-cards-info__profit warning">
-                            <i data-feather="trending-up" aria-hidden="true"></i>0.00%
-                        </span>
-                        Last month  --}}
-                        </p>
-                    </div>
-                </article>
-            </div>
-        </div>
-        <div class="row">
-            {{--  <div class="col-lg-9">
-            <div class="chart">
-                <canvas id="myChart" aria-label="Site statistics" role="img"></canvas>
-            </div>
-            <div class="users-table table-wrapper">
-                <table class="posts-table">
-                    <thead>
-                        <tr class="users-table-info">
-                            <th>
-                                <label class="users-table__checkbox ms-20">
-                                    <input type="checkbox" class="check-all">Thumbnail
-                                </label>
-                            </th>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <label class="users-table__checkbox">
-                                    <input type="checkbox" class="check">
-                                    <div class="categories-table-img">
-                                        <picture>
-                                            <source srcset="./img/categories/01.webp" type="image/webp">
-                                            <img src="./img/categories/01.jpg" alt="category">
-                                        </picture>
-                                    </div>
-                                </label>
-                            </td>
-                            <td>
-                                Starting your traveling blog with Vasco
-                            </td>
-                            <td>
-                                <div class="pages-table-img">
-                                    <picture>
-                                        <source srcset="./img/avatar/avatar-face-04.webp" type="image/webp"><img
-                                            src="./img/avatar/avatar-face-04.png" alt="User Name">
-                                    </picture>
-                                    Jenny Wilson
+
+
+                    <div class="row mt-4">
+
+                        <div class="col-md-3">
+                            <div class="exam-item">
+                                <i class="fa-solid fa-calendar"></i>
+                                <div>
+                                    <small>Date</small>
+                                    <h6>
+                                        {{ now()->format('d M Y') }}
+                                    </h6>
                                 </div>
-                            </td>
-                            <td><span class="badge-pending">Pending</span></td>
-                            <td>17.04.2021</td>
-                            <td>
-                                <span class="p-relative">
-                                    <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                        <div class="sr-only">More info</div>
-                                        <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="users-item-dropdown dropdown">
-                                        <li><a href="##">Edit</a></li>
-                                        <li><a href="##">Quick edit</a></li>
-                                        <li><a href="##">Trash</a></li>
-                                    </ul>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="users-table__checkbox">
-                                    <input type="checkbox" class="check">
-                                    <div class="categories-table-img">
-                                        <picture>
-                                            <source srcset="./img/categories/02.webp" type="image/webp"><img
-                                                src="./img/categories/02.jpg" alt="category">
-                                        </picture>
-                                    </div>
-                                </label>
-                            </td>
-                            <td>
-                                Start a blog to reach your creative peak
-                            </td>
-                            <td>
-                                <div class="pages-table-img">
-                                    <picture>
-                                        <source srcset="./img/avatar/avatar-face-03.webp" type="image/webp"><img
-                                            src="./img/avatar/avatar-face-03.png" alt="User Name">
-                                    </picture>
-                                    Annette Black
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="exam-item">
+                                <i class="fa-solid fa-clock"></i>
+                                <div>
+                                    <small>Session</small>
+                                    <h6>
+                                        SESSION-I
+                                    </h6>
                                 </div>
-                            </td>
-                            <td><span class="badge-pending">Pending</span></td>
-                            <td>23.04.2021</td>
-                            <td>
-                                <span class="p-relative">
-                                    <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                        <div class="sr-only">More info</div>
-                                        <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="users-item-dropdown dropdown">
-                                        <li><a href="##">Edit</a></li>
-                                        <li><a href="##">Quick edit</a></li>
-                                        <li><a href="##">Trash</a></li>
-                                    </ul>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="users-table__checkbox">
-                                    <input type="checkbox" class="check">
-                                    <div class="categories-table-img">
-                                        <picture>
-                                            <source srcset="./img/categories/03.webp" type="image/webp"><img
-                                                src="./img/categories/03.jpg" alt="category">
-                                        </picture>
-                                    </div>
-                                </label>
-                            </td>
-                            <td>
-                                Helping a local business reinvent itself
-                            </td>
-                            <td>
-                                <div class="pages-table-img">
-                                    <picture>
-                                        <source srcset="./img/avatar/avatar-face-02.webp" type="image/webp"><img
-                                            src="./img/avatar/avatar-face-02.png" alt="User Name">
-                                    </picture>
-                                    Kathryn Murphy
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="exam-item">
+                                <i class="fa-solid fa-book"></i>
+                                <div>
+                                    <small>Subject</small>
+                                    <h6>
+                                        Mathematics
+                                    </h6>
                                 </div>
-                            </td>
-                            <td><span class="badge-active">Active</span></td>
-                            <td>17.04.2021</td>
-                            <td>
-                                <span class="p-relative">
-                                    <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                        <div class="sr-only">More info</div>
-                                        <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="users-item-dropdown dropdown">
-                                        <li><a href="##">Edit</a></li>
-                                        <li><a href="##">Quick edit</a></li>
-                                        <li><a href="##">Trash</a></li>
-                                    </ul>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="users-table__checkbox">
-                                    <input type="checkbox" class="check">
-                                    <div class="categories-table-img">
-                                        <picture>
-                                            <source srcset="./img/categories/04.webp" type="image/webp"><img
-                                                src="./img/categories/04.jpg" alt="category">
-                                        </picture>
-                                    </div>
-                                </label>
-                            </td>
-                            <td>
-                                Caring is the new marketing
-                            </td>
-                            <td>
-                                <div class="pages-table-img">
-                                    <picture>
-                                        <source srcset="./img/avatar/avatar-face-05.webp" type="image/webp"><img
-                                            src="./img/avatar/avatar-face-05.png" alt="User Name">
-                                    </picture>
-                                    Guy Hawkins
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="exam-item">
+                                <i class="fa-solid fa-file-lines"></i>
+                                <div>
+                                    <small>Paper</small>
+                                    <h6>
+                                        Paper 02
+                                    </h6>
                                 </div>
-                            </td>
-                            <td><span class="badge-active">Active</span></td>
-                            <td>17.04.2021</td>
-                            <td>
-                                <span class="p-relative">
-                                    <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                        <div class="sr-only">More info</div>
-                                        <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="users-item-dropdown dropdown">
-                                        <li><a href="##">Edit</a></li>
-                                        <li><a href="##">Quick edit</a></li>
-                                        <li><a href="##">Trash</a></li>
-                                    </ul>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="users-table__checkbox">
-                                    <input type="checkbox" class="check">
-                                    <div class="categories-table-img">
-                                        <picture>
-                                            <source srcset="./img/categories/01.webp" type="image/webp"><img
-                                                src="./img/categories/01.jpg" alt="category">
-                                        </picture>
-                                    </div>
-                                </label>
-                            </td>
-                            <td>
-                                How to build a loyal community online and offline
-                            </td>
-                            <td>
-                                <div class="pages-table-img">
-                                    <picture>
-                                        <source srcset="./img/avatar/avatar-face-03.webp" type="image/webp"><img
-                                            src="./img/avatar/avatar-face-03.png" alt="User Name">
-                                    </picture>
-                                    Robert Fox
-                                </div>
-                            </td>
-                            <td><span class="badge-active">Active</span></td>
-                            <td>17.04.2021</td>
-                            <td>
-                                <span class="p-relative">
-                                    <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                        <div class="sr-only">More info</div>
-                                        <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="users-item-dropdown dropdown">
-                                        <li><a href="##">Edit</a></li>
-                                        <li><a href="##">Quick edit</a></li>
-                                        <li><a href="##">Trash</a></li>
-                                    </ul>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label class="users-table__checkbox">
-                                    <input type="checkbox" class="check">
-                                    <div class="categories-table-img">
-                                        <picture>
-                                            <source srcset="./img/categories/03.webp" type="image/webp"><img
-                                                src="./img/categories/03.jpg" alt="category">
-                                        </picture>
-                                    </div>
-                                </label>
-                            </td>
-                            <td>
-                                How to build a loyal community online and offline
-                            </td>
-                            <td>
-                                <div class="pages-table-img">
-                                    <picture>
-                                        <source srcset="./img/avatar/avatar-face-03.webp" type="image/webp"><img
-                                            src="./img/avatar/avatar-face-03.png" alt="User Name">
-                                    </picture>
-                                    Robert Fox
-                                </div>
-                            </td>
-                            <td><span class="badge-active">Active</span></td>
-                            <td>17.04.2021</td>
-                            <td>
-                                <span class="p-relative">
-                                    <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                        <div class="sr-only">More info</div>
-                                        <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="users-item-dropdown dropdown">
-                                        <li><a href="##">Edit</a></li>
-                                        <li><a href="##">Quick edit</a></li>
-                                        <li><a href="##">Trash</a></li>
-                                    </ul>
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <article class="customers-wrapper">
-                <canvas id="customersChart" aria-label="Customers statistics" role="img"></canvas>
-                <!--              <p class="customers__title">New Customers <span>+958</span></p>
-                            <p class="customers__date">28 Daily Avg.</p>
-                            <picture><source srcset="./img/svg/customers.svg" type="image/webp"><img src="./img/svg/customers.svg" alt=""></picture> -->
-            </article>
-            <article class="white-block">
-                <div class="top-cat-title">
-                    <h3>Top categories</h3>
-                    <p>28 Categories, 1400 Posts</p>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
-                <ul class="top-cat-list">
-                    <li>
-                        <a href="##">
-                            <div class="top-cat-list__title">
-                                Lifestyle <span>8.2k</span>
+            </div>
+
+
+            <!-- Optional Today's Status -->
+            {{-- <div class="col-xl-4 col-lg-12">
+
+                <div class="exam-status-card">
+
+                    <h5>
+                        <i class="fa-solid fa-chart-line me-2"></i>
+                        Exam Status
+                    </h5>
+
+
+                    <div class="status-row">
+                        <span>Total Candidates</span>
+                        <strong>2500</strong>
+                    </div>
+
+
+                    <div class="status-row">
+                        <span>Present</span>
+                        <strong class="text-success">
+                            2450
+                        </strong>
+                    </div>
+
+
+                    <div class="status-row">
+                        <span>Absent</span>
+                        <strong class="text-danger">
+                            50
+                        </strong>
+                    </div>
+
+
+                    <div class="progress mt-3">
+                        <div class="progress-bar bg-success" style="width:98%">
+                            98%
+                        </div>
+                    </div>
+
+                </div>
+
+            </div> --}}
+
+        </div>
+
+        <div class="row g-4 mb-4">
+
+            <div class="col-xl-4 col-lg-6">
+
+                <div class="chart-card">
+
+                    <div class="chart-header">
+                        <h5>
+                            <i class="fa-solid fa-chart-pie me-2"></i>
+                            Attendance Status
+                        </h5>
+
+                        <span class="today-badge">
+                            Today
+                        </span>
+                    </div>
+
+
+                    <div class="chart-container">
+                        <canvas id="attendanceChart"></canvas>
+                    </div>
+
+
+                    <div class="attendance-summary">
+
+                        <div>
+                            <span class="dot present"></span>
+                            Present
+
+                            <strong>
+                                {{ $present ?? 0 }}
+                            </strong>
+                        </div>
+
+
+                        <div>
+                            <span class="dot absent"></span>
+                            Absent
+
+                            <strong>
+                                {{ $absent ?? 0 }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+             <!-- Optional Today's Status -->
+            <div class="col-xl-4 col-lg-12">
+
+                <div class="exam-status-card">
+
+                    <h5>
+                        <i class="fa-solid fa-chart-line me-2"></i>
+                        Exam Status
+                    </h5>
+
+
+                    <div class="status-row">
+                        <span>Total Candidates</span>
+                        <strong>2500</strong>
+                    </div>
+
+
+                    <div class="status-row">
+                        <span>Present</span>
+                        <strong class="text-success">
+                            2450
+                        </strong>
+                    </div>
+
+
+                    <div class="status-row">
+                        <span>Absent</span>
+                        <strong class="text-danger">
+                            50
+                        </strong>
+                    </div>
+
+
+                    <div class="progress mt-3">
+                        <div class="progress-bar bg-success" style="width:98%">
+                            98%
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-xl-4 col-lg-6">
+
+                <div class="report-card">
+
+                    <div class="report-header">
+                        <h5>
+                            <i class="fa-solid fa-file-arrow-down me-2"></i>
+                            Quick Reports
+                        </h5>
+
+                        <span class="report-badge">
+                            Reports
+                        </span>
+                    </div>
+
+
+                    <div class="report-list">
+
+
+                        <a href="{{ route('absentees.download.pdf') }}" class="report-item">
+
+                            <div class="report-icon bg-danger-gradient">
+                                <i class="fa-solid fa-user-minus"></i>
                             </div>
-                            <div class="top-cat-list__subtitle">
-                                Dailiy lifestyle articles <span class="purple">+472</span>
+
+                            <div>
+                                <h6>Absentee Report</h6>
+                                <small>Download today's absent list</small>
                             </div>
+
+                            <i class="fa-solid fa-download"></i>
+
                         </a>
-                    </li>
-                    <li>
-                        <a href="##">
-                            <div class="top-cat-list__title">
-                                Tutorials <span>8.2k</span>
+
+
+
+                        <a href="{{ route('centers.download.pdf') }}" class="report-item">
+
+                            <div class="report-icon bg-warning-gradient">
+                                <i class="fa-solid fa-building-user"></i>
                             </div>
-                            <div class="top-cat-list__subtitle">
-                                Coding tutorials <span class="blue">+472</span>
+
+                            <div>
+                                <h6>Center Change Report</h6>
+                                <small>Candidate center changes</small>
                             </div>
+
+                            <i class="fa-solid fa-download"></i>
+
                         </a>
-                    </li>
-                    <li>
-                        <a href="##">
-                            <div class="top-cat-list__title">
-                                Technology <span>8.2k</span>
+
+
+
+
+                        <a href="{{ route('medium.download.pdf') }}" class="report-item">
+
+                            <div class="report-icon bg-success-gradient">
+                                <i class="fa-solid fa-language"></i>
                             </div>
-                            <div class="top-cat-list__subtitle">
-                                Dailiy technology articles <span class="danger">+472</span>
+
+                            <div>
+                                <h6>Medium Change Report</h6>
+                                <small>Language change details</small>
                             </div>
+
+                            <i class="fa-solid fa-download"></i>
+
                         </a>
-                    </li>
-                    <li>
-                        <a href="##">
-                            <div class="top-cat-list__title">
-                                UX design <span>8.2k</span>
+
+
+
+
+                        <a href="{{ route('note.download.pdf') }}" class="report-item">
+
+                            <div class="report-icon bg-primary-gradient">
+                                <i class="fa-solid fa-comment"></i>
                             </div>
-                            <div class="top-cat-list__subtitle">
-                                UX design tips <span class="success">+472</span>
+
+                            <div>
+                                <h6>Special Notes Report</h6>
+                                <small>Exam notes summary</small>
                             </div>
+
+                            <i class="fa-solid fa-download"></i>
+
                         </a>
-                    </li>
-                    <li>
-                        <a href="##">
-                            <div class="top-cat-list__title">
-                                Interaction tips <span>8.2k</span>
-                            </div>
-                            <div class="top-cat-list__subtitle">
-                                Interaction articles <span class="warning">+472</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="##">
-                            <div class="top-cat-list__title">
-                                App development <span>8.2k</span>
-                            </div>
-                            <div class="top-cat-list__subtitle">
-                                Mobile development articles <span class="warning">+472</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="##">
-                            <div class="top-cat-list__title">
-                                Nature <span>8.2k</span>
-                            </div>
-                            <div class="top-cat-list__subtitle">
-                                Wildlife animal articles <span class="warning">+472</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="##">
-                            <div class="top-cat-list__title">
-                                Geography <span>8.2k</span>
-                            </div>
-                            <div class="top-cat-list__subtitle">
-                                Geography articles <span class="primary">+472</span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </article>
-        </div>  --}}
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
         </div>
     </div>
 @endsection

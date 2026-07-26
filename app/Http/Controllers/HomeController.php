@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Exam;
 use App\Models\User;
-use App\Models\ExamData;
+use App\Models\ExamDb;
 use Illuminate\Http\Request;
 use App\Models\AbsentCandidates;
 use App\Models\CenterChange;
@@ -30,6 +30,22 @@ class HomeController extends ParentController
         // $response['today'] = Exam::whereDate('created_at', $today)->count();
 
         // $response['users'] = User::count();
+
+        $response['present'] = ExamDb::whereDate('date','2026-08-14')
+                     ->count()
+              -
+              AbsentCandidates::whereDate('date','2026-08-14')
+                     ->count();
+
+
+    $response['absent'] = AbsentCandidates::whereDate('date','2026-08-14')
+                              ->count();
+
+
+    // return view('dashboard',compact(
+    //     'present',
+    //     'absent'
+    // ));
 
         return view ('pages.home.index')->with($response);
     }

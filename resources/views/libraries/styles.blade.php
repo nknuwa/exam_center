@@ -444,23 +444,545 @@
         }
 
     }
-.navbar .nav-link.active {
-    background: rgba(255, 255, 255, 0.089);
-    color: #fff !important;
-    border-bottom: 1px solid #ffc107;
-    border-radius: 8px;
-    font-weight: 600;
-}
 
-.navbar .nav-link:hover {
-    background: rgba(255, 255, 255, 0.051);
-    border-radius: 8px;
-}
+    .navbar .nav-link.active {
+        background: rgba(255, 255, 255, 0.089);
+        color: #fff !important;
+        border-bottom: 1px solid #ffc107;
+        border-radius: 8px;
+        font-weight: 600;
+    }
 
-/* .navbar .nav-link.active {
-    color: #fff !important;
-    border-bottom: 3px solid #ffc107;
-    font-weight: 600;
-} */
+    .navbar .nav-link:hover {
+        background: rgba(255, 255, 255, 0.051);
+        border-radius: 8px;
+    }
 
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .menu-card {
+        color: #fff;
+        border-radius: 22px;
+        padding: 28px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        min-height: 150px;
+        position: relative;
+        overflow: hidden;
+        transition: all .35s ease;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, .15);
+    }
+
+    .menu-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, .22);
+    }
+
+    .menu-card::before {
+        content: '';
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .15);
+    }
+
+    .menu-card::after {
+        content: '';
+        position: absolute;
+        bottom: -50px;
+        left: -50px;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .08);
+    }
+
+    .menu-card .icon {
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, .18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        backdrop-filter: blur(8px);
+    }
+
+    .menu-card h5 {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .menu-card small {
+        opacity: .9;
+    }
+
+    .menu-card .arrow {
+        position: absolute;
+        right: 25px;
+        bottom: 20px;
+        font-size: 22px;
+        opacity: .8;
+    }
+
+    .stats-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 22px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+        transition: .3s;
+    }
+
+    .stats-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .stats-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+    }
+
+    .stats-card h2 {
+        font-size: 34px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .stats-card p {
+        color: #6c757d;
+        margin: 0;
+        font-size: 15px;
+    }
+
+    /* Blue */
+    .bg-primary-gradient {
+        background: linear-gradient(135deg, #4F8CFF 0%, #3358FF 100%);
+    }
+
+    /* Green */
+    .bg-success-gradient {
+        background: linear-gradient(135deg, #2DD4BF 0%, #0F9D58 100%);
+    }
+
+    /* Orange */
+    .bg-warning-gradient {
+        background: linear-gradient(135deg, #FFB75E 0%, #ED8F03 100%);
+    }
+
+    /* Red */
+    .bg-danger-gradient {
+        background: linear-gradient(135deg, #FF6B6B 0%, #D7263D 100%);
+    }
+
+    .bg-secondary-gradient {
+        background: linear-gradient(135deg, #616161 0%, #353535 100%);
+    }
+
+    .exam-card {
+
+        background: white;
+        border-radius: 22px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+
+    }
+
+
+    .exam-header {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+
+    .exam-header h4 {
+
+        font-weight: 700;
+        margin: 0;
+
+    }
+
+
+    .exam-header p {
+
+        color: #64748b;
+        margin: 5px 0 0;
+
+    }
+
+
+    .exam-badge {
+
+        background: linear-gradient(135deg,
+                #10b981,
+                #059669);
+
+        color: white;
+        padding: 8px 18px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+
+    }
+
+
+
+    .exam-item {
+
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        background: #f8fafc;
+        border-radius: 15px;
+
+        padding: 18px;
+
+        height: 100%;
+
+    }
+
+
+    .exam-item i {
+
+        width: 45px;
+        height: 45px;
+
+        border-radius: 12px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: #2563eb;
+        color: white;
+
+        font-size: 20px;
+
+    }
+
+
+    .exam-item small {
+
+        color: #64748b;
+
+    }
+
+
+    .exam-item h6 {
+
+        margin: 4px 0 0;
+
+        font-weight: 700;
+
+    }
+
+
+
+    /* Status Card */
+    .exam-status-card {
+
+        background: white;
+
+        border-radius: 22px;
+
+        padding: 25px;
+
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+
+    }
+
+    .exam-status-card h5 {
+
+        font-weight: 700;
+
+    }
+
+    .status-row {
+
+        display: flex;
+        justify-content: space-between;
+
+        padding: 12px 0;
+
+        border-bottom: 1px solid #eee;
+
+    }
+
+    .status-row strong {
+
+        font-size: 18px;
+
+    }
+
+    .chart-card {
+
+        background: white;
+
+        border-radius: 22px;
+
+        padding: 25px;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, .08);
+
+    }
+
+
+
+    .chart-header {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+    }
+
+
+    .chart-header h5 {
+
+        font-weight: 700;
+
+        margin: 0;
+
+    }
+
+
+
+    .today-badge {
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        padding: 6px 15px;
+
+        border-radius: 50px;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+    }
+
+
+
+    .chart-container {
+
+        height: 250px;
+
+        margin: 20px auto;
+
+    }
+
+
+
+    .attendance-summary {
+
+        display: flex;
+
+        justify-content: center;
+
+        gap: 30px;
+
+    }
+
+
+    .attendance-summary div {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        font-size: 14px;
+
+    }
+
+
+    .attendance-summary strong {
+
+        margin-left: 5px;
+
+    }
+
+
+
+    .dot {
+
+        width: 12px;
+
+        height: 12px;
+
+        border-radius: 50%;
+
+    }
+
+
+    .dot.present {
+
+        background: #10b981;
+
+    }
+
+
+    .dot.absent {
+
+        background: #ef4444;
+
+    }
+
+    /* ==============================
+   QUICK REPORT CARD
+============================== */
+
+    .report-card {
+
+        background: #fff;
+        border-radius: 22px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+
+    }
+
+
+
+    .report-header {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+    }
+
+
+    .report-header h5 {
+
+        font-weight: 700;
+        margin: 0;
+
+    }
+
+
+
+    .report-badge {
+
+        background: #eff6ff;
+        color: #2563eb;
+        padding: 7px 15px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+
+    }
+
+
+
+
+    /* Report Item */
+
+    .report-item {
+
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        padding: 15px;
+
+        border-radius: 16px;
+
+        margin-bottom: 12px;
+
+        background: #f8fafc;
+
+        color: #1e293b;
+
+        transition: .3s;
+
+    }
+
+
+
+    .report-item:hover {
+
+        background: #eef2ff;
+
+        transform: translateX(5px);
+
+    }
+
+
+
+    .report-item h6 {
+
+        margin: 0;
+
+        font-weight: 700;
+
+    }
+
+
+
+    .report-item small {
+
+        color: #64748b;
+
+    }
+
+
+
+    .report-item>i {
+
+        margin-left: auto;
+
+        color: #64748b;
+
+    }
+
+
+
+    /* Report Icons */
+
+    .report-icon {
+
+        width: 50px;
+        height: 50px;
+
+        border-radius: 14px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        color: white;
+
+        font-size: 20px;
+
+    }
 </style>
