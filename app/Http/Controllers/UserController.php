@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UsersImport;
 
 class UserController extends Controller
 {
@@ -24,6 +27,12 @@ class UserController extends Controller
         return view('pages.users.new', compact('centers', 'roles'));
     }
 
+    public function bulk()
+    {
+        // $centers = ExamDb::distinct()->orderBy('center_no', 'asc')->pluck('center_no');
+        // $roles = Role::all();
+        return view('pages.users.bulk');
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -32,18 +41,28 @@ class UserController extends Controller
             'phone_no'  => 'required|string',
             'name'      => 'required|string|max:255',
             'email'     => 'required|email|unique:users,email',
-            'password'  => 'required|confirmed|min:6',
+            // 'password'  => 'required|confirmed|min:6',
         ]);
 
         $user = User::create([
             'name'      => $request->name,
             'email'     => $request->email,
-            'password'  => Hash::make($request->password),
+            'password'  => Hash::make(Str::random(20)),
             'center_no' => $request->center_no,
             'role_id'   => $request->role_id,
             'phone_no'  => $request->phone_no,
             'status'    => $request->status ?? 1,
         ]);
+
+        // $user = User::create([
+        //     'name'      => $request->name,
+        //     'email'     => $request->email,
+        //     'password'  => Hash::make($request->password),
+        //     'center_no' => $request->center_no,
+        //     'role_id'   => $request->role_id,
+        //     'phone_no'  => $request->phone_no,
+        //     'status'    => $request->status ?? 1,
+        // ]);
 
         // ✅ Assign role via Spatie
         $role = Role::find($request->role_id);
@@ -142,5 +161,17 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->back()->with('success', 'User deleted successfully!');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        Excel::import(new UsersImport, $request->file('file'));
+
+        return redirect()->back()
+            ->with('success', 'Users imported successfully.');
     }
 }

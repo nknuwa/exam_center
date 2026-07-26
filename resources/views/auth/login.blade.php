@@ -12,7 +12,26 @@
             <!-- Right column: Form -->
             <div class="login-right">
                 <article class="sign-up">
-                    <form class="sign-up-form form" method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('send.otp') }}">
+                        @csrf
+
+                        <label class="form-label-wrapper">
+                            <p class="form-label">Mobile Number</p>
+
+                            <input type="text" name="phone_no" class="form-control form-control-lg"
+                                placeholder="0771234567" required>
+
+                            @error('phone_no')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </label>
+
+                        <button class="form-btn primary-default-btn transparent-btn mt-3">
+                            Send OTP
+                        </button>
+
+                    </form>
+                    {{-- <form class="sign-up-form form" method="POST" action="{{ route('login') }}">
                         @csrf
                         <label class="form-label-wrapper">
                             <p class="form-label">Email</p>
@@ -33,7 +52,7 @@
                         </label>
 
                         <button class="form-btn primary-default-btn transparent-btn mt-3">Sign in</button>
-                    </form>
+                    </form> --}}
                 </article>
             </div>
         </div>

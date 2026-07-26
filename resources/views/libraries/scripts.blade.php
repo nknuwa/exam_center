@@ -370,33 +370,33 @@
     });
 </script>
 
-{{--get Exam ID --}}
+{{-- get Exam ID --}}
 <script>
-    $('#index_no').on('change', function () {
+    $('#index_no').on('change', function() {
 
-    $.ajax({
-        url: "{{ route('nic.getCandidate') }}",
-        type: "GET",
-        data: {
-            center_no: $('#center_no').val(),
-            date: $('#date').val(),
-            session: $('#session').val(),
-            subject_code: $('#subject_code').val(),
-            index_no: $('#index_no').val()
-        },
-        success: function (response) {
+        $.ajax({
+            url: "{{ route('nic.getCandidate') }}",
+            type: "GET",
+            data: {
+                center_no: $('#center_no').val(),
+                date: $('#date').val(),
+                session: $('#session').val(),
+                subject_code: $('#subject_code').val(),
+                index_no: $('#index_no').val()
+            },
+            success: function(response) {
 
-            if (response.status) {
-                $('#paper_code').val(response.paper_code);
-                $('#exam_id').val(response.exam_id);
-            } else {
-                $('#paper_code').val('');
-                $('#exam_id').val('');
+                if (response.status) {
+                    $('#paper_code').val(response.paper_code);
+                    $('#exam_id').val(response.exam_id);
+                } else {
+                    $('#paper_code').val('');
+                    $('#exam_id').val('');
+                }
             }
-        }
-    });
+        });
 
-});
+    });
 </script>
 
 {{--  <script>
@@ -971,65 +971,80 @@
     });
 </script>
 <script>
+    $(document).ready(function() {
+        $('#user_table').DataTable({
+            language: {
+                emptyTable: "No data available in the table",
+                paginate: {
+                    previous: '<i class="fa-solid fa-angles-left"></i>',
+                    next: '<i class="fa-solid fa-angles-right"></i>'
+                }
+            },
+            pageLength: 10,
+            lengthMenu: [5, 10, 20],
+            order: [
+                [0, "desc"]
+            ]
+        });
+    });
+</script>
+<script>
+    const ctx = document.getElementById('attendanceChart');
 
-const ctx = document.getElementById('attendanceChart');
 
+    new Chart(ctx, {
 
-new Chart(ctx, {
+        type: 'doughnut',
 
-    type: 'doughnut',
+        data: {
 
-    data: {
-
-        labels: [
-            'Present',
-            'Absent'
-        ],
-
-        datasets: [{
-
-            data: [
-                {{ $present ?? 0 }},
-                {{ $absent ?? 0 }}
+            labels: [
+                'Present',
+                'Absent'
             ],
 
-            backgroundColor: [
-                '#10b981',
-                '#ef4444'
-            ],
+            datasets: [{
 
-            borderWidth:0,
+                data: [
+                    {{ $present ?? 0 }},
+                    {{ $absent ?? 0 }}
+                ],
 
-            hoverOffset:8
+                backgroundColor: [
+                    '#10b981',
+                    '#ef4444'
+                ],
 
-        }]
+                borderWidth: 0,
 
-    },
+                hoverOffset: 8
 
-
-    options: {
-
-        responsive:true,
-
-        maintainAspectRatio:false,
-
-
-        plugins:{
-
-            legend:{
-
-                display:false
-
-            }
+            }]
 
         },
 
 
-        cutout:'70%'
+        options: {
 
-    }
+            responsive: true,
 
-});
+            maintainAspectRatio: false,
 
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            },
+
+
+            cutout: '70%'
+
+        }
+
+    });
 </script>
-

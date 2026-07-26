@@ -15,6 +15,7 @@ use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\NicController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\OtpLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,12 @@ use App\Http\Controllers\ProfileController;
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+
+Route::post('/send-otp', [OtpLoginController::class,'sendOtp'])->name('send.otp');
+
+Route::get('/verify-otp', [OtpLoginController::class,'showVerify'])->name('otp.verify.form');
+
+Route::post('/verify-otp', [OtpLoginController::class,'verifyOtp'])->name('verify.otp');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -135,7 +142,9 @@ Route::prefix('nic')->group(function () {
 Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('users.all');
     Route::get('/new', [UserController::class, 'new'])->name('users.new');
+    Route::get('/bulk', [UserController::class, 'bulk'])->name('user_bulk.new');
     Route::post('/store', [UserController::class, 'store'])->name('users.store');
+    Route::post('/users/import', [UserController::class, 'import'])->name('users.import');
     Route::get('/{user_id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/{user_id}/update', [UserController::class, 'update'])->name('users.update');
     Route::get('/{user_id}/delete', [UserController::class, 'delete'])->name('users.delete');

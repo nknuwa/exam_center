@@ -149,11 +149,23 @@
     }
 
     .sidebar {
-        background-color: #660303 !important;
+        /* background-color: #660303 !important; */
+        background:
+            linear-gradient(140deg,
+                #0c053a 20%,
+                #345191 45%,
+                #0c053a 100%);
     }
 
+
+
     .main-nav--bg {
-        background-color: #660303 !important;
+        /* background-color: #660303 !important; */
+        background:
+            linear-gradient(140deg,
+                #0c053a 20%,
+                #345191 45%,
+                #0c053a 100%);
 
     }
 
@@ -350,8 +362,8 @@
                 #3a3a3a 50%,
                 #696969 100%);
 
-                /* background:linear-gradient(135deg,#111827,#374151,#4b5563); */
-                /* background:linear-gradient(135deg,#065f46,#10b981,#34d399); */
+        /* background:linear-gradient(135deg,#111827,#374151,#4b5563); */
+        /* background:linear-gradient(135deg,#065f46,#10b981,#34d399); */
 
         min-height: 70px;
 
@@ -1098,6 +1110,168 @@
         color: white;
 
         font-size: 20px;
+
+    }
+
+    /* Modern User Table */
+
+    .modern-card {
+        border-radius: 18px;
+    }
+
+
+    .modern-table {
+        border-collapse: separate;
+        border-spacing: 0 12px;
+    }
+
+
+    .modern-table thead th {
+        background: #f8f9fa;
+        border: 0;
+        color: #6c757d;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+        padding: 15px;
+    }
+
+
+    .modern-table tbody tr {
+        background: #fff;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, .05);
+        transition: .25s ease;
+    }
+
+
+    .modern-table tbody tr:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, .10);
+    }
+
+
+    .modern-table td {
+        padding: 16px;
+        border: 0;
+    }
+
+
+    .modern-table tbody tr td:first-child {
+        border-radius: 15px 0 0 15px;
+    }
+
+
+    .modern-table tbody tr td:last-child {
+        border-radius: 0 15px 15px 0;
+    }
+
+
+
+    /* Avatar */
+
+    .user-avatar {
+
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+
+        background: linear-gradient(135deg, #667eea, #764ba2);
+
+        color: white;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-weight: 700;
+    }
+
+
+
+    /* Role Badge */
+
+    /* .role-badge {
+
+        background: #dcfce7;
+    color: #15803d;
+
+        padding: 7px 14px;
+        border-radius: 20px;
+
+        font-size: 12px;
+        margin-right: 5px;
+
+    } */
+
+    .role-badge {
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* Super Admin */
+.role-danger {
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+
+/* Admin */
+.role-primary {
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+
+/* Teacher */
+.role-success {
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+
+/* Normal User */
+.role-secondary {
+    background:#f1f5f9;
+    color:#475569;
+}
+
+
+/* Other Roles */
+.role-default {
+    background:#fef3c7;
+    color:#b45309;
+}
+
+
+
+    /* Action button */
+
+    .action-btn {
+
+        width: 38px;
+        height: 38px;
+
+        border-radius: 12px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #e0f2fe;
+        color: #0284c7;
+
+        transition: .2s;
+
+    }
+
+
+    .action-btn:hover {
+
+        background: #0284c7;
+        color: white;
 
     }
 </style>

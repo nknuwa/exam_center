@@ -57,7 +57,7 @@
                                         required>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <label class="form-label">Password</label>
                                     <input type="password" name="password" class="form-control" required>
                                 </div>
@@ -65,7 +65,7 @@
                                 <div class="col-md-6">
                                     <label class="form-label">Confirm Password</label>
                                     <input type="password" name="password_confirmation" class="form-control" required>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <label class="form-label">Center</label>
