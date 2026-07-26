@@ -239,11 +239,11 @@
 
                     <div>
                         <h5 class="fw-bold mb-1">
-                            <i class="fa-solid fa-language text-danger me-2"></i>
-                            Medium Changes List
+                            <i class="fa-solid fa-id-card text-primary me-2"></i>
+                            Candidate NIC Changes List
                         </h5>
                         <small class="text-muted">
-                            Examination Medium Changes Records
+                            Examination Candidate NIC Changes Records
                         </small>
                     </div>
 
@@ -354,7 +354,7 @@
 
                 <div class="d-flex justify-content-end gap-2 mt-4">
 
-                    <a href="{{ route('medium.download.excel') }}" class="btn btn-success rounded-pill px-4">
+                    <a href="{{ route('nic.download.excel') }}" class="btn btn-success rounded-pill px-4">
 
                         <i class="fa-solid fa-file-excel me-1"></i>
                         Excel
@@ -362,7 +362,7 @@
                     </a>
 
 
-                    <a href="{{ route('medium.download.pdf') }}" class="btn btn-danger rounded-pill px-4">
+                    <a href="{{ route('nic.download.pdf') }}" class="btn btn-danger rounded-pill px-4">
 
                         <i class="fa-solid fa-file-pdf me-1"></i>
                         PDF

@@ -158,4 +158,19 @@ class NicController extends Controller
         //     ->with('success', 'Absent candidate added successfully.');
     }
 
+    public function downloadExcel()
+    {
+        return Excel::download(new NicExport, 'nic_report.xlsx');
+    }
+
+    public function downloadPDF()
+    {
+        $nicChanges = NicChanges::all(); // or your filtered query
+
+        $pdf = Pdf::loadView('pdf.nic', compact('nicChanges'))
+            ->setPaper('A4', 'landscape'); // landscape better for wide tables
+
+        return $pdf->download('nic_report.pdf');
+    }
+
 }

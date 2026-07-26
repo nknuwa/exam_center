@@ -22,7 +22,7 @@
             <ul class="navbar-nav ms-auto align-items-lg-center">
                 {{-- Home --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('home') }}">
+                    <a class="nav-link text-white {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
                         {{--  <i class="fa-solid fa-house me-1"></i>   --}}
                         Home
                     </a>
@@ -30,7 +30,7 @@
 
                 {{-- Absentees --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('absentees.all') }}">
+                    <a class="nav-link text-white {{ request()->routeIs('absentees.*') ? 'active' : '' }}" href="{{ route('absentees.all') }}">
                         {{--  <i class="fa-solid fa-building-columns me-1"></i>   --}}
                         Absentees
                     </a>
@@ -38,7 +38,7 @@
 
                {{-- Center Change --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('center.all') }}">
+                    <a class="nav-link text-white {{ request()->routeIs('center.*') ? 'active' : '' }}" href="{{ route('center.all') }}">
                         {{--  <i class="fa-solid fa-building-columns me-1"></i>   --}}
                         Center Change
                     </a>
@@ -46,7 +46,7 @@
 
                 {{-- Medium Change --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('medium.all') }}">
+                    <a class="nav-link text-white {{ request()->routeIs('medium.*') ? 'active' : '' }}" href="{{ route('medium.all') }}">
                         {{--  <i class="fa-solid fa-language me-1"></i>  --}}
                          Medium Change
                     </a>
@@ -54,7 +54,7 @@
 
                 {{-- Message --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('message.all') }}">
+                    <a class="nav-link text-white {{ request()->routeIs('message.*') ? 'active' : '' }}" href="{{ route('message.all') }}">
                         {{--  <i class="fa-solid fa-language me-1"></i>  --}}
                          Messages
                     </a>
@@ -62,7 +62,7 @@
 
                 {{-- Message --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('nic.all') }}">
+                    <a class="nav-link text-white {{ request()->routeIs('nic.*') ? 'active' : '' }}" href="{{ route('nic.all') }}">
                         {{--  <i class="fa-solid fa-language me-1"></i>  --}}
                          NIC Change
                     </a>

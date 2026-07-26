@@ -113,8 +113,8 @@ Route::prefix('nic')->group(function () {
     Route::post('/store', [NicController::class, 'store'])->name('nic.store');
 
     // // Route::get('/exams/download/csv', [AbsentController::class, 'downloadCsv'])->name('exams.download.csv');
-    // Route::get('/exams/download/excel', [AbsentController::class, 'downloadExcel'])->name('absentees.download.excel');
-    // Route::get('/exams/download/pdf', [AbsentController::class, 'downloadPdf'])->name('absentees.download.pdf');
+    Route::get('/exams/download/excel', [NicController::class, 'downloadExcel'])->name('nic.download.excel');
+    Route::get('/exams/download/pdf', [NicController::class, 'downloadPdf'])->name('nic.download.pdf');
 
     // Route::delete('/absentees/{id}',[AbsentController::class, 'destroy'])->name('absentees.destroy');
 });

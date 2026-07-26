@@ -444,6 +444,23 @@
         }
 
     }
+.navbar .nav-link.active {
+    background: rgba(255, 255, 255, 0.089);
+    color: #fff !important;
+    border-bottom: 1px solid #ffc107;
+    border-radius: 8px;
+    font-weight: 600;
+}
 
-    
+.navbar .nav-link:hover {
+    background: rgba(255, 255, 255, 0.051);
+    border-radius: 8px;
+}
+
+/* .navbar .nav-link.active {
+    color: #fff !important;
+    border-bottom: 3px solid #ffc107;
+    font-weight: 600;
+} */
+
 </style>
