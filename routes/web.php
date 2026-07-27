@@ -132,7 +132,7 @@ Route::prefix('message')->group(function () {
 Route::prefix('nic')->group(function () {
     Route::get('/', [NicController::class, 'index'])->name('nic.all');
     Route::get('/all', [NicController::class, 'All'])->name('nic.allData');
-    Route::get('/get-paper-details', [NicController::class, 'getPaperDetails'])->name('get.paper.details');
+    Route::get('/get-paper-details', [NicController::class, 'getPaperDetails'])->name('get.paper_nic.details');
     Route::get('/nic/get-candidate', [NicController::class, 'getCandidate'])->name('nic.getCandidate');
 
     Route::post('/store', [NicController::class, 'store'])->name('nic.store');

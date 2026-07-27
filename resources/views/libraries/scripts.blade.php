@@ -101,42 +101,6 @@
 </script>
 
 
-{{--  <script>
-    $(document).ready(function() {
-        $('#center_no, #date, #session').on('change', function() {
-            let center_no = $('#center_no').val();
-            let exam_date = $('#date').val();
-            let session = $('#session').val();
-
-            if(center_no && exam_date && session) {
-                $.ajax({
-                    url: '{{ route("get.paper.details") }}',
-                    type: 'GET',
-                    data: {
-                        center_no: center_no,
-                        exam_date: exam_date,
-                        session: session
-                    },
-                    success: function(response) {
-                        console.log('AJAX Response:', response); // Debug
-                        $('#subject_code').val(response.subject_code || '');
-                        $('#paper_code').val(response.paper_code || '');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('AJAX Error:', error);
-                        $('#subject_code').val('');
-                        $('#paper_code').val('');
-                    }
-                });
-            } else {
-                // Clear fields if inputs are incomplete
-                $('#subject_code').val('');
-                $('#paper_code').val('');
-            }
-        });
-    });
-</script>  --}}
-
 {{-- get paper details medium --}}
 <script>
     $(document).ready(function() {
@@ -330,6 +294,58 @@
             if (exam_date && session) {
                 $.ajax({
                     url: '{{ route('get.paper_note.details') }}',
+                    type: 'GET',
+                    data: {
+                        exam_date,
+                        session
+                    },
+                    success: function(response) {
+                        let subjectSelect = $('#subject_code');
+                        subjectSelect.empty().append(
+                            '<option value="">Select Subject</option>');
+
+                        if (response.subjects && response.subjects.length > 0) {
+                            response.subjects.forEach(function(item) {
+                                subjectSelect.append(
+                                    `<option value="${item.subject_code}" data-paper="${item.paper_code}">
+                                    ${item.subject_code}
+                                </option>`
+                                );
+                            });
+                        }
+
+                        $('#paper_code').val('');
+                    },
+                    error: function() {
+                        $('#subject_code').empty().append(
+                            '<option value="">Select Subject</option>');
+                        $('#paper_code').val('');
+                    }
+                });
+            }
+        });
+
+        // When subject selected → auto-fill paper code
+        $('#subject_code').on('change', function() {
+            let paperCode = $(this).find(':selected').data('paper');
+            $('#paper_code').val(paperCode || '');
+        });
+
+    });
+</script>
+
+{{-- get paper details NIC --}}
+<script>
+    $(document).ready(function() {
+
+        // When date or session changes
+        $('#date, #session').on('change', function() {
+            let exam_date = $('#date').val();
+            let session = $('#session').val();
+
+            if (exam_date && session) {
+                $.ajax({
+                    url: '{{ route('get.paper_nic.details') }}',
                     type: 'GET',
                     data: {
                         exam_date,
