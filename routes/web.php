@@ -48,11 +48,11 @@ use App\Http\Controllers\Auth\OtpLoginController;
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
-Route::post('/send-otp', [OtpLoginController::class,'sendOtp'])->name('send.otp');
+Route::post('/send-otp', [OtpLoginController::class, 'sendOtp'])->name('send.otp');
 
-Route::get('/verify-otp', [OtpLoginController::class,'showVerify'])->name('otp.verify.form');
+Route::get('/verify-otp', [OtpLoginController::class, 'showVerify'])->name('otp.verify.form');
 
-Route::post('/verify-otp', [OtpLoginController::class,'verifyOtp'])->name('verify.otp');
+Route::post('/verify-otp', [OtpLoginController::class, 'verifyOtp'])->name('verify.otp');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -68,8 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])
         ->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'changePassword'])
-    ->name('profile.password');
-
+        ->name('profile.password');
 });
 
 
@@ -81,7 +80,7 @@ Route::prefix('absentees')->group(function () {
     Route::get('/', [AbsentController::class, 'index'])->name('absentees.all');
     Route::get('/all', [AbsentController::class, 'All'])->name('absentees.allData');
     Route::get('/get-paper-details', [AbsentController::class, 'getPaperDetails'])->name('get.paper.details');
-
+    Route::get('/absentees/get-candidate', [AbsentController::class, 'getCandidate'])->name('absentees.getCandidate');
 
     Route::post('/store', [AbsentController::class, 'store'])->name('absentees.store');
 
@@ -89,12 +88,12 @@ Route::prefix('absentees')->group(function () {
     Route::get('/exams/download/excel', [AbsentController::class, 'downloadExcel'])->name('absentees.download.excel');
     Route::get('/exams/download/pdf', [AbsentController::class, 'downloadPdf'])->name('absentees.download.pdf');
 
-    Route::delete('/absentees/{id}',[AbsentController::class, 'destroy'])->name('absentees.destroy');
+    Route::delete('/absentees/{id}', [AbsentController::class, 'destroy'])->name('absentees.destroy');
 });
 
 Route::prefix('medium')->group(function () {
     Route::get('/', [MediumController::class, 'index'])->name('medium.all');
-        Route::get('/all', [MediumController::class, 'All'])->name('medium.allData');
+    Route::get('/all', [MediumController::class, 'All'])->name('medium.allData');
     Route::get('/get-paper-details', [MediumController::class, 'getPaperDetails'])->name('get.paper_medium.details');
     Route::get('/get-medium', [MediumController::class, 'getMedium'])->name('get.medium');
     Route::post('/store', [MediumController::class, 'store'])->name('medium.store');
@@ -113,7 +112,6 @@ Route::prefix('center')->group(function () {
 
     Route::get('/exams/download/excel', [CenterController::class, 'downloadExcel'])->name('centers.download.excel');
     Route::get('/exams/download/pdf', [CenterController::class, 'downloadPdf'])->name('centers.download.pdf');
-
 });
 
 Route::prefix('message')->group(function () {
@@ -124,8 +122,6 @@ Route::prefix('message')->group(function () {
 
     Route::get('/exams/download/excel', [CommentsController::class, 'downloadExcel'])->name('note.download.excel');
     Route::get('/exams/download/pdf', [CommentsController::class, 'downloadPdf'])->name('note.download.pdf');
-
-
 });
 
 /* NIC Route*/

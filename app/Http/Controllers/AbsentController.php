@@ -21,14 +21,14 @@ class AbsentController extends Controller
      */
     public function index()
     {
-        $response['exam_db'] = ExamDb::select('center_no')->distinct()->get();
-        $response['absentees'] = AbsentCandidates::where('user_id', Auth::id())->get();
+        $response['exam_db'] = ExamDb::where('exam_id', 'AL26')->select('center_no')->distinct()->orderBy('center_no')->get();
+        $response['absentees'] = AbsentCandidates::where('user_id', Auth::id())->where('exam_id', 'AL26')->get();
         return view('pages.absents.index')->with($response);
     }
 
     public function All()
     {
-        $response['absentees'] = AbsentCandidates::all();
+        $response['absentees'] = AbsentCandidates::where('exam_id', 'AL26')->get();
         return view('pages.absents.all')->with($response);
     }
 
@@ -102,43 +102,28 @@ class AbsentController extends Controller
         }
     }
 
+    public function getCandidate(Request $request)
+    {
+        $candidate = ExamDb::where('center_no', $request->center_no)
+            ->whereDate('date', $request->date)
+            ->where('session', $request->session)
+            ->where('subject_code', $request->subject_code)
+            ->where('index_no', $request->index_no)
+            ->first();
 
+        if (!$candidate) {
+            return response()->json([
+                'status' => false
+            ]);
+        }
 
-    // public function getPaperDetails(Request $request)
-    // {
-    //     try {
-    //         $user = Auth::user();
+        return response()->json([
+            'status'     => true,
+            'paper_code' => $candidate->paper_code,
+            'exam_id'    => $candidate->exam_id,
+        ]);
+    }
 
-    //         // Use user's center_no directly (ignore the one from request)
-    //         $center_no = $user->center_no;
-
-    //         $exam_date = $request->exam_date;
-    //         $session_input = strtoupper(trim($request->session));
-
-    //         // Normalize date (handle dd/mm/yyyy or yyyy-mm-dd)
-    //         $exam_date = date('Y-m-d', strtotime(str_replace('/', '-', $exam_date)));
-
-    //         // Validate session input
-    //         $valid_sessions = ['SESSION-I', 'SESSION-II'];
-    //         if (!in_array($session_input, $valid_sessions)) {
-    //             return response()->json(['subject_code' => '', 'paper_code' => ''], 422);
-    //         }
-
-    //         // Fetch data for that user's center only
-    //         $data = ExamDb::where('center_no', $center_no)
-    //             ->whereDate('date', $exam_date)
-    //             ->where('session', $session_input)
-    //             ->select('subject_code', 'paper_code')
-    //             ->first();
-
-    //         return response()->json($data ?? ['subject_code' => '', 'paper_code' => '']);
-    //     } catch (\Exception $e) {
-    //         Log::error('getPaperDetails Error: ' . $e->getMessage(), [
-    //             'request' => $request->all()
-    //         ]);
-    //         return response()->json(['subject_code' => '', 'paper_code' => ''], 500);
-    //     }
-    // }
 
 
     /**
@@ -162,6 +147,7 @@ class AbsentController extends Controller
             ->where('subject_code', $request->subject_code)
             ->where('paper_code', $request->paper_code)
             ->where('index_no', $request->index_no)
+            ->where('exam_id', $request->exam_id)
             ->exists();
 
         if (!$candidateExists) {
@@ -177,6 +163,7 @@ class AbsentController extends Controller
             ->where('subject_code', $request->subject_code)
             ->where('paper_code', $request->paper_code)
             ->where('index_no', $request->index_no)
+            ->where('exam_id', $request->exam_id)
             ->exists();
 
         if ($duplicate) {
@@ -193,6 +180,7 @@ class AbsentController extends Controller
             'subject_code' => $request->subject_code,
             'paper_code'   => $request->paper_code,
             'index_no'     => $request->index_no,
+            'exam_id'      => $request->exam_id,
             'user_id'      => Auth::id(),
         ]);
 

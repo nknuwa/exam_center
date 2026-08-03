@@ -16,6 +16,7 @@ class AbsentCandidates extends Model
         'subject_code',
         'paper_code',
         'index_no',
+        'exam_id',
         'user_id',
     ];
 

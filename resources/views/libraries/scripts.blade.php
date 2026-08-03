@@ -415,6 +415,35 @@
     });
 </script>
 
+
+<script>
+    $('#index_no').on('change', function() {
+
+        $.ajax({
+            url: "{{ route('absentees.getCandidate') }}",
+            type: "GET",
+            data: {
+                center_no: $('#center_no').val(),
+                date: $('#date').val(),
+                session: $('#session').val(),
+                subject_code: $('#subject_code').val(),
+                index_no: $('#index_no').val()
+            },
+            success: function(response) {
+
+                if (response.status) {
+                    $('#paper_code').val(response.paper_code);
+                    $('#exam_id').val(response.exam_id);
+                } else {
+                    $('#paper_code').val('');
+                    $('#exam_id').val('');
+                }
+            }
+        });
+
+    });
+</script>
+
 {{--  <script>
     $(document).ready(function() {
         $('#date, #session').on('change', function() {
@@ -932,7 +961,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#examTable').DataTable({
+        $('#absenteesTable').DataTable({
             language: {
                 emptyTable: "No data available in the table",
                 paginate: {

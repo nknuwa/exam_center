@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\ExamDb;
 use App\Models\NicChanges;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class NicController extends Controller
 {
-     public function index()
+    public function index()
     {
         $response['exam_db'] = ExamDb::select('center_no')->distinct()->get();
         $response['nicChanges'] = NicChanges::where('user_id', Auth::id())->get();
@@ -65,26 +66,26 @@ class NicController extends Controller
     }
 
     public function getCandidate(Request $request)
-{
-    $candidate = ExamDb::where('center_no', $request->center_no)
-        ->whereDate('date', $request->date)
-        ->where('session', $request->session)
-        ->where('subject_code', $request->subject_code)
-        ->where('index_no', $request->index_no)
-        ->first();
+    {
+        $candidate = ExamDb::where('center_no', $request->center_no)
+            ->whereDate('date', $request->date)
+            ->where('session', $request->session)
+            ->where('subject_code', $request->subject_code)
+            ->where('index_no', $request->index_no)
+            ->first();
 
-    if (!$candidate) {
+        if (!$candidate) {
+            return response()->json([
+                'status' => false
+            ]);
+        }
+
         return response()->json([
-            'status' => false
+            'status'     => true,
+            'paper_code' => $candidate->paper_code,
+            'exam_id'    => $candidate->exam_id,
         ]);
     }
-
-    return response()->json([
-        'status'     => true,
-        'paper_code' => $candidate->paper_code,
-        'exam_id'    => $candidate->exam_id,
-    ]);
-}
 
     public function store(Request $request)
     {
@@ -172,5 +173,4 @@ class NicController extends Controller
 
         return $pdf->download('nic_report.pdf');
     }
-
 }

@@ -135,6 +135,8 @@
                                     <label for="index_no" class="form-label">Index Number *</label>
                                     <input type="text" id="index_no" name="index_no"
                                         class="form-control form-control-sm" value="{{ old('index_no') }}">
+                                        <input type="hidden" id="exam_id" name="exam_id" class="form-control form-control-sm"
+                                        readonly>
                                     @error('index_no')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -221,7 +223,7 @@
 
                 <div class="table-responsive">
 
-                    <table id="examTable" class="table modern-table align-middle mb-0">
+                    <table id="absenteesTable" class="table modern-table align-middle mb-0">
 
                         <thead>
                             <tr>
@@ -315,7 +317,7 @@
 
                                 <tr>
 
-                                    <td colspan="6" class="text-center py-5">
+                                    <td colspan="7" class="text-center py-5">
 
                                         <div class="text-muted">
 
