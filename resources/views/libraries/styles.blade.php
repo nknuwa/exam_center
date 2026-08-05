@@ -1274,4 +1274,27 @@
         color: white;
 
     }
+
+    .input-group .form-control{
+    border-left:none;
+}
+
+.input-group-text{
+    border-right:none;
+    background:#fff;
+}
+
+.pagination{
+    margin-bottom:0;
+}
+
+.page-link{
+    border-radius:8px;
+    margin:0 2px;
+}
+
+.page-item.active .page-link{
+    background:#0d6efd;
+    border-color:#0d6efd;
+}
 </style>

@@ -960,22 +960,22 @@
 </script>  --}}
 
 <script>
-    $(document).ready(function() {
-        $('#absenteesTable').DataTable({
-            language: {
-                emptyTable: "No data available in the table",
-                paginate: {
-                    previous: '<i class="fa-solid fa-angles-left"></i>',
-                    next: '<i class="fa-solid fa-angles-right"></i>'
-                }
-            },
-            pageLength: 10,
-            lengthMenu: [5, 10, 20],
-            order: [
-                [0, "desc"]
-            ]
-        });
-    });
+    // $(document).ready(function() {
+    //     $('#absenteesTable').DataTable({
+    //         language: {
+    //             emptyTable: "No data available in the table",
+    //             paginate: {
+    //                 previous: '<i class="fa-solid fa-angles-left"></i>',
+    //                 next: '<i class="fa-solid fa-angles-right"></i>'
+    //             }
+    //         },
+    //         pageLength: 10,
+    //         lengthMenu: [5, 10, 20],
+    //         order: [
+    //             [0, "desc"]
+    //         ]
+    //     });
+    // });
 </script>
 
 <script>

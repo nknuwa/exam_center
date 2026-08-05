@@ -135,7 +135,7 @@
                                     <label for="index_no" class="form-label">Index Number *</label>
                                     <input type="text" id="index_no" name="index_no"
                                         class="form-control form-control-sm" value="{{ old('index_no') }}">
-                                        <input type="hidden" id="exam_id" name="exam_id" class="form-control form-control-sm"
+                                    <input type="hidden" id="exam_id" name="exam_id" class="form-control form-control-sm"
                                         readonly>
                                     @error('index_no')
                                         <small class="text-danger">{{ $message }}</small>
@@ -212,7 +212,7 @@
                     </div>
 
                     <span class="badge bg-danger-subtle text-danger px-3 py-2">
-                        Total : {{ count($absentees) }}
+                        Total : {{ $absentees->total() }}
                     </span>
 
                 </div>
@@ -222,7 +222,65 @@
             <div class="card-body px-4 pb-4">
 
                 <div class="table-responsive">
+                    <div class="row mb-4 mx-2 align-items-center g-3">
 
+                        <div class="col-md-8 col-12">
+
+                            <form method="GET" action="{{ route('absentees.all') }}"
+                                class="d-flex align-items-center">
+
+                                <label class="me-2 fw-semibold">
+                                    Show
+                                </label>
+
+                                <select name="per_page" class="form-select form-select-sm w-auto me-2"
+                                    onchange="this.form.submit()">
+
+                                    @foreach ([10, 25, 50, 100] as $size)
+                                        <option value="{{ $size }}"
+                                            {{ request('per_page', 10) == $size ? 'selected' : '' }}>
+                                            {{ $size }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+
+                                <span>entries</span>
+
+                                <input type="hidden" name="search" value="{{ request('search') }}">
+
+                            </form>
+
+                        </div>
+
+
+                        <div class="col-md-4 col-12 justify-content-end">
+
+                            <form method="GET" action="{{ route('absentees.all') }}"
+                                class="d-flex justify-content-end">
+
+                                <input type="hidden" name="per_page" value="{{ request('per_page', 10) }}">
+
+                                <div class="input-group w-100">
+
+                                    <span class="input-group-text bg-white">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+
+                                    <input type="text" class="form-control" name="search"
+                                        placeholder="Search candidate..." value="{{ request('search') }}">
+
+                                    <button class="btn btn-primary">
+                                        Search
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
                     <table id="absenteesTable" class="table modern-table align-middle mb-0">
 
                         <thead>
@@ -335,6 +393,26 @@
                         </tbody>
 
                     </table>
+                    <div class="row align-items-center mt-3 mx-2">
+
+                        <div class="col-md-6">
+
+                            @if ($absentees->count())
+                                Showing {{ $absentees->firstItem() }} to {{ $absentees->lastItem() }}
+                                of {{ $absentees->total() }} entries
+                            @else
+                                Showing 0 to 0 of 0 entries
+                            @endif
+
+                        </div>
+
+                        <div class="col-md-6 d-flex justify-content-end">
+
+                            {{ $absentees->appends(request()->query())->links() }}
+
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -503,5 +581,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     </script>
 @endif
-
-

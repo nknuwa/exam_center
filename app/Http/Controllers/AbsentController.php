@@ -19,11 +19,43 @@ class AbsentController extends Controller
     /**
      * Show Absentees index page
      */
-    public function index()
+    public function index(Request $request)
     {
-        $response['exam_db'] = ExamDb::where('exam_id', 'AL26')->select('center_no')->distinct()->orderBy('center_no')->get();
-        $response['absentees'] = AbsentCandidates::where('user_id', Auth::id())->where('exam_id', 'AL26')->get();
-        return view('pages.absents.index')->with($response);
+        $perPage = $request->get('per_page', 1);
+
+        $query = AbsentCandidates::where('user_id', Auth::id())
+            ->where('exam_id', 'AL26');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('center_no', 'like', "%{$search}%")
+                    ->orWhere('index_no', 'like', "%{$search}%")
+                    ->orWhere('subject_code', 'like', "%{$search}%")
+                    ->orWhere('paper_code', 'like', "%{$search}%")
+                    ->orWhere('session', 'like', "%{$search}%")
+                    ->orWhere('date', 'like', "%{$search}%");
+            });
+        }
+
+        $response['exam_db'] = ExamDb::where('exam_id', 'AL26')
+            ->select('center_no')
+            ->distinct()
+            ->orderBy('center_no')
+            ->get();
+
+        $response['absentees'] = $query
+            ->latest()
+            ->paginate($perPage)
+            ->appends($request->query());
+
+
+        return view('pages.absents.index', $response);
+
+        // $response['exam_db'] = ExamDb::where('exam_id', 'AL26')->select('center_no')->distinct()->orderBy('center_no')->get();
+        // $response['absentees'] = AbsentCandidates::where('user_id', Auth::id())->where('exam_id', 'AL26')->get();
+        // return view('pages.absents.index')->with($response);
     }
 
     public function All()
