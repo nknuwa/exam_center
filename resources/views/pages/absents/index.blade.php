@@ -135,7 +135,7 @@
                                     <label for="index_no" class="form-label">Index Number *</label>
                                     <input type="text" id="index_no" name="index_no"
                                         class="form-control form-control-sm" value="{{ old('index_no') }}">
-                                    <input type="hidden" id="exam_id" name="exam_id" class="form-control form-control-sm"
+                                    <input type="text" id="exam_id" name="exam_id" class="form-control form-control-sm"
                                         readonly>
                                     @error('index_no')
                                         <small class="text-danger">{{ $message }}</small>

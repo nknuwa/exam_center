@@ -14,11 +14,43 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class CenterController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $response['exam_db'] = ExamDb::select('center_no')->distinct()->get();
-        $response['centers'] = CenterChange::where('user_id', Auth::id())->get();
-        return view('pages.center.index')->with($response);
+        $perPage = $request->get('per_page', 10);
+
+        $query = CenterChange::where('user_id', Auth::id())
+            ->where('exam_id', 'AL26');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('current_center_no', 'like', "%{$search}%")
+                    ->orWhere('new_center_no', 'like', "%{$search}%")
+                    ->orWhere('index_no', 'like', "%{$search}%")
+                    ->orWhere('subject_code', 'like', "%{$search}%")
+                    ->orWhere('paper_code', 'like', "%{$search}%")
+                    ->orWhere('session', 'like', "%{$search}%")
+                    ->orWhere('date', 'like', "%{$search}%");
+            });
+        }
+
+        $response['exam_db'] = ExamDb::where('exam_id', 'AL26')
+            ->select('center_no')
+            ->distinct()
+            ->orderBy('center_no')
+            ->get();
+
+        $response['centers'] = $query
+            ->latest()
+            ->paginate($perPage)
+            ->appends($request->query());
+
+        return view('pages.center.index', $response);
+
+        // $response['exam_db'] = ExamDb::select('center_no')->distinct()->get();
+        // $response['centers'] = CenterChange::where('user_id', Auth::id())->get();
+        // return view('pages.center.index')->with($response);
     }
 
     public function All()
@@ -58,24 +90,68 @@ class CenterController extends Controller
         }
     }
 
+    // public function getCandidate(Request $request)
+    // {
+    //     $candidate = ExamDb::where('index_no', $request->index_no)
+    //         ->where('subject_code', $request->subject_code)
+    //         ->whereDate('date', $request->date)
+    //         ->where('session', $request->session)
+    //         ->where('exam_id', $request->exam_id)
+    //         ->first();
+
+    //     if (!$candidate) {
+    //         return response()->json([
+    //             'status' => false
+    //         ]);
+    //     }
+
+    //     return response()->json([
+    //         'status' => true,
+    //         'center_no' => $candidate->center_no,
+    //         'paper_code' => $candidate->paper_code,
+    //         'exam_id' => $candidate->exam_id,
+    //     ]);
+    // }
+
+    // public function getCenterByIndex(Request $request)
+    // {
+    //     $index_no = $request->index_no;
+
+    //     // Example: look up student or candidate record by index number
+    //     $candidate = ExamDb::where('index_no', $index_no)->first();
+
+    //     if ($candidate) {
+    //         return response()->json([
+    //             'center_no' => $candidate->center_no,
+    //         ]);
+    //     } else {
+    //         return response()->json([
+    //             'center_no' => null,
+    //             'message' => 'Index not found',
+    //         ], 404);
+    //     }
+    // }
+
     public function getCenterByIndex(Request $request)
-    {
-        $index_no = $request->index_no;
+{
+    $candidate = ExamDb::where('index_no', $request->index_no)
+        ->first();
 
-        // Example: look up student or candidate record by index number
-        $candidate = ExamDb::where('index_no', $index_no)->first();
-
-        if ($candidate) {
-            return response()->json([
-                'center_no' => $candidate->center_no,
-            ]);
-        } else {
-            return response()->json([
-                'center_no' => null,
-                'message' => 'Index not found',
-            ], 404);
-        }
+    if ($candidate) {
+        return response()->json([
+            'center_no' => $candidate->center_no,
+            // 'paper_code' => $candidate->paper_code,
+            'exam_id' => $candidate->exam_id,
+        ]);
     }
+
+    return response()->json([
+        'center_no' => null,
+        // 'paper_code' => null,
+        'exam_id' => null,
+        'message' => 'Index not found',
+    ], 404);
+}
 
     public function store(Request $request)
     {
@@ -120,6 +196,7 @@ class CenterController extends Controller
             'subject_code' => $request->subject_code,
             'paper_code' => $request->paper_code,
             'index_no' => $request->index_no,
+            'exam_id' => $request->exam_id,
             'current_center_no' => $request->current_center_no,
             'new_center_no' => $request->new_center_no,
             'user_id' => Auth::id(),
@@ -128,7 +205,7 @@ class CenterController extends Controller
         return redirect()->route('center.all')->with('success', 'Center changed successfully!');
     }
 
-     public function downloadExcel()
+    public function downloadExcel()
     {
         return Excel::download(new CentersExport, 'centers_report.xlsx');
     }

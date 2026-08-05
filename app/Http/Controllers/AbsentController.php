@@ -16,12 +16,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class AbsentController extends Controller
 {
-    /**
-     * Show Absentees index page
-     */
     public function index(Request $request)
     {
-        $perPage = $request->get('per_page', 1);
+        $perPage = $request->get('per_page', 10);
 
         $query = AbsentCandidates::where('user_id', Auth::id())
             ->where('exam_id', 'AL26');

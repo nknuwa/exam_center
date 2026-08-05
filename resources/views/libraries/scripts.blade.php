@@ -204,7 +204,7 @@
     $(document).ready(function() {
 
         // Prevent accidental form reload
-        $('#examForm').on('submit', function(e) {
+        $('#centerForm').on('submit', function(e) {
             e.preventDefault();
         });
 
@@ -254,31 +254,64 @@
 
         // On index_no blur, get center number
         $('#index_no').on('blur', function() {
+
             let index_no = $(this).val();
 
             if (index_no) {
+
                 $.ajax({
                     url: '{{ route('get.center.by.index') }}',
                     type: 'GET',
                     data: {
-                        index_no
+                        index_no: index_no
                     },
                     success: function(response) {
-                        console.log('Center Response:', response);
-                        if (response.center_no) {
-                            $('#current_center_no').val(response.center_no);
-                        } else {
-                            $('#current_center_no').val('');
-                            alert('No center found for this index number.');
-                        }
+
+                        console.log(response);
+
+                        $('#current_center_no').val(response.center_no ?? '');
+                        // $('#paper_code').val(response.paper_code ?? '');
+                        $('#exam_id').val(response.exam_id ?? '');
+
                     },
-                    error: function(xhr, status, error) {
-                        console.error('Center Fetch Error:', error);
+                    error: function() {
+
                         $('#current_center_no').val('');
+                        // $('#paper_code').val('');
+                        $('#exam_id').val('');
+
+                        alert('No center found for this index number.');
                     }
                 });
+
             }
         });
+        // $('#index_no').on('blur', function() {
+        //     let index_no = $(this).val();
+
+        //     if (index_no) {
+        //         $.ajax({
+        //             url: '{{ route('get.center.by.index') }}',
+        //             type: 'GET',
+        //             data: {
+        //                 index_no
+        //             },
+        //             success: function(response) {
+        //                 console.log('Center Response:', response);
+        //                 if (response.center_no) {
+        //                     $('#current_center_no').val(response.center_no);
+        //                 } else {
+        //                     $('#current_center_no').val('');
+        //                     alert('No center found for this index number.');
+        //                 }
+        //             },
+        //             error: function(xhr, status, error) {
+        //                 console.error('Center Fetch Error:', error);
+        //                 $('#current_center_no').val('');
+        //             }
+        //         });
+        //     }
+        // });
     });
 </script>
 
@@ -387,7 +420,7 @@
 </script>
 
 {{-- get Exam ID --}}
-<script>
+{{-- <script>
     $('#index_no').on('change', function() {
 
         $.ajax({
@@ -413,10 +446,10 @@
         });
 
     });
-</script>
+</script> --}}
 
 
-<script>
+{{-- <script>
     $('#index_no').on('change', function() {
 
         $.ajax({
@@ -442,89 +475,11 @@
         });
 
     });
-</script>
-
-{{--  <script>
-    $(document).ready(function() {
-        $('#date, #session').on('change', function() {
-            let exam_date = $('#date').val();
-            let session = $('#session').val();
-
-            if (exam_date && session) {
-                $.ajax({
-                    url: '{{ route('get.paper_center.details') }}',
-                    type: 'GET',
-                    data: {
-                        exam_date: exam_date,
-                        session: session
-                    },
-                    success: function(response) {
-                        console.log('AJAX Response:', response);
-                        let subjectSelect = $('#subject_code');
-                        subjectSelect.empty();
-                        subjectSelect.append('<option value="">Select Subject</option>');
-
-                        if (response.subjects && response.subjects.length > 0) {
-                            response.subjects.forEach(function(item) {
-                                subjectSelect.append(
-                                    `<option value="${item.subject_code}" data-paper="${item.paper_code}">
-                                    ${item.subject_code}
-                                </option>`
-                                );
-                            });
-                        }
-
-                        $('#paper_code').val('');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('AJAX Error:', error);
-                        $('#subject_code').empty().append(
-                            '<option value="">Select Subject</option>');
-                        $('#paper_code').val('');
-                    }
-                });
-            } else {
-                $('#subject_code').empty().append('<option value="">Select Subject</option>');
-                $('#paper_code').val('');
-            }
-        });
-
-        $('#subject_code').on('change', function() {
-            let paperCode = $(this).find(':selected').data('paper');
-            $('#paper_code').val(paperCode || '');
-        });
-
-        $('#index_no').on('blur', function() {
-            let index_no = $(this).val();
-
-            if (index_no) {
-                $.ajax({
-                    url: '{{ route('get.center.by.index') }}',
-                    type: 'GET',
-                    data: {
-                        index_no: index_no
-                    },
-                    success: function(response) {
-                        console.log('Center Response:', response);
-                        if (response.center_no) {
-                            $('#current_center_no').val(response.center_no);
-                        } else {
-                            $('#current_center_no').val('');
-                            alert('No center found for this index number.');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Center Fetch Error:', error);
-                        $('#current_center_no').val('');
-                    }
-                });
-            }
-        });
-
-    });
-</script>  --}}
+</script> --}}
 
 
+
+{{-- --}}
 
 {{-- clear btn --}}
 {{-- <script>

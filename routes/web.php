@@ -106,6 +106,8 @@ Route::prefix('center')->group(function () {
     Route::get('/', [CenterController::class, 'index'])->name('center.all');
     Route::get('/all', [CenterController::class, 'All'])->name('center.allData');
     Route::get('/get-paper-details', [CenterController::class, 'getPaperDetails'])->name('get.paper_center.details');
+    Route::get('/get-candidate',[CenterController::class,'getCandidate'])->name('center.getCandidate');
+    // Route::get('/centers/get-candidate', [CenterController::class, 'getCandidate'])->name('center.getCandidate');
     Route::get('/get-center-details', [CenterController::class, 'getCenterDetails'])->name('get.center.details');
     Route::get('/get-center-by-index', [CenterController::class, 'getCenterByIndex'])->name('get.center.by.index');
     Route::post('/store', [CenterController::class, 'store'])->name('centers.store');

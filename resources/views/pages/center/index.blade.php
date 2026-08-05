@@ -113,7 +113,7 @@
                                     <select id="subject_code" name="subject_code" class="form-control">
                                         <option value="">Select Subject</option>
                                     </select>
-                                     @error('subject_code')
+                                    @error('subject_code')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                     {{--  <input id="subject_code" type="text" name="subject_code" class="form-control" readonly>  --}}
@@ -130,14 +130,16 @@
                                     <label class="form-label mb-1">Index <span class="text-danger">*</span></label>
                                     <input class="form-control form-control-sm" type="text" name="index_no"
                                         id="index_no" value="{{ old('index_no') }}">
-
+                                    <input type="hidden" id="exam_id" name="exam_id" class="form-control form-control-sm"
+                                        readonly>
                                     @error('index_no')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="col-lg-4 col-md-6">
-                                    <label class="form-label mb-1">Applicant Current Center <span class="text-danger">*</span></label>
+                                    <label class="form-label mb-1">Applicant Current Center <span
+                                            class="text-danger">*</span></label>
                                     <input class="form-control form-control-sm" type="text" name="current_center_no"
                                         id="current_center_no" value="{{ old('center_no') }}" readonly>
                                 </div>
@@ -232,7 +234,7 @@
 
 
         <!-- Exam Table -->
-         <!-- Modern Exam Table -->
+        <!-- Modern Exam Table -->
         <div class="card mt-4 border-0 shadow-lg rounded-4 overflow-hidden">
 
             <div class="card-header bg-white border-0 px-4 pt-4">
@@ -249,7 +251,7 @@
                     </div>
 
                     <span class="badge bg-danger-subtle text-danger px-3 py-2">
-                        Total : {{ count($centers) }}
+                        Total : {{ $centers->total() }}
                     </span>
 
                 </div>
@@ -259,6 +261,63 @@
             <div class="card-body px-4 pb-4">
 
                 <div class="table-responsive">
+                    <div class="row mb-4 mx-2 align-items-center g-3">
+
+                        <div class="col-md-8 col-12">
+
+                            <form method="GET" action="{{ route('center.all') }}" class="d-flex align-items-center">
+
+                                <label class="me-2 fw-semibold">
+                                    Show
+                                </label>
+
+                                <select name="per_page" class="form-select form-select-sm w-auto me-2"
+                                    onchange="this.form.submit()">
+
+                                    @foreach ([10, 25, 50, 100] as $size)
+                                        <option value="{{ $size }}"
+                                            {{ request('per_page', 10) == $size ? 'selected' : '' }}>
+                                            {{ $size }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+
+                                <span>entries</span>
+
+                                <input type="hidden" name="search" value="{{ request('search') }}">
+
+                            </form>
+
+                        </div>
+
+
+                        <div class="col-md-4 col-12 justify-content-end">
+
+                            <form method="GET" action="{{ route('center.all') }}" class="d-flex justify-content-end">
+
+                                <input type="hidden" name="per_page" value="{{ request('per_page', 10) }}">
+
+                                <div class="input-group w-100">
+
+                                    <span class="input-group-text bg-white">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+
+                                    <input type="text" class="form-control" name="search"
+                                        placeholder="Search candidate..." value="{{ request('search') }}">
+
+                                    <button class="btn btn-secondary">
+                                        Search
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
 
                     <table id="examTable" class="table modern-table align-middle mb-0">
 
@@ -278,7 +337,6 @@
                         <tbody>
 
                             @forelse($centers as $center)
-
                                 <tr>
 
                                     <td>
@@ -377,6 +435,27 @@
                         </tbody>
 
                     </table>
+
+                    <div class="row align-items-center mt-3 mx-2">
+
+                        <div class="col-md-6">
+
+                            @if ($centers->count())
+                                Showing {{ $centers->firstItem() }} to {{ $centers->lastItem() }}
+                                of {{ $centers->total() }} entries
+                            @else
+                                Showing 0 to 0 of 0 entries
+                            @endif
+
+                        </div>
+
+                        <div class="col-md-6 d-flex justify-content-end">
+
+                            {{ $centers->appends(request()->query())->links() }}
+
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -515,3 +594,7 @@
         });
     </script>
 @endif
+
+
+
+
